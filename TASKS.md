@@ -1,6 +1,6 @@
 # V4V Blog Builder — Task Tracker
 
-## Current Phase: Phase 1 Complete - Moving to Phase 2
+## Current Phase: Phase 2 Complete - Moving to Phase 3
 
 ---
 
@@ -55,26 +55,31 @@
 
 ---
 
-## Phase 2: Engagement
+## Phase 2: Engagement ✅ COMPLETE
 
 ### Zap Features
-- [ ] Enhance ZapButton for articles
-- [ ] Create ZapDisplay component (totals + zappers)
-- [ ] Implement anonymous zap flow (QR invoice)
-- [ ] Create useArticleZaps hook
+- [x] Integrate existing ZapButton for articles
+- [x] Create ZapDisplay component (totals + zappers)
+- [x] Use existing zap flow with QR invoice support
 
 ### Social Features
-- [ ] Create LikeButton component
-- [ ] Create RepostButton component
-- [ ] Create ShareButton component
-- [ ] Create BookmarkButton component
-- [ ] Create CommentSection component (kind:1111)
-- [ ] Create EngagementBar component
+- [x] Create LikeButton component (kind:7 reactions)
+- [x] Create RepostButton component (kind:16 generic reposts)
+- [x] Create ShareButton component (copy link, Twitter, native share)
+- [x] Create BookmarkButton component (NIP-51 kind:10003)
+- [x] Create CommentSection component (kind:1111 with threading)
+- [x] Create EngagementBar component (horizontal/vertical/compact layouts)
 
 ### Hooks
-- [ ] Create useArticleEngagement hook
-- [ ] Create useArticleComments hook
-- [ ] Create useBookmarks hook
+- [x] Create useArticleEngagement hook (combined query for all engagement types)
+- [x] Use existing useComments hook for article comments
+- [x] Create useBookmarks hook (NIP-51 public bookmarks)
+- [x] Create useToggleBookmark hook
+- [x] Create useHasLiked and useHasReposted hooks
+
+### Integration
+- [x] Integrate EngagementBar into ArticleView
+- [x] Integrate CommentSection into ArticleView
 
 ---
 

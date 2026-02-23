@@ -6,8 +6,11 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Separator } from '@/components/ui/separator';
 import { useAuthor } from '@/hooks/useAuthor';
 import { formatDate, calculateReadingTime, type ArticleData } from '@/lib/article';
+import { EngagementBar } from '@/components/engagement/EngagementBar';
+import { CommentSection } from '@/components/engagement/CommentSection';
 import { cn } from '@/lib/utils';
 
 interface ArticleViewProps {
@@ -124,6 +127,21 @@ export function ArticleView({ article, className }: ArticleViewProps) {
           </div>
         </footer>
       )}
+
+      {/* Engagement Bar */}
+      <Separator className="my-8" />
+      <EngagementBar
+        article={article.event}
+        authorPubkey={article.pubkey}
+        slug={article.slug}
+        title={article.title}
+        summary={article.summary}
+        className="mb-8"
+      />
+
+      {/* Comments Section */}
+      <Separator className="my-8" />
+      <CommentSection article={article.event} />
     </article>
   );
 }
