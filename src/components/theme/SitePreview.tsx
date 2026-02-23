@@ -190,6 +190,36 @@ export function SitePreview({ settings, className }: SitePreviewProps) {
 
         {layout === 'newsletter' && (
           <div className="space-y-2">
+            {/* Featured article for newsletter */}
+            <Card 
+              className="overflow-hidden" 
+              style={{ backgroundColor: colors.card, borderColor: colors.border, borderRadius }}
+            >
+              <div className="p-2 border-b" style={{ borderColor: colors.border }}>
+                <Badge 
+                  variant="secondary" 
+                  className="text-[8px] px-1 py-0"
+                  style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
+                >
+                  Featured
+                </Badge>
+              </div>
+              <div className="flex gap-2">
+                <div className="w-20 h-14 bg-gradient-to-br from-gray-200 to-gray-300 flex-shrink-0" />
+                <div className="p-2 flex-1">
+                  <p 
+                    className="text-[9px] font-medium line-clamp-2"
+                    style={{ fontFamily: theme.fonts.heading }}
+                  >
+                    Featured Newsletter Article
+                  </p>
+                  <p className="text-[7px] line-clamp-1" style={{ color: colors.muted }}>
+                    The most important article for your readers...
+                  </p>
+                </div>
+              </div>
+            </Card>
+            {/* Regular articles */}
             {[1, 2, 3].map((i) => (
               <Card 
                 key={i} 
@@ -215,7 +245,30 @@ export function SitePreview({ settings, className }: SitePreviewProps) {
 
         {layout === 'minimal' && (
           <div className="space-y-2 max-w-[180px] mx-auto">
-            {[1, 2, 3, 4].map((i) => (
+            {/* Featured article for minimal */}
+            <div 
+              className="py-2 border-b"
+              style={{ borderColor: colors.border }}
+            >
+              <Badge 
+                variant="secondary" 
+                className="text-[7px] px-1 py-0 mb-1"
+                style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
+              >
+                Featured
+              </Badge>
+              <p 
+                className="text-[10px] font-medium"
+                style={{ fontFamily: theme.fonts.heading }}
+              >
+                Featured Minimal Article
+              </p>
+              <p className="text-[7px]" style={{ color: colors.muted }}>
+                Feb 23, 2026
+              </p>
+            </div>
+            {/* Regular articles */}
+            {[1, 2, 3].map((i) => (
               <div 
                 key={i} 
                 className="py-2 border-b"

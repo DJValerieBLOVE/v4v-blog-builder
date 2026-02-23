@@ -15,6 +15,7 @@ export interface ArticleData {
   createdAt: number;
   category: string | null;
   tags: string[];
+  featured: boolean;
   event: NostrEvent;
 }
 
@@ -32,6 +33,7 @@ export function parseArticle(event: NostrEvent): ArticleData {
   const tags = event.tags
     .filter(([name]) => name === 't')
     .map(([, value]) => value);
+  const featured = event.tags.find(([name]) => name === 'featured')?.[1] === 'true';
 
   return {
     id: event.id,
@@ -45,6 +47,7 @@ export function parseArticle(event: NostrEvent): ArticleData {
     createdAt: event.created_at,
     category,
     tags,
+    featured,
     event,
   };
 }

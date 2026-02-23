@@ -350,6 +350,32 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ---
 
+## Phase 6.10: Featured Articles & UI Polish ✅ COMPLETE
+
+### Settings Layout
+- [x] Changed Theme Settings to 50/50 split layout (lg:grid-cols-2)
+- [x] Preview panel now gets full 50% width instead of fixed 320px
+- [x] Better use of horizontal space on wide screens
+
+### Featured Articles in Previews
+- [x] Magazine layout: Featured article already existed (hero card style)
+- [x] Newsletter layout: Added featured article section with badge
+- [x] Minimal layout: Added featured article with badge indicator
+
+### Article Editor Featured Toggle
+- [x] Added "Featured Article" toggle switch in Settings tab
+- [x] Star icon indicator for featured status
+- [x] Featured flag passed to usePublishArticle hook
+- [x] Featured status loaded when editing existing articles
+
+### Data Model Updates
+- [x] Added `featured: boolean` to ArticleData interface
+- [x] Added `featured?: boolean` to ArticleInput interface  
+- [x] parseArticle extracts featured flag from tags
+- [x] usePublishArticle adds `["featured", "true"]` tag when enabled
+
+---
+
 ## Design Notes
 
 - All thumbnails use 16:9 ratio
@@ -360,3 +386,4 @@ Phases 1-6 complete. Post-phase polish complete.
 - Theme presets: Magazine, Newsletter, Minimal
 - Color presets: Purple, Blue, Green, Orange, Pink, Red
 - Full color customization: accent, background, text, card colors
+- Featured articles marked with `["featured", "true"]` tag

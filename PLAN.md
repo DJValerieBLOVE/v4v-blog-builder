@@ -249,6 +249,21 @@ BLOG OWNER (you)          VISITORS (readers who login)
 
 ---
 
+### Phase 6.10: Featured Articles & UI Polish ✅
+**Goal**: Featured article system and settings layout improvements
+
+- [x] 50/50 split layout for Theme Settings (controls/preview)
+- [x] Featured article section in Magazine layout preview
+- [x] Featured article section in Newsletter layout preview
+- [x] Featured article section in Minimal layout preview
+- [x] "Add to Featured" toggle in article editor
+- [x] Featured flag stored in article tags
+- [x] Featured status loaded when editing existing articles
+
+**Deliverable**: Complete featured article system with improved settings UX
+
+---
+
 ## Data Models
 
 ### Article (kind:30023)
@@ -266,6 +281,7 @@ BLOG OWNER (you)          VISITORS (readers who login)
     ["t", "bitcoin"],
     ["t", "podcast"],
     ["category", "Bitcoin"],
+    ["featured", "true"],
     ["alt", "Blog post: Article Title"]
   ]
 }

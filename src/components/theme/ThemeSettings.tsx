@@ -181,9 +181,9 @@ export function ThemeSettings() {
         </div>
       )}
 
-      {/* Split layout: Settings + Preview */}
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr,320px] gap-6">
-        {/* Left: Settings */}
+      {/* Split layout: Settings + Preview - 50/50 on large screens */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Left: Settings (50%) */}
         <Tabs defaultValue="identity" className="space-y-6">
           {/* Bubble-style tabs - NOT full width */}
           <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
@@ -982,14 +982,14 @@ export function ThemeSettings() {
         </TabsContent>
         </Tabs>
 
-        {/* Right: Live Preview */}
-        <div className="hidden xl:block">
+        {/* Right: Live Preview (50%) */}
+        <div className="hidden lg:block">
           <div className="sticky top-4">
             <div className="flex items-center gap-2 mb-3">
               <Monitor className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm font-medium">Live Preview</span>
             </div>
-            <SitePreview settings={previewSettings} />
+            <SitePreview settings={previewSettings} className="w-full" />
           </div>
         </div>
       </div>

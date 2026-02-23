@@ -11,6 +11,7 @@ interface ArticleInput {
   category?: string;
   tags?: string[];
   publishedAt?: number;
+  featured?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export function usePublishArticle() {
         category,
         tags = [],
         publishedAt = Math.floor(Date.now() / 1000),
+        featured = false,
       } = input;
 
       // Build tags array
@@ -59,6 +61,11 @@ export function usePublishArticle() {
 
       for (const tag of tags) {
         eventTags.push(['t', tag.toLowerCase()]);
+      }
+
+      // Add featured flag if set
+      if (featured) {
+        eventTags.push(['featured', 'true']);
       }
 
       // Add alt tag for NIP-31 compliance

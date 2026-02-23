@@ -11,6 +11,7 @@ import {
   FileText,
   Settings,
   Image as ImageIcon,
+  Star,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +21,7 @@ import { Badge } from '@/components/ui/badge';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
 import {
   Dialog,
   DialogContent,
@@ -63,6 +65,7 @@ export function AdminEditor() {
   const [tagInput, setTagInput] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
   const [slugEdited, setSlugEdited] = useState(false);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   // Load existing article data
   useEffect(() => {
@@ -74,6 +77,7 @@ export function AdminEditor() {
       setCategory(existingArticle.category ?? '');
       setTags(existingArticle.tags);
       setFeaturedImage(existingArticle.image ?? '');
+      setIsFeatured(existingArticle.featured ?? false);
       setSlugEdited(true);
     }
   }, [existingArticle]);
@@ -181,6 +185,7 @@ export function AdminEditor() {
         image: featuredImage || undefined,
         category: category || undefined,
         tags: tags.length > 0 ? tags : undefined,
+        featured: isFeatured || undefined,
       });
 
       toast({
@@ -387,6 +392,28 @@ export function AdminEditor() {
                     <p className="text-xs text-muted-foreground">
                       Click a tag to remove it. Tags help readers discover your content.
                     </p>
+                  </div>
+
+                  {/* Featured Article Toggle */}
+                  <div className="flex items-center justify-between pt-4 border-t">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-full bg-primary/10">
+                        <Star className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <Label htmlFor="featured" className="text-base font-medium">
+                          Featured Article
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          Display this article prominently on your homepage
+                        </p>
+                      </div>
+                    </div>
+                    <Switch
+                      id="featured"
+                      checked={isFeatured}
+                      onCheckedChange={setIsFeatured}
+                    />
                   </div>
                 </CardContent>
               </Card>
