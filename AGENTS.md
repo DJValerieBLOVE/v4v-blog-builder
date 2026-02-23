@@ -8,6 +8,24 @@
 - **Purpose**: Open-source template for Nostr-native blogs with Lightning monetization
 - **Repository**: https://github.com/DJValerieBLOVE/v4v-blog-builder.git
 
+## CRITICAL: Documentation Requirements
+
+**ALWAYS update PLAN.md and TASKS.md after completing any feature or fix:**
+
+1. **PLAN.md** - Update the build phases section:
+   - Mark completed items with `[x]`
+   - Add new phases if implementing significant features
+   - Keep the phase descriptions accurate
+
+2. **TASKS.md** - Update the task tracker:
+   - Mark completed tasks with `[x]`
+   - Add detailed subtasks for what was implemented
+   - Document any new components, hooks, or features created
+
+**Do this BEFORE committing your changes.** The user relies on these files to track project progress.
+
+---
+
 ## Key Documentation
 
 - **PLAN.md**: Architecture and build phases
