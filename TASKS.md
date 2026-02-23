@@ -1,6 +1,6 @@
 # V4V Blog Builder — Task Tracker
 
-## Current Phase: Phase 4 Complete - Moving to Phase 5
+## Current Phase: Phase 5 Complete - Moving to Phase 6
 
 ---
 
@@ -153,26 +153,31 @@
 
 ---
 
-## Phase 5: Newsletter & Hero
+## Phase 5: Newsletter & Hero ✅ COMPLETE
 
 ### Hero Section
-- [ ] Create HeroSection component
-- [ ] Create hero style variants (fullWidth, split, minimal)
-- [ ] Create SubscribeForm component
-- [ ] Create NostrFollowButton component
+- [x] Create HeroSection component with blog settings integration
+- [x] Create fullWidth hero variant
+- [x] Create split hero variant
+- [x] Create minimal hero variant
+- [x] Create SubscribeForm component (inline, stacked, minimal variants)
+- [x] Create NostrFollowButton component with copy/share dialog
 
 ### Newsletter Integration
-- [ ] Create NewsletterSettings UI
-- [ ] Create provider selection dropdown
-- [ ] Create API key/config fields per provider
-- [ ] Create useNewsletterSubmit hook
+- [x] Create useNewsletterSubmit hook with provider dispatching
+- [x] Newsletter settings integrated into theme settings
 
 ### Provider Integrations
-- [ ] Implement Mailchimp integration
-- [ ] Implement ConvertKit integration
-- [ ] Implement Buttondown integration
-- [ ] Implement Beehiiv integration
-- [ ] Implement generic webhook option
+- [x] Implement Mailchimp integration (via CORS proxy)
+- [x] Implement ConvertKit integration (direct API)
+- [x] Implement Buttondown integration (via CORS proxy)
+- [x] Implement Beehiiv integration (via CORS proxy)
+- [x] Implement generic webhook option
+
+### HomePage Updates
+- [x] Integrate HeroSection with blog settings
+- [x] Update HomePage to use layout-specific article display
+- [x] Wrap PublicLayout with BlogSettingsProvider
 
 ---
 

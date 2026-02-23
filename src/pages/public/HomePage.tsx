@@ -1,15 +1,20 @@
 import { useMemo } from 'react';
 import { useHead } from '@unhead/react';
-import { Zap, Newspaper, Sparkles } from 'lucide-react';
+import { Zap, Newspaper } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useArticles } from '@/hooks/useArticles';
 import { ArticleGrid, ArticleGridSkeleton } from '@/components/blog/ArticleGrid';
+import { ArticleList, ArticleListSkeleton } from '@/components/blog/ArticleList';
+import { ArticleFeed, ArticleFeedSkeleton } from '@/components/blog/ArticleFeed';
 import { CategoryNav } from '@/components/blog/CategoryNav';
+import { HeroSection } from '@/components/hero/HeroSection';
+import { useBlogSettingsContext } from '@/components/theme/BlogSettingsProvider';
 import { extractCategories } from '@/lib/article';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function HomePage() {
   const { user } = useCurrentUser();
+  const { settings } = useBlogSettingsContext();
   
   // When logged in, show the user's own articles
   // When logged out, show a curated feed or demo articles
@@ -25,85 +30,40 @@ export function HomePage() {
 
   // Set page head
   useHead({
-    title: 'V4V Blog Builder - Your Nostr-Native Blog',
+    title: `${settings.identity.blogName} - Your Nostr-Native Blog`,
     meta: [
-      { name: 'description', content: 'Create and share your content on Nostr with Lightning payments.' },
+      { name: 'description', content: settings.identity.tagline ?? 'Create and share your content on Nostr with Lightning payments.' },
     ],
   });
 
+  // Determine layout based on theme preset
+  const layout = settings.theme.preset;
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background py-20 md:py-28">
-        <div className="container relative z-10">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm text-primary mb-6">
-              <Sparkles className="h-4 w-4" />
-              <span>Powered by Nostr & Lightning</span>
-            </div>
-            
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl mb-6 animate-fade-up">
-              Your Content,{' '}
-              <span className="text-primary">Your Rules</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-fade-up" style={{ animationDelay: '0.1s' }}>
-              A beautiful blog platform built on Nostr. Own your content, 
-              accept value-for-value payments, and connect directly with your audience.
-            </p>
-
-            {!user && (
-              <div className="flex flex-wrap justify-center gap-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                <Card className="flex-1 max-w-xs">
-                  <CardContent className="pt-6 text-center">
-                    <Zap className="h-10 w-10 mx-auto text-primary mb-4" />
-                    <h3 className="font-heading text-lg mb-2">Lightning Zaps</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Accept Bitcoin payments directly from your readers
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="flex-1 max-w-xs">
-                  <CardContent className="pt-6 text-center">
-                    <Newspaper className="h-10 w-10 mx-auto text-primary mb-4" />
-                    <h3 className="font-heading text-lg mb-2">Own Your Content</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Your posts live on Nostr, not a central server
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
-          </div>
-        </div>
-        
-        {/* Background decoration */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 h-[600px] w-[600px] rounded-full bg-primary/5 blur-3xl" />
-        </div>
-      </section>
+      {/* Hero Section - uses blog settings */}
+      <HeroSection authorPubkey={user?.pubkey} />
 
       {/* Articles Section */}
       <section className="container py-12 md:py-16">
         {user ? (
           <>
             {/* Category Navigation */}
-            {categories.length > 0 && (
+            {categories.length > 0 && layout !== 'minimal' && (
               <div className="mb-8">
                 <CategoryNav categories={categories} />
               </div>
             )}
 
-            {/* Articles Grid */}
+            {/* Articles - Layout based on theme */}
             {isLoading ? (
-              <ArticleGridSkeleton count={6} />
+              <ArticlesLoadingSkeleton layout={layout} />
             ) : error ? (
               <div className="text-center py-16">
                 <p className="text-destructive">Failed to load articles. Please try again.</p>
               </div>
             ) : articles && articles.length > 0 ? (
-              <ArticleGrid articles={articles} />
+              <ArticlesDisplay articles={articles} layout={layout} />
             ) : (
               <EmptyState />
             )}
@@ -114,6 +74,41 @@ export function HomePage() {
       </section>
     </div>
   );
+}
+
+function ArticlesDisplay({ 
+  articles, 
+  layout 
+}: { 
+  articles: import('@/lib/article').ArticleData[]; 
+  layout: 'magazine' | 'newsletter' | 'minimal';
+}) {
+  if (layout === 'newsletter') {
+    return <ArticleList articles={articles} />;
+  }
+  if (layout === 'minimal') {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <ArticleFeed articles={articles} />
+      </div>
+    );
+  }
+  // Magazine (default)
+  return <ArticleGrid articles={articles} />;
+}
+
+function ArticlesLoadingSkeleton({ layout }: { layout: 'magazine' | 'newsletter' | 'minimal' }) {
+  if (layout === 'newsletter') {
+    return <ArticleListSkeleton count={5} />;
+  }
+  if (layout === 'minimal') {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <ArticleFeedSkeleton count={8} />
+      </div>
+    );
+  }
+  return <ArticleGridSkeleton count={6} />;
 }
 
 function EmptyState() {
