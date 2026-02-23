@@ -123,8 +123,8 @@ export function EngagementBar({
 
   // Horizontal layout (default)
   return (
-    <div className={cn('flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4', className)}>
-      {/* Left side - Zaps */}
+    <div className={cn('flex flex-col gap-4', className)}>
+      {/* Top - Zaps */}
       <div className="flex items-center gap-4">
         <ZapButton event={article} />
         {showZapAmount && engagement && (
@@ -138,8 +138,8 @@ export function EngagementBar({
         )}
       </div>
 
-      {/* Right side - Actions */}
-      <div className="flex items-center gap-2 flex-wrap">
+      {/* Bottom - Actions spread out */}
+      <div className="flex items-center justify-between">
         <LikeButton
           authorPubkey={authorPubkey}
           slug={slug}

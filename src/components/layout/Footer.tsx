@@ -11,7 +11,7 @@ export function Footer({ blogName = 'V4V Blog', className }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={cn('border-t bg-muted/30', className)}>
+    <footer className={cn('border-t bg-background', className)}>
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}

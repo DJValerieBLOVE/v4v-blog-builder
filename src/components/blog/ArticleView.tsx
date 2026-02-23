@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { nip19 } from 'nostr-tools';
-import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Tag, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,6 +12,7 @@ import { useAuthor } from '@/hooks/useAuthor';
 import { formatDate, calculateReadingTime, type ArticleData } from '@/lib/article';
 import { EngagementBar } from '@/components/engagement/EngagementBar';
 import { CommentSection } from '@/components/engagement/CommentSection';
+import { ZapButton } from '@/components/ZapButton';
 import { cn } from '@/lib/utils';
 
 interface ArticleViewProps {
@@ -23,6 +25,7 @@ export function ArticleView({ article, className }: ArticleViewProps) {
   const npub = nip19.npubEncode(article.pubkey);
   const readingTime = calculateReadingTime(article.content);
   const metadata = author.data?.metadata;
+  const [showComments, setShowComments] = useState(false);
 
   return (
     <article className={cn('max-w-4xl mx-auto', className)}>
@@ -31,7 +34,7 @@ export function ArticleView({ article, className }: ArticleViewProps) {
         <Button variant="ghost" asChild className="gap-2 -ml-4">
           <Link to="/">
             <ArrowLeft className="h-4 w-4" />
-            Back to articles
+            Back
           </Link>
         </Button>
       </div>
@@ -59,38 +62,43 @@ export function ArticleView({ article, className }: ArticleViewProps) {
           </p>
         )}
 
-        {/* Author and Meta */}
-        <div className="flex flex-wrap items-center gap-6 pb-8 border-b">
-          {/* Author */}
-          <Link 
-            to={`/${npub}`}
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
-          >
-            <Avatar className="h-12 w-12">
-              <AvatarImage src={metadata?.picture} alt={metadata?.name} />
-              <AvatarFallback className="font-heading">
-                {metadata?.name?.[0]?.toUpperCase() ?? '?'}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="font-medium">{metadata?.name ?? 'Anonymous'}</p>
-              {metadata?.nip05 && (
-                <p className="text-sm text-muted-foreground">{metadata.nip05}</p>
-              )}
+        {/* Author, Meta, and Zap Button */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b">
+          <div className="flex flex-wrap items-center gap-6">
+            {/* Author */}
+            <Link 
+              to={`/${npub}`}
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            >
+              <Avatar className="h-12 w-12">
+                <AvatarImage src={metadata?.picture} alt={metadata?.name} />
+                <AvatarFallback className="font-heading">
+                  {metadata?.name?.[0]?.toUpperCase() ?? '?'}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="font-medium">{metadata?.name ?? 'Anonymous'}</p>
+                {metadata?.nip05 && (
+                  <p className="text-sm text-muted-foreground">{metadata.nip05}</p>
+                )}
+              </div>
+            </Link>
+
+            {/* Date */}
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Calendar className="h-4 w-4" />
+              <span>{formatDate(article.publishedAt)}</span>
             </div>
-          </Link>
 
-          {/* Date */}
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <span>{formatDate(article.publishedAt)}</span>
+            {/* Reading time */}
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              <span>{readingTime} min read</span>
+            </div>
           </div>
 
-          {/* Reading time */}
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            <span>{readingTime} min read</span>
-          </div>
+          {/* Zap button at top */}
+          <ZapButton event={article.event} />
         </div>
       </header>
 
@@ -139,11 +147,39 @@ export function ArticleView({ article, className }: ArticleViewProps) {
         className="mb-8"
       />
 
-      {/* Comments Section */}
+      {/* Comments Toggle Button */}
       <Separator className="my-8" />
-      <CommentSection article={article.event} />
+      <div className="flex justify-center">
+        <Button
+          variant="outline"
+          onClick={() => setShowComments(!showComments)}
+          className="gap-2 rounded-full"
+        >
+          <MessageCircle className="h-4 w-4" />
+          {showComments ? 'Hide Comments' : 'Show Comments'}
+        </Button>
+      </div>
+
+      {/* Comments Section - only shown when toggled */}
+      {showComments && (
+        <>
+          <Separator className="my-8" />
+          <CommentSection article={article.event} />
+        </>
+      )}
     </article>
   );
+}
+
+/**
+ * Strip markdown bold/italic markers from text
+ */
+function stripMarkdownMarkers(text: string): string {
+  return text
+    .replace(/\*\*/g, '')
+    .replace(/__/g, '')
+    .replace(/\*/g, '')
+    .replace(/_/g, '');
 }
 
 /**
@@ -159,18 +195,34 @@ function ArticleContent({ content }: { content: string }) {
       {blocks.map((block, index) => {
         const trimmed = block.trim();
         
-        // Headers
+        // Headers - strip any ** markers from headers
         if (trimmed.startsWith('# ')) {
-          return <h1 key={index}>{trimmed.slice(2)}</h1>;
+          return <h1 key={index}>{stripMarkdownMarkers(trimmed.slice(2))}</h1>;
         }
         if (trimmed.startsWith('## ')) {
-          return <h2 key={index}>{trimmed.slice(3)}</h2>;
+          return <h2 key={index}>{stripMarkdownMarkers(trimmed.slice(3))}</h2>;
         }
         if (trimmed.startsWith('### ')) {
-          return <h3 key={index}>{trimmed.slice(4)}</h3>;
+          return <h3 key={index}>{stripMarkdownMarkers(trimmed.slice(4))}</h3>;
         }
         if (trimmed.startsWith('#### ')) {
-          return <h4 key={index}>{trimmed.slice(5)}</h4>;
+          return <h4 key={index}>{stripMarkdownMarkers(trimmed.slice(5))}</h4>;
+        }
+        // Handle headers with ** prefix like **## Header**
+        if (trimmed.startsWith('**') && trimmed.match(/^\*\*[#]+ /)) {
+          const withoutBold = trimmed.replace(/^\*\*/, '').replace(/\*\*$/, '');
+          if (withoutBold.startsWith('# ')) {
+            return <h1 key={index}>{stripMarkdownMarkers(withoutBold.slice(2))}</h1>;
+          }
+          if (withoutBold.startsWith('## ')) {
+            return <h2 key={index}>{stripMarkdownMarkers(withoutBold.slice(3))}</h2>;
+          }
+          if (withoutBold.startsWith('### ')) {
+            return <h3 key={index}>{stripMarkdownMarkers(withoutBold.slice(4))}</h3>;
+          }
+          if (withoutBold.startsWith('#### ')) {
+            return <h4 key={index}>{stripMarkdownMarkers(withoutBold.slice(5))}</h4>;
+          }
         }
 
         // Blockquote
@@ -187,7 +239,7 @@ function ArticleContent({ content }: { content: string }) {
           return (
             <ul key={index}>
               {items.map((item, i) => (
-                <li key={i}>{item.slice(2)}</li>
+                <li key={i} dangerouslySetInnerHTML={{ __html: processInlineFormatting(item.slice(2)) }} />
               ))}
             </ul>
           );
@@ -199,7 +251,7 @@ function ArticleContent({ content }: { content: string }) {
           return (
             <ol key={index}>
               {items.map((item, i) => (
-                <li key={i}>{item.replace(/^\d+\. /, '')}</li>
+                <li key={i} dangerouslySetInnerHTML={{ __html: processInlineFormatting(item.replace(/^\d+\. /, '')) }} />
               ))}
             </ol>
           );
@@ -235,21 +287,27 @@ function ArticleContent({ content }: { content: string }) {
 
 /**
  * Process inline markdown formatting
+ * Also strips any remaining ** artifacts if they weren't properly matched
  */
 function processInlineFormatting(text: string): string {
-  return text
-    // Bold
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+  let result = text
+    // Bold - match across multiple lines (with \s\S)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/__([^_]+)__/g, '<strong>$1</strong>')
     // Italic
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/_(.+?)_/g, '<em>$1</em>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/_([^_]+)_/g, '<em>$1</em>')
     // Code
-    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
     // Links
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     // Line breaks
     .replace(/\n/g, '<br />');
+  
+  // Clean up any remaining ** or __ artifacts (from AI-generated content)
+  result = result.replace(/\*\*/g, '').replace(/__/g, '');
+  
+  return result;
 }
 
 export function ArticleViewSkeleton() {

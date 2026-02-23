@@ -6,7 +6,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuthor } from '@/hooks/useAuthor';
-import { formatShortDate, calculateReadingTime, type ArticleData } from '@/lib/article';
+import { type ArticleData } from '@/lib/article';
 import { cn } from '@/lib/utils';
 
 interface ArticleCardProps {
@@ -31,7 +31,6 @@ export function ArticleCard({
   const npub = nip19.npubEncode(article.pubkey);
   const articleUrl = `/article/${npub}/${article.slug}`;
   const author = useAuthor(article.pubkey);
-  const readingTime = calculateReadingTime(article.content);
 
   // Default placeholder image for articles without thumbnails
   const placeholderImage = `https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=450&fit=crop`;
@@ -63,9 +62,10 @@ export function ArticleCard({
   }
 
   if (layout === 'list') {
+    const listFirstTag = article.tags.length > 0 ? article.tags[0] : null;
     return (
       <Link to={articleUrl} className={cn('group block', className)}>
-        <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-card">
           <div className="flex flex-col sm:flex-row">
             {showThumbnail && (
               <div className="sm:w-64 shrink-0">
@@ -79,11 +79,6 @@ export function ArticleCard({
               </div>
             )}
             <CardContent className="flex-1 p-6">
-              {article.category && (
-                <Badge variant="secondary" className="mb-3">
-                  {article.category}
-                </Badge>
-              )}
               <h3 className="font-heading text-xl mb-2 group-hover:text-primary transition-colors line-clamp-2">
                 {article.title}
               </h3>
@@ -93,20 +88,28 @@ export function ArticleCard({
                 </p>
               )}
               {showMeta && (
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm">
                   {showAuthor && author.data?.metadata && (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 mr-2">
                       <Avatar className="h-6 w-6">
                         <AvatarImage src={author.data.metadata.picture} />
                         <AvatarFallback className="text-xs">
                           {author.data.metadata.name?.[0]?.toUpperCase() ?? '?'}
                         </AvatarFallback>
                       </Avatar>
-                      <span>{author.data.metadata.name}</span>
+                      <span className="text-muted-foreground">{author.data.metadata.name}</span>
                     </div>
                   )}
-                  <span>{formatShortDate(article.publishedAt)}</span>
-                  <span>{readingTime} min read</span>
+                  {article.category && (
+                    <Badge variant="secondary">
+                      {article.category}
+                    </Badge>
+                  )}
+                  {listFirstTag && (
+                    <Badge variant="outline" className="text-muted-foreground">
+                      #{listFirstTag}
+                    </Badge>
+                  )}
                 </div>
               )}
             </CardContent>
@@ -116,10 +119,13 @@ export function ArticleCard({
     );
   }
 
+  // Get first tag for display
+  const firstTag = article.tags.length > 0 ? article.tags[0] : null;
+
   // Grid layout (default)
   return (
     <Link to={articleUrl} className={cn('group block', className)}>
-      <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow duration-300">
+      <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-card">
         {showThumbnail && (
           <AspectRatio ratio={16 / 9}>
             <img
@@ -130,11 +136,6 @@ export function ArticleCard({
           </AspectRatio>
         )}
         <CardContent className="p-6">
-          {article.category && (
-            <Badge variant="secondary" className="mb-3">
-              {article.category}
-            </Badge>
-          )}
           <h3 className="font-heading text-xl mb-2 group-hover:text-primary transition-colors line-clamp-2">
             {article.title}
           </h3>
@@ -144,9 +145,17 @@ export function ArticleCard({
             </p>
           )}
           {showMeta && (
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <span>{formatShortDate(article.publishedAt)}</span>
-              <span>{readingTime} min read</span>
+            <div className="flex items-center gap-2 text-sm">
+              {article.category && (
+                <Badge variant="secondary">
+                  {article.category}
+                </Badge>
+              )}
+              {firstTag && (
+                <Badge variant="outline" className="text-muted-foreground">
+                  #{firstTag}
+                </Badge>
+              )}
             </div>
           )}
         </CardContent>
