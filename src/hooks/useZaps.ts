@@ -6,14 +6,14 @@ import { useToast } from '@/hooks/useToast';
 import { useNWC } from '@/hooks/useNWCContext';
 import type { NWCConnection } from '@/hooks/useNWC';
 import { nip57 } from 'nostr-tools';
-import type { Event } from 'nostr-tools';
+import type { Event as NostrToolsEvent } from 'nostr-tools';
 import type { WebLNProvider } from '@webbtc/webln-types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNostr } from '@nostrify/react';
 import type { NostrEvent } from '@nostrify/nostrify';
 
 export function useZaps(
-  target: Event | Event[],
+  target: NostrToolsEvent | NostrToolsEvent[],
   webln: WebLNProvider | null,
   _nwcConnection: NWCConnection | null,
   onZapSuccess?: () => void
@@ -209,8 +209,9 @@ export function useZaps(
         comment
       };
       
+      // nip57.makeZapRequest expects nostr-tools Event type for addressable events
       const zapRequest = isAddressable 
-        ? nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget as NostrEvent })
+        ? nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget })
         : nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget.id });
 
       // Sign the zap request (but don't publish to relays - only send to LNURL endpoint)

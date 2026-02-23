@@ -6,17 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useAuthor } from '@/hooks/useAuthor';
 import { useBlogSettingsContext } from '@/components/theme/BlogSettingsProvider';
 import { useBlogOwner } from '@/hooks/useBlogOwner';
+import { BLOG_OWNER_PUBKEY } from '@/lib/blogOwner';
 import type { AboutSection } from '@/lib/blogSettings';
 
 export function AboutPage() {
-  const { user } = useCurrentUser();
-  const { isOwner } = useBlogOwner();
+  const { isOwner, ownerPubkey } = useBlogOwner();
   const { settings, isLoading: isLoadingSettings } = useBlogSettingsContext();
-  const author = useAuthor(user?.pubkey);
+  // Always fetch the BLOG OWNER's profile, not the logged-in user
+  const author = useAuthor(ownerPubkey ?? BLOG_OWNER_PUBKEY ?? undefined);
   const metadata = author.data?.metadata;
 
   // Get enabled sections
@@ -55,7 +55,8 @@ export function AboutPage() {
     );
   }
 
-  const npub = user ? nip19.npubEncode(user.pubkey) : null;
+  // Use the blog owner's pubkey for the npub display
+  const npub = ownerPubkey ? nip19.npubEncode(ownerPubkey) : (BLOG_OWNER_PUBKEY ? nip19.npubEncode(BLOG_OWNER_PUBKEY) : null);
 
   return (
     <div className="container py-12">
@@ -112,34 +113,35 @@ interface AboutSectionRendererProps {
 function AboutSectionRenderer({ section, metadata, npub }: AboutSectionRendererProps) {
   switch (section.type) {
     case 'hero':
+      // Image on left, text on right layout
       return (
-        <div 
-          className="rounded-2xl p-8 md:p-12 text-center relative overflow-hidden"
-          style={{
-            backgroundImage: section.image ? `url(${section.image})` : undefined,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundColor: section.image ? undefined : 'hsl(var(--muted))',
-          }}
-        >
-          {section.image && (
-            <div className="absolute inset-0 bg-black/50" />
-          )}
-          <div className="relative z-10">
-            <h1 
-              className="font-heading text-3xl md:text-4xl mb-4"
-              style={{ color: section.image ? 'white' : undefined }}
-            >
-              {section.title || 'About This Blog'}
-            </h1>
-            {section.content && (
-              <p 
-                className="text-lg md:text-xl max-w-xl mx-auto whitespace-pre-wrap"
-                style={{ color: section.image ? 'rgba(255,255,255,0.9)' : 'hsl(var(--muted-foreground))' }}
-              >
-                {section.content}
-              </p>
+        <div className="rounded-2xl overflow-hidden border bg-card">
+          <div className="flex flex-col md:flex-row">
+            {/* Image on left */}
+            {section.image ? (
+              <div className="md:w-1/2">
+                <img 
+                  src={section.image} 
+                  alt={section.title || 'About'} 
+                  className="w-full h-48 md:h-full object-cover"
+                />
+              </div>
+            ) : (
+              <div className="md:w-1/2 bg-muted flex items-center justify-center min-h-[12rem]">
+                <span className="text-muted-foreground text-sm">Add an image</span>
+              </div>
             )}
+            {/* Text on right */}
+            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+              <h1 className="font-heading text-3xl md:text-4xl mb-4">
+                {section.title || 'About This Blog'}
+              </h1>
+              {section.content && (
+                <p className="text-lg text-muted-foreground whitespace-pre-wrap">
+                  {section.content}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       );

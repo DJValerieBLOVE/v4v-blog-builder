@@ -80,19 +80,19 @@ export function AdminLayout() {
               (item.href !== '/admin' && location.pathname.startsWith(item.href));
             
             return (
-              <Link
-                key={item.href}
-                to={item.href}
-                className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors',
-                  isActive
-                    ? 'bg-accent text-foreground'
-                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
-                )}
-              >
-                <Icon className="h-5 w-5" />
-                {item.label}
-              </Link>
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={cn(
+                    'flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors',
+                    isActive
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                  {item.label}
+                </Link>
             );
           })}
         </nav>
@@ -150,8 +150,8 @@ export function AdminLayout() {
                       className={cn(
                         'flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors',
                         isActive
-                          ? 'bg-accent text-foreground'
-                          : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
