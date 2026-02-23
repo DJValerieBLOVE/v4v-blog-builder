@@ -378,11 +378,13 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ## Phase 6.11: Critical Bug Fixes ✅ COMPLETE
 
-### useZaps.ts TypeScript Error (RECURRING FIX)
-- [x] Renamed `Event` import to `NostrToolsEvent` for type clarity
-- [x] Removed unnecessary `as NostrEvent` type cast
-- [x] nip57.makeZapRequest uses nostr-tools Event type natively
-- [x] This was causing build failures on every change
+### useZaps.ts TypeScript Error (PERMANENTLY FIXED)
+- [x] **ROOT CAUSE**: Line 215 was passing `actualTarget.id` (string) to `nip57.makeZapRequest`
+- [x] `nip57.makeZapRequest({ event: ... })` expects a full Event object, NOT a string
+- [x] **FIX**: Always pass the full event object with type cast: `event: actualTarget as NostrToolsEvent`
+- [x] Removed unnecessary conditional logic for addressable vs regular events
+- [x] nip57 internally handles creating `e` or `a` tags based on event kind
+- [x] Renamed import to `NostrToolsEvent` to avoid confusion with nostrify's `NostrEvent`
 
 ### GLOBAL Dark Hover/Highlight Fix
 - [x] **ROOT CAUSE**: BlogSettingsProvider line 42 was:

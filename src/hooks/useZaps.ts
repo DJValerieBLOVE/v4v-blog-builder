@@ -192,27 +192,18 @@ export function useZaps(
         return;
       }
 
-      // Create zap request - use appropriate event format based on kind
-      // For addressable events (30000-39999), pass the object to get 'a' tag
-      // For all other events, pass the ID string to get 'e' tag
-      const isAddressable = actualTarget.kind >= 30000 && actualTarget.kind < 40000;
-
       const zapAmount = amount * 1000; // convert to millisats
 
-      // Build zap request with correct event type
-      // For addressable events, we need to pass the full event object
-      // For regular events, we pass the event ID string
-      const zapRequestParams = {
+      // Build zap request - always pass the full event object
+      // nip57.makeZapRequest will create the appropriate tags based on event kind
+      // nip57.makeZapRequest will create the appropriate tags (e tag for regular, a tag for addressable)
+      const zapRequest = nip57.makeZapRequest({
         profile: actualTarget.pubkey,
+        event: actualTarget as NostrToolsEvent,
         amount: zapAmount,
         relays: config.relayMetadata.relays.map(r => r.url),
         comment
-      };
-      
-      // nip57.makeZapRequest expects nostr-tools Event type for addressable events
-      const zapRequest = isAddressable 
-        ? nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget })
-        : nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget.id });
+      });
 
       // Sign the zap request (but don't publish to relays - only send to LNURL endpoint)
       if (!user.signer) {

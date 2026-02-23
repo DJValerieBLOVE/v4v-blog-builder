@@ -267,10 +267,10 @@ BLOG OWNER (you)          VISITORS (readers who login)
 ### Phase 6.11: Critical Bug Fixes ✅
 **Goal**: Fix recurring TypeScript errors and UI color issues
 
-- [x] **useZaps.ts TypeScript Error (RECURRING)**
-  - Fixed type mismatch between nostr-tools `Event` and nostrify `NostrEvent`
-  - Renamed import to `NostrToolsEvent` for clarity
-  - Removed unnecessary type cast that caused build failures
+- [x] **useZaps.ts TypeScript Error (PERMANENTLY FIXED)**
+  - ROOT CAUSE: Passing string ID instead of Event object to `nip57.makeZapRequest`
+  - FIX: Always pass full event object with cast `as NostrToolsEvent`
+  - Removed conditional logic - nip57 handles `e`/`a` tags internally
 
 - [x] **GLOBAL Dark Hover/Highlight Fix**
   - Root cause: BlogSettingsProvider was setting `--accent` to primary color (dark)
