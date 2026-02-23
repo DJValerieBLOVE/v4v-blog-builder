@@ -264,6 +264,44 @@ BLOG OWNER (you)          VISITORS (readers who login)
 
 ---
 
+### Phase 6.11: Critical Bug Fixes ✅
+**Goal**: Fix recurring TypeScript errors and UI color issues
+
+- [x] **useZaps.ts TypeScript Error (RECURRING)**
+  - Fixed type mismatch between nostr-tools `Event` and nostrify `NostrEvent`
+  - Renamed import to `NostrToolsEvent` for clarity
+  - Removed unnecessary type cast that caused build failures
+
+- [x] **GLOBAL Dark Hover/Highlight Fix**
+  - Root cause: BlogSettingsProvider was setting `--accent` to primary color (dark)
+  - All dropdowns, sidebars, and buttons had BLACK hover states
+  - Fixed by using `muted` color for accent instead of primary
+  - Affects: dropdown menus, profile button, sidebar selections
+
+- [x] **About Page Settings Not Saving**
+  - PublicLayout was using `user?.pubkey` instead of `BLOG_OWNER_PUBKEY`
+  - Non-logged-in visitors saw default settings
+  - Logged-in visitors saw THEIR settings, not the blog owner's
+  - Fixed: Always use BLOG_OWNER_PUBKEY for public pages
+
+- [x] **About Page Hero Section Redesign**
+  - Removed dark gray overlay design
+  - New layout: Image on left (50%), Text on right (50%)
+  - Clean card-style with proper shadow and border
+  - Gradient placeholder when no image is set
+
+- [x] **Blog Settings Merge Function**
+  - Added missing `about` section handling
+  - About sections now properly saved and loaded from Nostr
+
+- [x] **Admin Sidebar Hover Colors**
+  - Changed from `bg-accent` to `bg-muted` for hover states
+  - Active state uses `bg-primary` for visibility
+
+**Deliverable**: Stable, production-ready UI with no recurring build errors
+
+---
+
 ## Data Models
 
 ### Article (kind:30023)

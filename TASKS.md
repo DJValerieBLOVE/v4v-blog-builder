@@ -376,6 +376,50 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ---
 
+## Phase 6.11: Critical Bug Fixes ✅ COMPLETE
+
+### useZaps.ts TypeScript Error (RECURRING FIX)
+- [x] Renamed `Event` import to `NostrToolsEvent` for type clarity
+- [x] Removed unnecessary `as NostrEvent` type cast
+- [x] nip57.makeZapRequest uses nostr-tools Event type natively
+- [x] This was causing build failures on every change
+
+### GLOBAL Dark Hover/Highlight Fix
+- [x] **ROOT CAUSE**: BlogSettingsProvider line 42 was:
+  - `root.style.setProperty('--accent', hexToHsl(colors.primary));`
+  - This set accent (hover color) to PRIMARY (dark gray #2D2D2D)
+- [x] **FIX**: Removed that line, now accent uses muted (light gray)
+- [x] Fixes dropdown menu hovers (was BLACK, now light gray)
+- [x] Fixes profile button hover/active state
+- [x] Fixes sidebar menu selections
+- [x] Fixes all components using `bg-accent` for hover
+
+### About Page Settings Not Saving
+- [x] PublicLayout was using `user?.pubkey` for BlogSettingsProvider
+- [x] Non-logged-in visitors saw default settings (broken)
+- [x] Logged-in visitors saw THEIR settings, not owner's (broken)
+- [x] Fixed: Changed to `BLOG_OWNER_PUBKEY ?? undefined`
+- [x] All visitors now see the blog owner's customizations
+
+### About Page Hero Section
+- [x] Removed dark gray overlay design completely
+- [x] New layout: Image on left (50%), Text on right (50%)
+- [x] Clean card-style design with shadow and border
+- [x] Uses gradient placeholder when no image is set
+- [x] Proper responsive stacking on mobile
+
+### Blog Settings Merge Function
+- [x] Added missing `about` section handling to mergeBlogSettings()
+- [x] About sections are now properly saved to Nostr (kind:30078)
+- [x] About sections are now properly loaded from Nostr
+
+### Admin Sidebar Colors
+- [x] Changed active state from `bg-accent` to `bg-primary text-primary-foreground`
+- [x] Changed hover state from `hover:bg-accent` to `hover:bg-muted`
+- [x] Applied to both desktop and mobile sidebars
+
+---
+
 ## Design Notes
 
 - All thumbnails use 16:9 ratio
@@ -387,3 +431,4 @@ Phases 1-6 complete. Post-phase polish complete.
 - Color presets: Purple, Blue, Green, Orange, Pink, Red
 - Full color customization: accent, background, text, card colors
 - Featured articles marked with `["featured", "true"]` tag
+- **IMPORTANT**: `--accent` CSS variable must be LIGHT (for hovers), never dark
