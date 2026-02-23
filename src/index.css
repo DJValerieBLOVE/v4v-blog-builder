@@ -4,45 +4,49 @@
 
 @layer base {
   :root {
-    /* V4V Blog Builder - Neutral Default (users customize via settings) */
+    /* V4V Blog Builder - Light theme with very light grays */
     --background: 0 0% 100%;
-    --foreground: 240 10% 4%;
+    --foreground: 240 10% 10%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 240 10% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 4%;
+    --popover-foreground: 240 10% 10%;
 
-    /* Neutral dark accent - professional default */
+    /* Primary accent - neutral dark for buttons */
     --primary: 240 6% 20%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 96%;
+    /* Secondary - very light gray */
+    --secondary: 0 0% 96%;
     --secondary-foreground: 240 6% 10%;
 
-    --muted: 240 5% 96%;
+    /* Muted - very light gray (NOT dark!) */
+    --muted: 0 0% 96%;
     --muted-foreground: 240 4% 46%;
 
-    --accent: 240 5% 96%;
+    /* Accent - very light gray for hovers */
+    --accent: 0 0% 96%;
     --accent-foreground: 240 6% 10%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 240 6% 20%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar - white/light background */
+    --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 5% 26%;
     --sidebar-primary: 240 6% 20%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 240 6% 10%;
-    --sidebar-border: 240 6% 90%;
+    --sidebar-border: 0 0% 90%;
     --sidebar-ring: 240 6% 20%;
   }
 

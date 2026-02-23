@@ -86,8 +86,8 @@ export function AdminLayout() {
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors',
                   isActive
-                    ? 'bg-gray-100 text-foreground'
-                    : 'text-muted-foreground hover:bg-gray-50 hover:text-foreground'
+                    ? 'bg-accent text-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                 )}
               >
                 <Icon className="h-5 w-5" />
@@ -150,8 +150,8 @@ export function AdminLayout() {
                       className={cn(
                         'flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors',
                         isActive
-                          ? 'bg-gray-100 text-foreground'
-                          : 'text-muted-foreground hover:bg-gray-50 hover:text-foreground'
+                          ? 'bg-accent text-foreground'
+                          : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                       )}
                       onClick={() => setMobileOpen(false)}
                     >
