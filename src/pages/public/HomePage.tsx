@@ -154,7 +154,7 @@ function GettingStarted() {
         </p>
         
         <div className="grid gap-4 text-left">
-          <div className="flex gap-4 p-4 rounded-lg bg-muted/50">
+          <div className="flex gap-4 p-4 rounded-lg bg-white border">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
               1
             </div>
@@ -166,7 +166,7 @@ function GettingStarted() {
             </div>
           </div>
           
-          <div className="flex gap-4 p-4 rounded-lg bg-muted/50">
+          <div className="flex gap-4 p-4 rounded-lg bg-white border">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
               2
             </div>
@@ -178,7 +178,7 @@ function GettingStarted() {
             </div>
           </div>
           
-          <div className="flex gap-4 p-4 rounded-lg bg-muted/50">
+          <div className="flex gap-4 p-4 rounded-lg bg-white border">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
               3
             </div>
