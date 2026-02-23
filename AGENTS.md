@@ -1,4 +1,53 @@
-# Project Overview
+# V4V Blog Builder
+
+> Ghost-inspired blogging platform powered by Nostr and Lightning
+
+## Project Identity
+
+- **Name**: V4V Blog Builder
+- **Purpose**: Open-source template for Nostr-native blogs with Lightning monetization
+- **Repository**: https://github.com/DJValerieBLOVE/v4v-blog-builder.git
+
+## Key Documentation
+
+- **PLAN.md**: Architecture and build phases
+- **TASKS.md**: Current task tracker
+- **SPEC.md**: Detailed technical specifications
+- **NIP.md**: Nostr protocol usage and event schemas
+
+## Design Requirements
+
+- **Aesthetic**: Elegant, modern, luxury
+- **Heading Font**: Marcellus (NO bold)
+- **Body Font**: Inter (configurable)
+- **Buttons**: Large, fully rounded (pill style)
+- **Thumbnails**: All images 16:9 aspect ratio
+- **Themes**: Magazine (default), Newsletter, Minimal
+
+## Core Features
+
+1. **Blog Engine**: NIP-23 articles, categories, tags, search
+2. **Block Editor**: TipTap-based, images/video/podcast embeds
+3. **V4V Zaps**: Lightning payments on articles (logged in + anonymous)
+4. **Theme System**: Settings UI for customization
+5. **Newsletter**: Multi-provider email integration
+6. **SEO/LLM**: Meta tags, JSON-LD, semantic HTML
+
+## Routes
+
+```
+PUBLIC                          ADMIN (login required)
+/                               /admin
+/article/:npub/:slug            /admin/articles
+/category/:slug                 /admin/editor
+/tag/:tag                       /admin/editor/:id
+/search                         /admin/settings
+/about                          /admin/bookmarks
+```
+
+---
+
+# Technical Overview
 
 This project is a Nostr client application built with React 18.x, TailwindCSS 3.x, Vite, shadcn/ui, and Nostrify.
 
