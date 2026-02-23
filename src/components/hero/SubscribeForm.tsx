@@ -103,13 +103,13 @@ export function SubscribeForm({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className="pl-10 h-9 rounded-md"
+            className="pl-10 h-9 rounded-full"
             disabled={isPending}
           />
         </div>
         <Button
           type="submit"
-          className="w-full rounded-md gap-2"
+          className="w-full rounded-full gap-2"
           disabled={isPending}
         >
           {isPending ? (
@@ -144,13 +144,13 @@ export function SubscribeForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="pl-10 h-9 rounded-md"
+          className="pl-10 h-9 rounded-full"
           disabled={isPending}
         />
       </div>
       <Button
         type="submit"
-        className="px-8 rounded-md gap-2"
+        className="px-8 rounded-full gap-2"
         disabled={isPending}
       >
         {isPending ? (
