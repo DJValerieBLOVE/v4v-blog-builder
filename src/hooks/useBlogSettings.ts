@@ -10,6 +10,72 @@ import {
 const SETTINGS_D_TAG = 'v4v-blog-settings';
 
 /**
+ * Deep merge blog settings - merges source into target
+ */
+function mergeBlogSettings(target: BlogSettings, source: Partial<BlogSettings>): BlogSettings {
+  const result = { ...target };
+
+  // Merge identity
+  if (source.identity) {
+    result.identity = {
+      ...target.identity,
+      ...source.identity,
+      logo: source.identity.logo 
+        ? { ...target.identity.logo, ...source.identity.logo }
+        : target.identity.logo,
+    };
+  }
+
+  // Merge theme
+  if (source.theme) {
+    result.theme = {
+      ...target.theme,
+      ...source.theme,
+      colors: source.theme.colors 
+        ? { ...target.theme.colors, ...source.theme.colors }
+        : target.theme.colors,
+      darkMode: source.theme.darkMode
+        ? { ...target.theme.darkMode, ...source.theme.darkMode }
+        : target.theme.darkMode,
+      fonts: source.theme.fonts
+        ? { ...target.theme.fonts, ...source.theme.fonts }
+        : target.theme.fonts,
+    };
+  }
+
+  // Merge hero
+  if (source.hero) {
+    result.hero = {
+      ...target.hero,
+      ...source.hero,
+    };
+  }
+
+  // Merge newsletter
+  if (source.newsletter) {
+    result.newsletter = {
+      ...target.newsletter,
+      ...source.newsletter,
+    };
+  }
+
+  // Merge social
+  if (source.social) {
+    result.social = {
+      ...target.social,
+      ...source.social,
+    };
+  }
+
+  // Simple overwrites
+  if (source.version !== undefined) result.version = source.version;
+  if (source.categories !== undefined) result.categories = source.categories;
+  if (source.navigation !== undefined) result.navigation = source.navigation;
+
+  return result;
+}
+
+/**
  * Hook to fetch blog settings from Nostr (kind:30078)
  */
 export function useBlogSettings(authorPubkey?: string) {
@@ -38,8 +104,7 @@ export function useBlogSettings(authorPubkey?: string) {
 
       try {
         const settings = JSON.parse(event.content) as Partial<BlogSettings>;
-        // Merge with defaults to ensure all fields exist
-        return deepMerge(defaultBlogSettings as Record<string, unknown>, settings as Record<string, unknown>) as BlogSettings;
+        return mergeBlogSettings(defaultBlogSettings, settings);
       } catch {
         return defaultBlogSettings;
       }
@@ -66,7 +131,7 @@ export function useUpdateBlogSettings() {
         ?? defaultBlogSettings;
 
       // Merge new settings with current
-      const updatedSettings = deepMerge(currentSettings as Record<string, unknown>, settings as Record<string, unknown>);
+      const updatedSettings = mergeBlogSettings(currentSettings, settings);
 
       // Publish to Nostr
       await createEvent({
@@ -78,46 +143,11 @@ export function useUpdateBlogSettings() {
         ],
       });
 
-      return updatedSettings as BlogSettings;
+      return updatedSettings;
     },
     onSuccess: (data) => {
       // Update cache
       queryClient.setQueryData(['blog-settings', user?.pubkey], data);
     },
   });
-}
-
-/**
- * Deep merge two objects - simplified version for BlogSettings
- */
-function deepMerge(
-  target: Record<string, unknown>,
-  source: Record<string, unknown>
-): Record<string, unknown> {
-  const result: Record<string, unknown> = { ...target };
-
-  for (const key in source) {
-    if (Object.prototype.hasOwnProperty.call(source, key)) {
-      const sourceValue = source[key];
-      const targetValue = target[key];
-
-      if (
-        sourceValue !== null &&
-        typeof sourceValue === 'object' &&
-        !Array.isArray(sourceValue) &&
-        targetValue !== null &&
-        typeof targetValue === 'object' &&
-        !Array.isArray(targetValue)
-      ) {
-        result[key] = deepMerge(
-          targetValue as Record<string, unknown>,
-          sourceValue as Record<string, unknown>
-        );
-      } else if (sourceValue !== undefined) {
-        result[key] = sourceValue;
-      }
-    }
-  }
-
-  return result;
 }
