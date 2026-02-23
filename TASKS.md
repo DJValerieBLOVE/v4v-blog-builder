@@ -307,7 +307,27 @@ Phases 1-6 complete. Post-phase polish complete.
 - [x] 2-column layout for all settings sections
 - [x] Featured post layout in Magazine theme (Ghost-style hero card)
 - [x] Live site preview panel in Theme Settings
-- [x] Side-by-side editor/preview in Article Editor
+
+---
+
+## Phase 6.8: Article Editor & About Page ✅ COMPLETE
+
+### Article Editor Improvements
+- [x] Removed slide-out sheet for article settings
+- [x] Added inline tabs: Content, Settings, Image
+- [x] Settings tab shows slug, category, summary, tags in card layout
+- [x] Image tab shows featured image upload with preview
+- [x] All settings visible without opening anything
+
+### Customizable About Page
+- [x] Added "About" tab in Admin Settings
+- [x] Blog description field ("What is your blog about?")
+- [x] Writer name field (falls back to Nostr profile name)
+- [x] Writer photo with upload (falls back to Nostr profile pic)
+- [x] Writer bio field (falls back to Nostr about)
+- [x] Toggle to show/hide Nostr profile info (Lightning, website, npub)
+- [x] About page displays custom content or Nostr fallbacks
+- [x] Edit button for blog owners on About page
 
 ---
 

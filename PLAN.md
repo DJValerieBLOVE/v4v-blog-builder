@@ -219,9 +219,22 @@ BLOG OWNER (you)          VISITORS (readers who login)
 - [x] 2-column layout for theme settings
 - [x] Featured post in magazine layout (Ghost-style hero card)
 - [x] Live site preview panel in Theme Settings
-- [x] Side-by-side editor/preview in Article Editor
 
 **Deliverable**: Designer-friendly theme customization
+
+---
+
+### Phase 6.8: Article Editor & About Page ✅
+**Goal**: Improved editor workflow and customizable About page
+
+- [x] Article settings inline with tabs (not slide-out sheet)
+- [x] Content, Settings, Image tabs in editor
+- [x] Customizable About page in Admin Settings
+- [x] Blog description field ("What is your blog about?")
+- [x] Writer name, photo, bio fields (fallback to Nostr profile)
+- [x] Toggle to show/hide Nostr profile info on About page
+
+**Deliverable**: User-friendly article creation and About page customization
 
 ---
 
