@@ -48,6 +48,18 @@ export function HomePage() {
       <section className="container py-12 md:py-16">
         {user ? (
           <>
+            {/* Page Title for logged-in users */}
+            <div className="mb-8">
+              <h1 className="font-heading text-3xl md:text-4xl mb-2">
+                {settings.identity.blogName}
+              </h1>
+              {settings.identity.tagline && (
+                <p className="text-muted-foreground text-lg">
+                  {settings.identity.tagline}
+                </p>
+              )}
+            </div>
+
             {/* Category Navigation */}
             {categories.length > 0 && layout !== 'minimal' && (
               <div className="mb-8">

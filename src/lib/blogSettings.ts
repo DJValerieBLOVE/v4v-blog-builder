@@ -14,6 +14,8 @@ export interface BlogSettings {
       text?: string;
       imageUrl?: string;
     };
+    icon?: string; // Publication icon/favicon
+    coverImage?: string; // Publication cover image
   };
   
   theme: {
@@ -164,6 +166,32 @@ export const themePresets: Record<string, ThemePreset> = {
     },
     heroStyle: 'minimal',
   },
+};
+
+/**
+ * Font presets (Google Fonts available via @fontsource packages)
+ */
+export const fontOptions = {
+  heading: [
+    { name: 'Marcellus', value: 'Marcellus', description: 'Elegant serif' },
+    { name: 'Playfair Display', value: 'Playfair Display', description: 'Classic serif' },
+    { name: 'Lora', value: 'Lora', description: 'Modern serif' },
+    { name: 'Merriweather', value: 'Merriweather', description: 'Readable serif' },
+    { name: 'Inter', value: 'Inter', description: 'Modern sans-serif' },
+    { name: 'Outfit', value: 'Outfit', description: 'Geometric sans-serif' },
+    { name: 'Poppins', value: 'Poppins', description: 'Friendly sans-serif' },
+    { name: 'Space Grotesk', value: 'Space Grotesk', description: 'Tech sans-serif' },
+  ],
+  body: [
+    { name: 'Marcellus', value: 'Marcellus', description: 'Elegant serif' },
+    { name: 'Inter', value: 'Inter', description: 'Modern, readable' },
+    { name: 'Lora', value: 'Lora', description: 'Modern serif' },
+    { name: 'Merriweather', value: 'Merriweather', description: 'Comfortable reading' },
+    { name: 'Source Serif Pro', value: 'Source Serif Pro', description: 'Adobe serif' },
+    { name: 'Nunito', value: 'Nunito', description: 'Rounded sans-serif' },
+    { name: 'Open Sans', value: 'Open Sans', description: 'Clean sans-serif' },
+    { name: 'Roboto', value: 'Roboto', description: 'Material sans-serif' },
+  ],
 };
 
 /**

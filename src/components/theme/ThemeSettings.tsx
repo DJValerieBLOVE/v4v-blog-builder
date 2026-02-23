@@ -17,8 +17,16 @@ import {
   type ThemeColors,
   themePresets, 
   colorPresets,
+  fontOptions,
   defaultBlogSettings,
 } from '@/lib/blogSettings';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
 // Helper to build complete theme colors
@@ -290,6 +298,130 @@ export function ThemeSettings() {
                   </div>
                 )}
               </div>
+
+              {/* Publication Icon (Favicon) */}
+              <div className="space-y-2 pt-4 border-t">
+                <Label>Publication Icon</Label>
+                <p className="text-sm text-muted-foreground">A square icon, at least 60x60px. Used as favicon.</p>
+                <div className="flex items-center gap-4">
+                  {currentSettings?.identity?.icon && (
+                    <div className="w-16 h-16 rounded-lg border overflow-hidden bg-gray-100 flex-shrink-0">
+                      <img
+                        src={currentSettings.identity.icon}
+                        alt="Icon"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="flex gap-2 flex-1">
+                    <Input
+                      value={currentSettings?.identity?.icon ?? ''}
+                      onChange={(e) => updateLocal({
+                        identity: {
+                          ...currentSettings?.identity,
+                          blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                          logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                          icon: e.target.value || undefined,
+                        },
+                      })}
+                      placeholder="https://..."
+                      className="flex-1"
+                    />
+                    <Label
+                      htmlFor="icon-upload"
+                      className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-4 cursor-pointer"
+                    >
+                      {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
+                    </Label>
+                    <input
+                      id="icon-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          const [[, url]] = await uploadFile(file);
+                          updateLocal({
+                            identity: {
+                              ...currentSettings?.identity,
+                              blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                              logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                              icon: url,
+                            },
+                          });
+                          toast({ title: 'Icon uploaded' });
+                        } catch {
+                          toast({ title: 'Upload failed', variant: 'destructive' });
+                        }
+                      }}
+                      disabled={isUploading}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Publication Cover Image */}
+              <div className="space-y-2 pt-4 border-t">
+                <Label>Publication Cover</Label>
+                <p className="text-sm text-muted-foreground">A large banner image for your homepage and social sharing.</p>
+                {currentSettings?.identity?.coverImage && (
+                  <AspectRatio ratio={16 / 9} className="rounded-lg overflow-hidden border">
+                    <img
+                      src={currentSettings.identity.coverImage}
+                      alt="Cover"
+                      className="w-full h-full object-cover"
+                    />
+                  </AspectRatio>
+                )}
+                <div className="flex gap-2">
+                  <Input
+                    value={currentSettings?.identity?.coverImage ?? ''}
+                    onChange={(e) => updateLocal({
+                      identity: {
+                        ...currentSettings?.identity,
+                        blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                        logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                        coverImage: e.target.value || undefined,
+                      },
+                    })}
+                    placeholder="https://..."
+                    className="flex-1"
+                  />
+                  <Label
+                    htmlFor="cover-upload"
+                    className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-4 cursor-pointer"
+                  >
+                    {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
+                  </Label>
+                  <input
+                    id="cover-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      try {
+                        const [[, url]] = await uploadFile(file);
+                        updateLocal({
+                          identity: {
+                            ...currentSettings?.identity,
+                            blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                            logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                            coverImage: url,
+                          },
+                        });
+                        toast({ title: 'Cover image uploaded' });
+                      } catch {
+                        toast({ title: 'Upload failed', variant: 'destructive' });
+                      }
+                    }}
+                    disabled={isUploading}
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -485,6 +617,84 @@ export function ThemeSettings() {
                     placeholder="#FAFAFA"
                     className="flex-1"
                   />
+                </div>
+              </div>
+
+              {/* Typography */}
+              <div className="space-y-4 pt-4 border-t">
+                <div>
+                  <Label className="text-base">Typography</Label>
+                  <p className="text-sm text-muted-foreground">Choose fonts for your blog</p>
+                </div>
+
+                {/* Heading Font */}
+                <div className="space-y-2">
+                  <Label htmlFor="headingFont">Heading Font</Label>
+                  <Select
+                    value={currentSettings?.theme?.fonts?.heading ?? 'Marcellus'}
+                    onValueChange={(value) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: buildColors(currentSettings?.theme?.colors, {}),
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: { 
+                          heading: value, 
+                          body: currentSettings?.theme?.fonts?.body ?? 'Marcellus' 
+                        },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                  >
+                    <SelectTrigger id="headingFont">
+                      <SelectValue placeholder="Select heading font" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fontOptions.heading.map((font) => (
+                        <SelectItem key={font.value} value={font.value}>
+                          <div className="flex items-center gap-2">
+                            <span>{font.name}</span>
+                            <span className="text-xs text-muted-foreground">— {font.description}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Body Font */}
+                <div className="space-y-2">
+                  <Label htmlFor="bodyFont">Body Font</Label>
+                  <Select
+                    value={currentSettings?.theme?.fonts?.body ?? 'Marcellus'}
+                    onValueChange={(value) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: buildColors(currentSettings?.theme?.colors, {}),
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: { 
+                          heading: currentSettings?.theme?.fonts?.heading ?? 'Marcellus', 
+                          body: value 
+                        },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                  >
+                    <SelectTrigger id="bodyFont">
+                      <SelectValue placeholder="Select body font" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fontOptions.body.map((font) => (
+                        <SelectItem key={font.value} value={font.value}>
+                          <div className="flex items-center gap-2">
+                            <span>{font.name}</span>
+                            <span className="text-xs text-muted-foreground">— {font.description}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
