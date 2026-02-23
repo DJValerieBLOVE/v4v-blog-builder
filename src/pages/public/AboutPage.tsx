@@ -10,6 +10,7 @@ import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useAuthor } from '@/hooks/useAuthor';
 import { useBlogSettingsContext } from '@/components/theme/BlogSettingsProvider';
 import { useBlogOwner } from '@/hooks/useBlogOwner';
+import type { AboutSection } from '@/lib/blogSettings';
 
 export function AboutPage() {
   const { user } = useCurrentUser();
@@ -18,19 +19,14 @@ export function AboutPage() {
   const author = useAuthor(user?.pubkey);
   const metadata = author.data?.metadata;
 
-  // Get about settings
-  const about = settings.about;
-  const hasCustomAbout = about?.writerName || about?.writerBio || about?.blogDescription;
+  // Get enabled sections
+  const sections = settings.about?.sections?.filter(s => s.enabled) ?? [];
 
   // Set page head
   useHead({
-    title: about?.writerName 
-      ? `About ${about.writerName} | ${settings.identity.blogName}`
-      : metadata?.name 
-        ? `About ${metadata.name} | ${settings.identity.blogName}` 
-        : `About | ${settings.identity.blogName}`,
+    title: `About | ${settings.identity.blogName}`,
     meta: [
-      { name: 'description', content: about?.blogDescription ?? about?.writerBio ?? metadata?.about ?? 'About the author' },
+      { name: 'description', content: 'Learn more about this blog and its author.' },
     ],
   });
 
@@ -47,22 +43,17 @@ export function AboutPage() {
           </Button>
         </div>
 
-        <div className="max-w-2xl mx-auto">
-          <div className="flex flex-col items-center text-center mb-8">
-            <Skeleton className="h-32 w-32 rounded-full mb-6" />
-            <Skeleton className="h-10 w-48 mb-2" />
-            <Skeleton className="h-5 w-32 mb-4" />
-            <Skeleton className="h-20 w-full max-w-md" />
+        <div className="max-w-2xl mx-auto space-y-8">
+          <Skeleton className="h-32 w-full rounded-lg" />
+          <div className="flex flex-col items-center">
+            <Skeleton className="h-24 w-24 rounded-full mb-4" />
+            <Skeleton className="h-8 w-48 mb-2" />
+            <Skeleton className="h-20 w-full" />
           </div>
         </div>
       </div>
     );
   }
-
-  // Determine what to display
-  const displayName = about?.writerName || metadata?.display_name || metadata?.name || 'Anonymous';
-  const displayPhoto = about?.writerPhoto || metadata?.picture;
-  const displayBio = about?.writerBio || metadata?.about;
 
   const npub = user ? nip19.npubEncode(user.pubkey) : null;
 
@@ -88,54 +79,119 @@ export function AboutPage() {
         )}
       </div>
 
-      <div className="max-w-2xl mx-auto">
-        {/* Blog Description */}
-        {about?.blogDescription && (
-          <div className="mb-12 text-center">
-            <h1 className="font-heading text-3xl md:text-4xl mb-4">
-              About {settings.identity.blogName}
-            </h1>
-            <p className="text-lg text-muted-foreground whitespace-pre-wrap">
-              {about.blogDescription}
-            </p>
-          </div>
+      <div className="max-w-2xl mx-auto space-y-12">
+        {sections.length === 0 ? (
+          // Default fallback if no sections configured
+          <DefaultAboutContent 
+            metadata={metadata} 
+            npub={npub}
+            blogName={settings.identity.blogName}
+          />
+        ) : (
+          // Render configured sections
+          sections.map((section) => (
+            <AboutSectionRenderer 
+              key={section.id} 
+              section={section} 
+              metadata={metadata}
+              npub={npub}
+            />
+          ))
         )}
+      </div>
+    </div>
+  );
+}
 
-        {/* Writer Section */}
-        <div className="mb-12">
-          {about?.blogDescription && (
-            <h2 className="font-heading text-2xl mb-6 text-center">Meet the Writer</h2>
+interface AboutSectionRendererProps {
+  section: AboutSection;
+  metadata?: { name?: string; display_name?: string; picture?: string; about?: string; website?: string; lud16?: string };
+  npub: string | null;
+}
+
+function AboutSectionRenderer({ section, metadata, npub }: AboutSectionRendererProps) {
+  switch (section.type) {
+    case 'hero':
+      return (
+        <div 
+          className="rounded-2xl p-8 md:p-12 text-center relative overflow-hidden"
+          style={{
+            backgroundImage: section.image ? `url(${section.image})` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundColor: section.image ? undefined : 'hsl(var(--muted))',
+          }}
+        >
+          {section.image && (
+            <div className="absolute inset-0 bg-black/50" />
           )}
-          
-          {/* Profile Header */}
-          <div className="flex flex-col items-center text-center mb-8">
-            <Avatar className="h-32 w-32 mb-6">
-              <AvatarImage src={displayPhoto} alt={displayName} />
-              <AvatarFallback className="text-4xl font-heading">
-                {displayName[0]?.toUpperCase() ?? '?'}
-              </AvatarFallback>
-            </Avatar>
-
-            <h2 className="font-heading text-3xl mb-2">
-              {displayName}
-            </h2>
-
-            {metadata?.nip05 && about?.showNostrProfile !== false && (
-              <p className="text-muted-foreground mb-4">{metadata.nip05}</p>
-            )}
-
-            {displayBio && (
-              <p className="text-lg text-muted-foreground max-w-md whitespace-pre-wrap">
-                {displayBio}
+          <div className="relative z-10">
+            <h1 
+              className="font-heading text-3xl md:text-4xl mb-4"
+              style={{ color: section.image ? 'white' : undefined }}
+            >
+              {section.title || 'About This Blog'}
+            </h1>
+            {section.content && (
+              <p 
+                className="text-lg md:text-xl max-w-xl mx-auto whitespace-pre-wrap"
+                style={{ color: section.image ? 'rgba(255,255,255,0.9)' : 'hsl(var(--muted-foreground))' }}
+              >
+                {section.content}
               </p>
             )}
           </div>
         </div>
+      );
 
-        {/* Links and Contact - only show if using Nostr profile or explicitly enabled */}
-        {(about?.showNostrProfile !== false || !hasCustomAbout) && user && (
-          <div className="grid gap-4 mb-12">
-            {metadata?.website && (
+    case 'writer':
+      const displayName = section.writerName || metadata?.display_name || metadata?.name || 'Anonymous';
+      const displayPhoto = section.writerPhoto || metadata?.picture;
+      const displayBio = section.writerBio || metadata?.about;
+      
+      return (
+        <div className="text-center">
+          {section.title && (
+            <h2 className="font-heading text-2xl mb-6">{section.title}</h2>
+          )}
+          <Avatar className="h-32 w-32 mx-auto mb-6">
+            <AvatarImage src={displayPhoto} alt={displayName} />
+            <AvatarFallback className="text-4xl font-heading">
+              {displayName[0]?.toUpperCase() ?? '?'}
+            </AvatarFallback>
+          </Avatar>
+          <h3 className="font-heading text-2xl mb-2">{displayName}</h3>
+          {displayBio && (
+            <p className="text-muted-foreground text-lg max-w-md mx-auto whitespace-pre-wrap">
+              {displayBio}
+            </p>
+          )}
+        </div>
+      );
+
+    case 'text':
+    case 'mission':
+      return (
+        <div className="text-center">
+          {section.title && (
+            <h2 className="font-heading text-2xl mb-4">{section.title}</h2>
+          )}
+          {section.content && (
+            <p className="text-muted-foreground text-lg whitespace-pre-wrap">
+              {section.content}
+            </p>
+          )}
+        </div>
+      );
+
+    case 'contact':
+      return (
+        <div>
+          {section.title && (
+            <h2 className="font-heading text-2xl mb-6 text-center">{section.title}</h2>
+          )}
+          <div className="grid gap-4">
+            {section.showWebsite && metadata?.website && (
               <Card>
                 <CardContent className="flex items-center gap-4 py-4">
                   <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
@@ -156,7 +212,7 @@ export function AboutPage() {
               </Card>
             )}
 
-            {metadata?.lud16 && (
+            {section.showLightning && metadata?.lud16 && (
               <Card>
                 <CardContent className="flex items-center gap-4 py-4">
                   <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
@@ -170,7 +226,7 @@ export function AboutPage() {
               </Card>
             )}
 
-            {npub && (
+            {section.showNpub && npub && (
               <Card>
                 <CardContent className="flex items-center gap-4 py-4">
                   <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
@@ -184,17 +240,116 @@ export function AboutPage() {
               </Card>
             )}
           </div>
-        )}
+        </div>
+      );
 
-        {/* Not logged in message */}
-        {!user && !hasCustomAbout && (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground mb-4">
-              Log in to see your profile information and customize your about page.
-            </p>
-          </div>
+    case 'social':
+      return (
+        <div className="text-center">
+          {section.title && (
+            <h2 className="font-heading text-2xl mb-4">{section.title}</h2>
+          )}
+          <p className="text-muted-foreground">
+            Social links coming soon...
+          </p>
+        </div>
+      );
+
+    default:
+      return null;
+  }
+}
+
+interface DefaultAboutContentProps {
+  metadata?: { name?: string; display_name?: string; picture?: string; about?: string; website?: string; lud16?: string };
+  npub: string | null;
+  blogName: string;
+}
+
+function DefaultAboutContent({ metadata, npub, blogName }: DefaultAboutContentProps) {
+  const displayName = metadata?.display_name || metadata?.name || 'Anonymous';
+
+  return (
+    <>
+      {/* Hero */}
+      <div className="text-center">
+        <h1 className="font-heading text-3xl md:text-4xl mb-4">About {blogName}</h1>
+        <p className="text-muted-foreground text-lg">
+          Welcome to my corner of the internet.
+        </p>
+      </div>
+
+      {/* Writer */}
+      <div className="text-center">
+        <h2 className="font-heading text-2xl mb-6">Meet the Writer</h2>
+        <Avatar className="h-32 w-32 mx-auto mb-6">
+          <AvatarImage src={metadata?.picture} alt={displayName} />
+          <AvatarFallback className="text-4xl font-heading">
+            {displayName[0]?.toUpperCase() ?? '?'}
+          </AvatarFallback>
+        </Avatar>
+        <h3 className="font-heading text-2xl mb-2">{displayName}</h3>
+        {metadata?.about && (
+          <p className="text-muted-foreground text-lg max-w-md mx-auto whitespace-pre-wrap">
+            {metadata.about}
+          </p>
         )}
       </div>
-    </div>
+
+      {/* Contact */}
+      <div>
+        <h2 className="font-heading text-2xl mb-6 text-center">Get in Touch</h2>
+        <div className="grid gap-4">
+          {metadata?.website && (
+            <Card>
+              <CardContent className="flex items-center gap-4 py-4">
+                <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
+                  <Globe className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground">Website</p>
+                  <a
+                    href={metadata.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    {metadata.website.replace(/^https?:\/\//, '')}
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {metadata?.lud16 && (
+            <Card>
+              <CardContent className="flex items-center gap-4 py-4">
+                <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
+                  <Zap className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground">Lightning Address</p>
+                  <p className="text-foreground">{metadata.lud16}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {npub && (
+            <Card>
+              <CardContent className="flex items-center gap-4 py-4">
+                <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10">
+                  <Mail className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-muted-foreground">Nostr Public Key</p>
+                  <p className="text-foreground text-sm truncate font-mono">{npub}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

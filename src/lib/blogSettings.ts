@@ -42,11 +42,7 @@ export interface BlogSettings {
   };
   
   about: {
-    writerName?: string;
-    writerBio?: string;
-    writerPhoto?: string;
-    blogDescription?: string;
-    showNostrProfile?: boolean;
+    sections: AboutSection[];
   };
   
   newsletter?: {
@@ -75,6 +71,28 @@ export interface ThemeColors {
   muted: string;
   border: string;
   card: string;
+}
+
+/**
+ * About page section types
+ */
+export type AboutSectionType = 'hero' | 'writer' | 'text' | 'mission' | 'contact' | 'social';
+
+export interface AboutSection {
+  id: string;
+  type: AboutSectionType;
+  enabled: boolean;
+  title?: string;
+  content?: string;
+  image?: string;
+  // Writer section specific
+  writerName?: string;
+  writerBio?: string;
+  writerPhoto?: string;
+  // Contact section specific
+  showLightning?: boolean;
+  showWebsite?: boolean;
+  showNpub?: boolean;
 }
 
 /**
@@ -129,7 +147,30 @@ export const defaultBlogSettings: BlogSettings = {
   },
   
   about: {
-    showNostrProfile: true,
+    sections: [
+      {
+        id: 'hero',
+        type: 'hero',
+        enabled: true,
+        title: 'About This Blog',
+        content: 'Welcome to my corner of the internet where I share my thoughts and ideas.',
+      },
+      {
+        id: 'writer',
+        type: 'writer',
+        enabled: true,
+        title: 'Meet the Writer',
+      },
+      {
+        id: 'contact',
+        type: 'contact',
+        enabled: true,
+        title: 'Get in Touch',
+        showLightning: true,
+        showWebsite: true,
+        showNpub: true,
+      },
+    ],
   },
   
   categories: ['Bitcoin', 'Podcast', 'Lifestyle'],

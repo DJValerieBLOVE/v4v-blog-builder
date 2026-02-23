@@ -229,12 +229,23 @@ BLOG OWNER (you)          VISITORS (readers who login)
 
 - [x] Article settings inline with tabs (not slide-out sheet)
 - [x] Content, Settings, Image tabs in editor
-- [x] Customizable About page in Admin Settings
-- [x] Blog description field ("What is your blog about?")
-- [x] Writer name, photo, bio fields (fallback to Nostr profile)
-- [x] Toggle to show/hide Nostr profile info on About page
 
-**Deliverable**: User-friendly article creation and About page customization
+**Deliverable**: User-friendly article creation
+
+---
+
+### Phase 6.9: About Page Builder ✅
+**Goal**: Visual drag-and-drop About page builder
+
+- [x] Drag-and-drop section reordering
+- [x] Section types: Hero, Writer, Text, Mission, Contact, Social
+- [x] Live preview panel showing real-time changes
+- [x] Enable/disable individual sections
+- [x] Custom content for each section (title, text, images)
+- [x] Fallback to Nostr profile data when fields empty
+- [x] Fixed settings tabs visibility (white background with proper styling)
+
+**Deliverable**: Visual About page builder with live preview
 
 ---
 

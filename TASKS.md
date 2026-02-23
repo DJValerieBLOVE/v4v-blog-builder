@@ -310,7 +310,7 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ---
 
-## Phase 6.8: Article Editor & About Page ✅ COMPLETE
+## Phase 6.8: Article Editor ✅ COMPLETE
 
 ### Article Editor Improvements
 - [x] Removed slide-out sheet for article settings
@@ -319,15 +319,34 @@ Phases 1-6 complete. Post-phase polish complete.
 - [x] Image tab shows featured image upload with preview
 - [x] All settings visible without opening anything
 
-### Customizable About Page
-- [x] Added "About" tab in Admin Settings
-- [x] Blog description field ("What is your blog about?")
-- [x] Writer name field (falls back to Nostr profile name)
-- [x] Writer photo with upload (falls back to Nostr profile pic)
-- [x] Writer bio field (falls back to Nostr about)
-- [x] Toggle to show/hide Nostr profile info (Lightning, website, npub)
-- [x] About page displays custom content or Nostr fallbacks
-- [x] Edit button for blog owners on About page
+---
+
+## Phase 6.9: About Page Builder ✅ COMPLETE
+
+### Visual Builder
+- [x] Created AboutPageBuilder component with drag-and-drop
+- [x] Section types: Hero, Writer, Text, Mission, Contact, Social
+- [x] Drag handle for reordering sections
+- [x] Enable/disable toggle for each section
+- [x] Delete button to remove sections
+- [x] Add section buttons for each type
+
+### Section Editors
+- [x] Hero section: title, description, background image
+- [x] Writer section: name, photo, bio (falls back to Nostr)
+- [x] Text/Mission sections: title and content
+- [x] Contact section: toggles for Lightning, website, npub
+- [x] Social section: placeholder for future links
+
+### Live Preview
+- [x] Real-time preview panel on right side (xl screens)
+- [x] Preview updates as you edit
+- [x] Shows enabled sections only
+
+### UI Fixes
+- [x] Fixed settings tabs visibility (white background, pill style)
+- [x] Active tab now uses primary color
+- [x] Tabs have proper contrast on any background
 
 ---
 
