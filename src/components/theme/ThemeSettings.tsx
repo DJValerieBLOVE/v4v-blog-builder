@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Palette, Layout, Type, Image, Loader2, Check } from 'lucide-react';
+import { Palette, Layout, Type, Image, Loader2, Check, Monitor } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { SitePreview } from './SitePreview';
 
 // Helper to build complete theme colors
 const buildColors = (currentColors: Partial<ThemeColors> | undefined, updates: Partial<ThemeColors>): ThemeColors => ({
@@ -129,6 +130,37 @@ export function ThemeSettings() {
 
   const hasChanges = localSettings !== null;
 
+  // Build preview settings (merge current with defaults for complete preview)
+  const previewSettings: BlogSettings = {
+    ...defaultBlogSettings,
+    ...currentSettings,
+    identity: {
+      ...defaultBlogSettings.identity,
+      ...currentSettings?.identity,
+      logo: currentSettings?.identity?.logo ?? defaultBlogSettings.identity.logo,
+    },
+    theme: {
+      ...defaultBlogSettings.theme,
+      ...currentSettings?.theme,
+      colors: {
+        ...defaultBlogSettings.theme.colors,
+        ...currentSettings?.theme?.colors,
+      },
+      darkMode: {
+        ...defaultBlogSettings.theme.darkMode,
+        ...currentSettings?.theme?.darkMode,
+      },
+      fonts: {
+        ...defaultBlogSettings.theme.fonts,
+        ...currentSettings?.theme?.fonts,
+      },
+    },
+    hero: {
+      ...defaultBlogSettings.hero,
+      ...currentSettings?.hero,
+    },
+  };
+
   return (
     <div className="space-y-6">
       {/* Save Button */}
@@ -149,23 +181,26 @@ export function ThemeSettings() {
         </div>
       )}
 
-      <Tabs defaultValue="identity" className="space-y-6">
-        {/* Bubble-style tabs - NOT full width */}
-        <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
-          <TabsTrigger value="identity" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
-            <Type className="h-4 w-4" />
-            <span className="hidden sm:inline">Identity</span>
-          </TabsTrigger>
-          <TabsTrigger value="theme" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
-            <Palette className="h-4 w-4" />
-            <span className="hidden sm:inline">Theme</span>
-          </TabsTrigger>
-          <TabsTrigger value="layout" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
-            <Layout className="h-4 w-4" />
-            <span className="hidden sm:inline">Layout</span>
-          </TabsTrigger>
-          <TabsTrigger value="hero" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
-            <Image className="h-4 w-4" />
+      {/* Split layout: Settings + Preview */}
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr,320px] gap-6">
+        {/* Left: Settings */}
+        <Tabs defaultValue="identity" className="space-y-6">
+          {/* Bubble-style tabs - NOT full width */}
+          <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
+            <TabsTrigger value="identity" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Type className="h-4 w-4" />
+              <span className="hidden sm:inline">Identity</span>
+            </TabsTrigger>
+            <TabsTrigger value="theme" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Palette className="h-4 w-4" />
+              <span className="hidden sm:inline">Theme</span>
+            </TabsTrigger>
+            <TabsTrigger value="layout" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Layout className="h-4 w-4" />
+              <span className="hidden sm:inline">Layout</span>
+            </TabsTrigger>
+            <TabsTrigger value="hero" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+              <Image className="h-4 w-4" />
             <span className="hidden sm:inline">Hero</span>
           </TabsTrigger>
         </TabsList>
@@ -945,7 +980,19 @@ export function ThemeSettings() {
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs>
+        </Tabs>
+
+        {/* Right: Live Preview */}
+        <div className="hidden xl:block">
+          <div className="sticky top-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Monitor className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-medium">Live Preview</span>
+            </div>
+            <SitePreview settings={previewSettings} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

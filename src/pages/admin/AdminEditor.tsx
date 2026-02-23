@@ -6,10 +6,12 @@ import {
   ArrowLeft, 
   Save,
   Eye,
+  EyeOff,
   Settings,
   Upload,
   Loader2,
-  ExternalLink,
+  PanelRightClose,
+  PanelRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -67,6 +69,7 @@ export function AdminEditor() {
   const [featuredImage, setFeaturedImage] = useState('');
   const [tagInput, setTagInput] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [showSidePreview, setShowSidePreview] = useState(true);
   const [slugEdited, setSlugEdited] = useState(false);
 
   // Load existing article data
@@ -238,7 +241,16 @@ export function AdminEditor() {
             <Button 
               variant="outline" 
               size="sm" 
-              className="gap-2 rounded-full"
+              className="gap-2 rounded-full hidden lg:inline-flex"
+              onClick={() => setShowSidePreview(!showSidePreview)}
+            >
+              {showSidePreview ? <PanelRightClose className="h-4 w-4" /> : <PanelRight className="h-4 w-4" />}
+              <span className="hidden sm:inline">{showSidePreview ? 'Hide Preview' : 'Show Preview'}</span>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="gap-2 rounded-full lg:hidden"
               onClick={() => setPreviewOpen(true)}
             >
               <Eye className="h-4 w-4" />
@@ -396,25 +408,91 @@ export function AdminEditor() {
         </div>
       </div>
 
-      {/* Editor */}
-      <div className="flex-1 p-4 md:p-8">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {/* Title */}
-          <Input
-            value={title}
-            onChange={(e) => handleTitleChange(e.target.value)}
-            placeholder="Article title..."
-            className="text-3xl md:text-4xl font-heading border-0 px-0 h-auto focus-visible:ring-0 placeholder:text-muted-foreground/50"
-          />
+      {/* Editor + Side Preview */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Editor Panel */}
+        <div className={`flex-1 overflow-y-auto p-4 md:p-8 ${showSidePreview ? 'lg:border-r' : ''}`}>
+          <div className="max-w-4xl mx-auto space-y-6">
+            {/* Title */}
+            <Input
+              value={title}
+              onChange={(e) => handleTitleChange(e.target.value)}
+              placeholder="Article title..."
+              className="text-3xl md:text-4xl font-heading border-0 px-0 h-auto focus-visible:ring-0 placeholder:text-muted-foreground/50"
+            />
 
-          {/* TipTap Block Editor */}
-          <BlockEditor
-            content={existingArticle ? markdownToHtml(existingArticle.content) : ''}
-            onChange={setContent}
-            onHtmlChange={setHtmlContent}
-            placeholder="Start writing your article..."
-          />
+            {/* TipTap Block Editor */}
+            <BlockEditor
+              content={existingArticle ? markdownToHtml(existingArticle.content) : ''}
+              onChange={setContent}
+              onHtmlChange={setHtmlContent}
+              placeholder="Start writing your article..."
+            />
+          </div>
         </div>
+
+        {/* Side Preview Panel - Desktop only */}
+        {showSidePreview && (
+          <div className="hidden lg:block w-[400px] xl:w-[480px] overflow-y-auto bg-muted/30">
+            <div className="p-6">
+              <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                <Eye className="h-4 w-4" />
+                <span className="text-sm font-medium">Live Preview</span>
+              </div>
+              
+              {/* Preview Card */}
+              <div className="bg-background rounded-lg border shadow-sm overflow-hidden">
+                {/* Featured Image */}
+                {featuredImage && (
+                  <AspectRatio ratio={16 / 9}>
+                    <img
+                      src={featuredImage}
+                      alt={title || 'Featured'}
+                      className="w-full h-full object-cover"
+                    />
+                  </AspectRatio>
+                )}
+                
+                {/* Content */}
+                <div className="p-6">
+                  {/* Category & Tags */}
+                  {(category || tags.length > 0) && (
+                    <div className="flex items-center gap-2 flex-wrap mb-3">
+                      {category && (
+                        <Badge variant="secondary">{category}</Badge>
+                      )}
+                      {tags.slice(0, 2).map((tag) => (
+                        <Badge key={tag} variant="outline" className="text-muted-foreground">
+                          #{tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Title */}
+                  <h1 className="font-heading text-2xl mb-3">
+                    {title || 'Untitled Article'}
+                  </h1>
+                  
+                  {/* Summary */}
+                  {summary && (
+                    <p className="text-muted-foreground mb-4">
+                      {summary}
+                    </p>
+                  )}
+                  
+                  {/* Article Content Preview */}
+                  <div 
+                    className="prose prose-sm dark:prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ 
+                      __html: htmlContent || markdownToHtml(content) || '<p class="text-muted-foreground italic">Start writing to see your content here...</p>' 
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Preview Dialog */}

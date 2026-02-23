@@ -211,6 +211,20 @@ BLOG OWNER (you)          VISITORS (readers who login)
 
 ---
 
+### Phase 6.7: Theme & Editor UX ✅
+**Goal**: Better design preview and editing experience
+
+- [x] Smaller color preset bubbles (w-6 h-6)
+- [x] Bubble-style tabs in Theme Settings (not full width)
+- [x] 2-column layout for theme settings
+- [x] Featured post in magazine layout (Ghost-style hero card)
+- [x] Live site preview panel in Theme Settings
+- [x] Side-by-side editor/preview in Article Editor
+
+**Deliverable**: Designer-friendly theme customization
+
+---
+
 ## Data Models
 
 ### Article (kind:30023)

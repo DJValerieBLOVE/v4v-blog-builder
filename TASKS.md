@@ -299,6 +299,18 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ---
 
+## Phase 6.7: Theme & Editor UX ✅ COMPLETE
+
+### Theme Settings Improvements
+- [x] Color preset circles reduced to small bubbles (w-6 h-6)
+- [x] Theme tabs changed to bubble/pill style (not full width)
+- [x] 2-column layout for all settings sections
+- [x] Featured post layout in Magazine theme (Ghost-style hero card)
+- [x] Live site preview panel in Theme Settings
+- [x] Side-by-side editor/preview in Article Editor
+
+---
+
 ## Design Notes
 
 - All thumbnails use 16:9 ratio
