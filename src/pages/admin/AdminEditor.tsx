@@ -6,12 +6,11 @@ import {
   ArrowLeft, 
   Save,
   Eye,
-  EyeOff,
-  Settings,
   Upload,
   Loader2,
-  PanelRightClose,
-  PanelRight,
+  FileText,
+  Settings,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,14 +18,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -69,7 +62,6 @@ export function AdminEditor() {
   const [featuredImage, setFeaturedImage] = useState('');
   const [tagInput, setTagInput] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [showSidePreview, setShowSidePreview] = useState(true);
   const [slugEdited, setSlugEdited] = useState(false);
 
   // Load existing article data
@@ -241,74 +233,121 @@ export function AdminEditor() {
             <Button 
               variant="outline" 
               size="sm" 
-              className="gap-2 rounded-full hidden lg:inline-flex"
-              onClick={() => setShowSidePreview(!showSidePreview)}
-            >
-              {showSidePreview ? <PanelRightClose className="h-4 w-4" /> : <PanelRight className="h-4 w-4" />}
-              <span className="hidden sm:inline">{showSidePreview ? 'Hide Preview' : 'Show Preview'}</span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="gap-2 rounded-full lg:hidden"
+              className="gap-2 rounded-full"
               onClick={() => setPreviewOpen(true)}
             >
               <Eye className="h-4 w-4" />
               <span className="hidden sm:inline">Preview</span>
             </Button>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2 rounded-full">
-                  <Settings className="h-4 w-4" />
-                  <span className="hidden sm:inline">Settings</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>Article Settings</SheetTitle>
-                  <SheetDescription>
-                    Configure your article's metadata and SEO.
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="space-y-6 mt-6">
-                  {/* Slug */}
-                  <div className="space-y-2">
-                    <Label htmlFor="slug">URL Slug</Label>
-                    <Input
-                      id="slug"
-                      value={slug}
-                      onChange={(e) => handleSlugChange(e.target.value)}
-                      placeholder="my-article-slug"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Will be used in the article URL
-                    </p>
+            <Button 
+              size="sm" 
+              className="gap-2 rounded-full" 
+              onClick={handlePublish}
+              disabled={isPublishing}
+            >
+              {isPublishing ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                'Publish'
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content with Tabs */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="container max-w-5xl py-6">
+          <Tabs defaultValue="content" className="space-y-6">
+            {/* Tab Navigation */}
+            <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
+              <TabsTrigger value="content" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <FileText className="h-4 w-4" />
+                <span>Content</span>
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </TabsTrigger>
+              <TabsTrigger value="image" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <ImageIcon className="h-4 w-4" />
+                <span>Image</span>
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Content Tab */}
+            <TabsContent value="content" className="space-y-6">
+              {/* Title */}
+              <Input
+                value={title}
+                onChange={(e) => handleTitleChange(e.target.value)}
+                placeholder="Article title..."
+                className="text-3xl md:text-4xl font-heading border-0 px-0 h-auto focus-visible:ring-0 placeholder:text-muted-foreground/50"
+              />
+
+              {/* TipTap Block Editor */}
+              <BlockEditor
+                content={existingArticle ? markdownToHtml(existingArticle.content) : ''}
+                onChange={setContent}
+                onHtmlChange={setHtmlContent}
+                placeholder="Start writing your article..."
+              />
+            </TabsContent>
+
+            {/* Settings Tab */}
+            <TabsContent value="settings" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-heading">Article Settings</CardTitle>
+                  <CardDescription>
+                    Configure your article's metadata and SEO. Fill these in to help readers find your content.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* 2-column grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* URL Slug */}
+                    <div className="space-y-2">
+                      <Label htmlFor="slug">URL Slug</Label>
+                      <Input
+                        id="slug"
+                        value={slug}
+                        onChange={(e) => handleSlugChange(e.target.value)}
+                        placeholder="my-article-slug"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Will be used in the article URL
+                      </p>
+                    </div>
+
+                    {/* Category */}
+                    <div className="space-y-2">
+                      <Label htmlFor="category">Category</Label>
+                      <Input
+                        id="category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        placeholder="e.g., Bitcoin, Podcast, Lifestyle"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Main category for this article
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Summary */}
+                  {/* Summary - full width */}
                   <div className="space-y-2">
                     <Label htmlFor="summary">Summary</Label>
                     <Textarea
                       id="summary"
                       value={summary}
                       onChange={(e) => setSummary(e.target.value)}
-                      placeholder="A brief description of your article..."
+                      placeholder="A brief description of your article that will appear in previews and search results..."
                       rows={3}
                     />
                     <p className="text-xs text-muted-foreground">
-                      Used for SEO and article previews
+                      Used for SEO, social sharing, and article previews
                     </p>
-                  </div>
-
-                  {/* Category */}
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category</Label>
-                    <Input
-                      id="category"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                      placeholder="e.g., Bitcoin, Podcast"
-                    />
                   </div>
 
                   {/* Tags */}
@@ -332,12 +371,12 @@ export function AdminEditor() {
                       </Button>
                     </div>
                     {tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-2">
+                      <div className="flex flex-wrap gap-2 mt-3">
                         {tags.map((tag) => (
                           <Badge
                             key={tag}
                             variant="secondary"
-                            className="cursor-pointer hover:bg-destructive/20"
+                            className="cursor-pointer hover:bg-destructive/20 transition-colors"
                             onClick={() => handleRemoveTag(tag)}
                           >
                             #{tag} ×
@@ -345,11 +384,27 @@ export function AdminEditor() {
                         ))}
                       </div>
                     )}
+                    <p className="text-xs text-muted-foreground">
+                      Click a tag to remove it. Tags help readers discover your content.
+                    </p>
                   </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-                  {/* Featured Image */}
+            {/* Image Tab */}
+            <TabsContent value="image" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-heading">Featured Image</CardTitle>
+                  <CardDescription>
+                    Add a featured image to make your article stand out. This image appears at the top of your article and in previews.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Upload/URL input */}
                   <div className="space-y-2">
-                    <Label>Featured Image</Label>
+                    <Label>Image URL or Upload</Label>
                     <div className="flex gap-2">
                       <Input
                         value={featuredImage}
@@ -366,6 +421,7 @@ export function AdminEditor() {
                         ) : (
                           <Upload className="h-4 w-4" />
                         )}
+                        <span className="ml-2">Upload</span>
                       </Label>
                       <input
                         id="image-upload"
@@ -376,123 +432,44 @@ export function AdminEditor() {
                         disabled={isUploading}
                       />
                     </div>
-                    {featuredImage && (
-                      <AspectRatio ratio={16 / 9} className="mt-2 rounded-lg overflow-hidden border">
+                    <p className="text-xs text-muted-foreground">
+                      Recommended: 16:9 aspect ratio, at least 1200px wide
+                    </p>
+                  </div>
+
+                  {/* Image Preview */}
+                  {featuredImage ? (
+                    <div className="space-y-2">
+                      <Label>Preview</Label>
+                      <AspectRatio ratio={16 / 9} className="rounded-lg overflow-hidden border bg-muted">
                         <img
                           src={featuredImage}
                           alt="Featured"
                           className="w-full h-full object-cover"
                         />
                       </AspectRatio>
-                    )}
-                    <p className="text-xs text-muted-foreground">
-                      Recommended: 16:9 aspect ratio, at least 1200px wide
-                    </p>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-            <Button 
-              size="sm" 
-              className="gap-2 rounded-full" 
-              onClick={handlePublish}
-              disabled={isPublishing}
-            >
-              {isPublishing ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                'Publish'
-              )}
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Editor + Side Preview */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Editor Panel */}
-        <div className={`flex-1 overflow-y-auto p-4 md:p-8 ${showSidePreview ? 'lg:border-r' : ''}`}>
-          <div className="max-w-4xl mx-auto space-y-6">
-            {/* Title */}
-            <Input
-              value={title}
-              onChange={(e) => handleTitleChange(e.target.value)}
-              placeholder="Article title..."
-              className="text-3xl md:text-4xl font-heading border-0 px-0 h-auto focus-visible:ring-0 placeholder:text-muted-foreground/50"
-            />
-
-            {/* TipTap Block Editor */}
-            <BlockEditor
-              content={existingArticle ? markdownToHtml(existingArticle.content) : ''}
-              onChange={setContent}
-              onHtmlChange={setHtmlContent}
-              placeholder="Start writing your article..."
-            />
-          </div>
-        </div>
-
-        {/* Side Preview Panel - Desktop only */}
-        {showSidePreview && (
-          <div className="hidden lg:block w-[400px] xl:w-[480px] overflow-y-auto bg-muted/30">
-            <div className="p-6">
-              <div className="flex items-center gap-2 mb-4 text-muted-foreground">
-                <Eye className="h-4 w-4" />
-                <span className="text-sm font-medium">Live Preview</span>
-              </div>
-              
-              {/* Preview Card */}
-              <div className="bg-background rounded-lg border shadow-sm overflow-hidden">
-                {/* Featured Image */}
-                {featuredImage && (
-                  <AspectRatio ratio={16 / 9}>
-                    <img
-                      src={featuredImage}
-                      alt={title || 'Featured'}
-                      className="w-full h-full object-cover"
-                    />
-                  </AspectRatio>
-                )}
-                
-                {/* Content */}
-                <div className="p-6">
-                  {/* Category & Tags */}
-                  {(category || tags.length > 0) && (
-                    <div className="flex items-center gap-2 flex-wrap mb-3">
-                      {category && (
-                        <Badge variant="secondary">{category}</Badge>
-                      )}
-                      {tags.slice(0, 2).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-muted-foreground">
-                          #{tag}
-                        </Badge>
-                      ))}
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => setFeaturedImage('')}
+                        className="mt-2"
+                      >
+                        Remove Image
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border-2 border-dashed border-muted-foreground/25 p-12 text-center">
+                      <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
+                      <p className="text-muted-foreground">
+                        No featured image yet. Upload or paste an image URL above.
+                      </p>
                     </div>
                   )}
-                  
-                  {/* Title */}
-                  <h1 className="font-heading text-2xl mb-3">
-                    {title || 'Untitled Article'}
-                  </h1>
-                  
-                  {/* Summary */}
-                  {summary && (
-                    <p className="text-muted-foreground mb-4">
-                      {summary}
-                    </p>
-                  )}
-                  
-                  {/* Article Content Preview */}
-                  <div 
-                    className="prose prose-sm dark:prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ 
-                      __html: htmlContent || markdownToHtml(content) || '<p class="text-muted-foreground italic">Start writing to see your content here...</p>' 
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
 
       {/* Preview Dialog */}

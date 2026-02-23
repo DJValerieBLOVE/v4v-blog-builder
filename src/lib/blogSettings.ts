@@ -41,6 +41,14 @@ export interface BlogSettings {
     showSubscribe: boolean;
   };
   
+  about: {
+    writerName?: string;
+    writerBio?: string;
+    writerPhoto?: string;
+    blogDescription?: string;
+    showNostrProfile?: boolean;
+  };
+  
   newsletter?: {
     provider: 'none' | 'mailchimp' | 'convertkit' | 'buttondown' | 'beehiiv' | 'webhook';
     config?: Record<string, string>;
@@ -118,6 +126,10 @@ export const defaultBlogSettings: BlogSettings = {
     title: 'Build Your Value for Value Blog',
     subtitle: 'Own your content. Get paid in Bitcoin.',
     showSubscribe: true,
+  },
+  
+  about: {
+    showNostrProfile: true,
   },
   
   categories: ['Bitcoin', 'Podcast', 'Lifestyle'],
