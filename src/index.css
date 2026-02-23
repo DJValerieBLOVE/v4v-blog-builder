@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* V4V Blog Builder - Elegant Purple Theme */
+    /* V4V Blog Builder - Vibrant Pink Theme (#eb00a8) */
     --background: 0 0% 100%;
     --foreground: 240 10% 4%;
 
@@ -14,8 +14,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 4%;
 
-    /* Purple accent - #8B5CF6 */
-    --primary: 258 90% 66%;
+    /* Pink accent - #eb00a8 (HSL: 319 100% 46%) */
+    --primary: 319 100% 46%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 240 5% 96%;
@@ -24,26 +24,26 @@
     --muted: 240 5% 96%;
     --muted-foreground: 240 4% 46%;
 
-    --accent: 258 90% 96%;
-    --accent-foreground: 258 90% 40%;
+    --accent: 319 100% 96%;
+    --accent-foreground: 319 100% 35%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 240 6% 90%;
     --input: 240 6% 90%;
-    --ring: 258 90% 66%;
+    --ring: 319 100% 46%;
 
     --radius: 9999px;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
-    --sidebar-primary: 258 90% 66%;
+    --sidebar-primary: 319 100% 46%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 258 90% 96%;
-    --sidebar-accent-foreground: 258 90% 40%;
+    --sidebar-accent: 319 100% 96%;
+    --sidebar-accent-foreground: 319 100% 35%;
     --sidebar-border: 240 6% 90%;
-    --sidebar-ring: 258 90% 66%;
+    --sidebar-ring: 319 100% 46%;
   }
 
   .dark {
@@ -56,8 +56,8 @@
     --popover: 240 10% 4%;
     --popover-foreground: 0 0% 98%;
 
-    /* Purple accent in dark mode */
-    --primary: 258 90% 66%;
+    /* Pink accent in dark mode */
+    --primary: 319 100% 46%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 240 4% 16%;
@@ -66,24 +66,24 @@
     --muted: 240 4% 16%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 258 50% 20%;
-    --accent-foreground: 258 90% 80%;
+    --accent: 319 50% 20%;
+    --accent-foreground: 319 100% 75%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 240 4% 16%;
     --input: 240 4% 16%;
-    --ring: 258 90% 66%;
+    --ring: 319 100% 46%;
 
     --sidebar-background: 240 10% 7%;
     --sidebar-foreground: 240 5% 96%;
-    --sidebar-primary: 258 90% 66%;
+    --sidebar-primary: 319 100% 46%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 258 50% 20%;
-    --sidebar-accent-foreground: 258 90% 80%;
+    --sidebar-accent: 319 50% 20%;
+    --sidebar-accent-foreground: 319 100% 75%;
     --sidebar-border: 240 4% 16%;
-    --sidebar-ring: 258 90% 66%;
+    --sidebar-ring: 319 100% 46%;
   }
 }
 
@@ -94,19 +94,25 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
   }
 
-  /* Heading font - Marcellus */
+  /* Headings use Marcellus - no bold */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Marcellus', serif;
+    font-family: 'Marcellus', Georgia, serif;
     font-weight: 400;
+  }
+
+  /* Body text uses Inter */
+  p, span, div, a, button, input, textarea, label {
+    font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
   }
 }
 
 @layer utilities {
   /* Custom utility for pill buttons */
   .btn-pill {
-    @apply rounded-full px-8 py-3 text-base font-medium;
+    @apply rounded-full px-8 py-3 text-base;
   }
 
   /* Article card aspect ratio */

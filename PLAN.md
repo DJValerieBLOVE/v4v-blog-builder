@@ -53,117 +53,117 @@ ADMIN ROUTES (requires login)
 
 ## Build Phases
 
-### Phase 1: Foundation
+### Phase 1: Foundation ✅
 **Goal**: Basic blog reading experience
 
-- [ ] Project setup and routing
-- [ ] Public layout (header, footer)
-- [ ] Homepage with article feed
-- [ ] Single article view
-- [ ] Article card component (16:9 thumbnails)
-- [ ] Category and tag pages
-- [ ] Search functionality
-- [ ] SEO meta tags
-- [ ] `useArticles` hook
-- [ ] `useArticle` hook
+- [x] Project setup and routing
+- [x] Public layout (header, footer)
+- [x] Homepage with article feed
+- [x] Single article view
+- [x] Article card component (16:9 thumbnails)
+- [x] Category and tag pages
+- [x] Search functionality
+- [x] SEO meta tags
+- [x] `useArticles` hook
+- [x] `useArticle` hook
 
 **Deliverable**: Working blog reader
 
 ---
 
-### Phase 2: Engagement
+### Phase 2: Engagement ✅
 **Goal**: V4V and social features
 
-- [ ] ZapButton for articles
-- [ ] Zap display (totals + recent)
-- [ ] Anonymous zap flow (QR invoice)
-- [ ] Like/reaction button
-- [ ] Repost button
-- [ ] Comment section (kind:1111)
-- [ ] Share button
-- [ ] Bookmark button
-- [ ] Engagement bar
-- [ ] `useArticleEngagement` hook
-- [ ] `useBookmarks` hook
+- [x] ZapButton for articles
+- [x] Zap display (totals + recent)
+- [x] Anonymous zap flow (QR invoice)
+- [x] Like/reaction button
+- [x] Repost button
+- [x] Comment section (kind:1111)
+- [x] Share button
+- [x] Bookmark button
+- [x] Engagement bar
+- [x] `useArticleEngagement` hook
+- [x] `useBookmarks` hook
 
 **Deliverable**: Full V4V blog with engagement
 
 ---
 
-### Phase 3: Admin & Editor
+### Phase 3: Admin & Editor ✅
 **Goal**: Content creation
 
-- [ ] Admin layout with sidebar
-- [ ] Admin dashboard
-- [ ] Article manager
-- [ ] Block editor (TipTap)
-- [ ] Text blocks (paragraph, heading, list, quote)
-- [ ] Image block (Blossom upload)
-- [ ] Video embed block
-- [ ] Podcast embed block
-- [ ] Link card block
-- [ ] Article settings panel
-- [ ] Publish/draft controls
-- [ ] `usePublishArticle` hook
-- [ ] `useDrafts` hook
+- [x] Admin layout with sidebar
+- [x] Admin dashboard
+- [x] Article manager
+- [x] Block editor (TipTap)
+- [x] Text blocks (paragraph, heading, list, quote)
+- [x] Image block (Blossom upload)
+- [x] Video embed block
+- [x] Podcast embed block
+- [x] Link card block
+- [x] Article settings panel
+- [x] Publish/draft controls
+- [x] `usePublishArticle` hook
+- [x] `useDrafts` hook
 
 **Deliverable**: Full authoring experience
 
 ---
 
-### Phase 4: Theme System
+### Phase 4: Theme System ✅
 **Goal**: Customizable appearance
 
-- [ ] Theme provider/context
-- [ ] Magazine theme preset
-- [ ] Newsletter theme preset
-- [ ] Minimal theme preset
-- [ ] Theme settings UI
-- [ ] Color customization
-- [ ] Font selection
-- [ ] Layout picker
-- [ ] Logo options
-- [ ] Hero settings
-- [ ] Dark mode toggle
-- [ ] Live preview
-- [ ] `useBlogSettings` hook
+- [x] Theme provider/context
+- [x] Magazine theme preset
+- [x] Newsletter theme preset
+- [x] Minimal theme preset
+- [x] Theme settings UI
+- [x] Color customization
+- [x] Font selection
+- [x] Layout picker
+- [x] Logo options
+- [x] Hero settings
+- [x] Dark mode toggle
+- [x] Live preview
+- [x] `useBlogSettings` hook
 
 **Deliverable**: Customizable blog appearance
 
 ---
 
-### Phase 5: Newsletter & Hero
+### Phase 5: Newsletter & Hero ✅
 **Goal**: Subscriber growth
 
-- [ ] Hero section component
-- [ ] Subscribe form
-- [ ] Nostr follow button
-- [ ] Newsletter settings UI
-- [ ] Mailchimp integration
-- [ ] ConvertKit integration
-- [ ] Buttondown integration
-- [ ] Beehiiv integration
-- [ ] Generic webhook
-- [ ] `useNewsletterSubmit` hook
+- [x] Hero section component
+- [x] Subscribe form
+- [x] Nostr follow button
+- [x] Newsletter settings UI
+- [x] Mailchimp integration
+- [x] ConvertKit integration
+- [x] Buttondown integration
+- [x] Beehiiv integration
+- [x] Generic webhook
+- [x] `useNewsletterSubmit` hook
 
 **Deliverable**: Working subscription system
 
 ---
 
-### Phase 6: Polish & SEO
+### Phase 6: Polish & SEO ✅
 **Goal**: Production-ready
 
-- [ ] JSON-LD structured data
-- [ ] Open Graph images
-- [ ] Sitemap generation
-- [ ] robots.txt
-- [ ] Performance optimization
-- [ ] Mobile responsiveness
-- [ ] Accessibility audit
-- [ ] Error states
-- [ ] Loading skeletons
-- [ ] Empty states
-- [ ] 404 page polish
+- [x] JSON-LD structured data
+- [x] Open Graph images
+- [x] Sitemap generation
+- [x] robots.txt
+- [x] Performance optimization
+- [x] Mobile responsiveness
+- [x] Accessibility audit
+- [x] Error states
+- [x] Loading skeletons
+- [x] Empty states
+- [x] 404 page polish
 
 **Deliverable**: LLM-readable, SEO-optimized
 
