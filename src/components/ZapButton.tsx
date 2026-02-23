@@ -30,8 +30,10 @@ export function ZapButton({
   const { webln, activeNWC } = useWallet();
 
   // Only fetch data if not provided externally
+  // Pass empty array to disable fetching when we don't need it
+  const zapTargetForQuery = externalZapData || !zapTarget ? [] : [zapTarget];
   const { totalSats: fetchedTotalSats, isLoading } = useZaps(
-    externalZapData ? [] : zapTarget ?? [], // Empty array prevents fetching if external data provided
+    zapTargetForQuery,
     webln,
     activeNWC
   );

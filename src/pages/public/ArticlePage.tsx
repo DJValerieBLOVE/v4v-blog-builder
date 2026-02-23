@@ -60,7 +60,7 @@ export function ArticlePage() {
     script: article ? [
       {
         type: 'application/ld+json',
-        children: jsonLd,
+        innerHTML: jsonLd,
       },
     ] : [],
   });

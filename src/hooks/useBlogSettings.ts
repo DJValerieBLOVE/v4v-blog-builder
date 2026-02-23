@@ -39,7 +39,7 @@ export function useBlogSettings(authorPubkey?: string) {
       try {
         const settings = JSON.parse(event.content) as Partial<BlogSettings>;
         // Merge with defaults to ensure all fields exist
-        return deepMerge(defaultBlogSettings, settings) as BlogSettings;
+        return deepMerge(defaultBlogSettings as Record<string, unknown>, settings as Record<string, unknown>) as BlogSettings;
       } catch {
         return defaultBlogSettings;
       }
@@ -66,7 +66,7 @@ export function useUpdateBlogSettings() {
         ?? defaultBlogSettings;
 
       // Merge new settings with current
-      const updatedSettings = deepMerge(currentSettings, settings);
+      const updatedSettings = deepMerge(currentSettings as Record<string, unknown>, settings as Record<string, unknown>);
 
       // Publish to Nostr
       await createEvent({
@@ -88,13 +88,13 @@ export function useUpdateBlogSettings() {
 }
 
 /**
- * Deep merge two objects
+ * Deep merge two objects - simplified version for BlogSettings
  */
-function deepMerge<T extends Record<string, unknown>>(
-  target: T,
-  source: Partial<T>
-): T {
-  const result = { ...target };
+function deepMerge(
+  target: Record<string, unknown>,
+  source: Record<string, unknown>
+): Record<string, unknown> {
+  const result: Record<string, unknown> = { ...target };
 
   for (const key in source) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
@@ -109,12 +109,12 @@ function deepMerge<T extends Record<string, unknown>>(
         typeof targetValue === 'object' &&
         !Array.isArray(targetValue)
       ) {
-        (result as Record<string, unknown>)[key] = deepMerge(
+        result[key] = deepMerge(
           targetValue as Record<string, unknown>,
           sourceValue as Record<string, unknown>
         );
       } else if (sourceValue !== undefined) {
-        (result as Record<string, unknown>)[key] = sourceValue;
+        result[key] = sourceValue;
       }
     }
   }
