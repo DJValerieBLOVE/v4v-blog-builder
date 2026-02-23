@@ -97,19 +97,19 @@ export function SubscribeForm({
     return (
       <form onSubmit={handleSubmit} className={cn('space-y-3 max-w-sm', className)}>
         <div className="relative">
-          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className="pl-12 h-12 rounded-full"
+            className="pl-10 h-9 rounded-md"
             disabled={isPending}
           />
         </div>
         <Button
           type="submit"
-          className="w-full h-12 rounded-full gap-2"
+          className="w-full rounded-md gap-2"
           disabled={isPending}
         >
           {isPending ? (
@@ -138,19 +138,19 @@ export function SubscribeForm({
       )}
     >
       <div className="relative flex-1">
-        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="pl-12 h-12 rounded-full"
+          className="pl-10 h-9 rounded-md"
           disabled={isPending}
         />
       </div>
       <Button
         type="submit"
-        className="h-12 px-8 rounded-full gap-2"
+        className="px-8 rounded-md gap-2"
         disabled={isPending}
       >
         {isPending ? (

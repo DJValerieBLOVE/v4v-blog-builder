@@ -179,7 +179,7 @@ const SignupDialog: React.FC<SignupDialogProps> = ({ isOpen, onClose }) => {
                 🔑
               </div>
 
-              <Button className="w-full h-12 px-9" onClick={generateKey}>
+              <Button className="w-full px-8" onClick={generateKey}>
                 Generate key
               </Button>
             </div>
@@ -215,7 +215,7 @@ const SignupDialog: React.FC<SignupDialogProps> = ({ isOpen, onClose }) => {
               </div>
 
               <Button
-                className="w-full h-12 px-9"
+                className="w-full px-8"
                 onClick={downloadKey}
               >
                 <Download className="size-4" />

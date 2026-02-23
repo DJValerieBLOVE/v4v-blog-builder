@@ -305,7 +305,7 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ isOpen, onClose, onLogin }) =
                 </Alert>
               )}
               <Button
-                className="w-full h-12 px-9"
+                className="w-full px-8"
                 onClick={handleExtensionLogin}
                 disabled={isLoading}
               >
