@@ -420,6 +420,24 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ---
 
+## Phase 6.12: UI Polish ✅ COMPLETE
+
+### Footer
+- [x] Removed "© 2026 V4V Blog. All rights reserved." text
+- [x] Centered the "Vibed with Shakespeare" link
+
+### Sidebar Hover Fix
+- [x] Changed hover from `hover:bg-gray-100` to `hover:bg-muted`
+- [x] `bg-muted` respects theme (light gray in both light/dark mode)
+- [x] Applied to both desktop and mobile navigation
+
+### Article Line Spacing
+- [x] Added `leading-normal` class to article content
+- [x] Paragraphs and list items now use 1.5 line height
+- [x] Improved readability for long-form content
+
+---
+
 ## Design Notes
 
 - All thumbnails use 16:9 ratio

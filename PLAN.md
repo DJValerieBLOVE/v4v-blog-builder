@@ -302,6 +302,17 @@ BLOG OWNER (you)          VISITORS (readers who login)
 
 ---
 
+### Phase 6.12: UI Polish ✅
+**Goal**: Minor UI refinements
+
+- [x] Remove copyright text from footer ("© 2026 All rights reserved")
+- [x] Fix sidebar hover color (gray-100 → muted for theme compatibility)
+- [x] Set article content line spacing to 1.5 (leading-normal)
+
+**Deliverable**: Cleaner footer and improved article readability
+
+---
+
 ## Data Models
 
 ### Article (kind:30023)
