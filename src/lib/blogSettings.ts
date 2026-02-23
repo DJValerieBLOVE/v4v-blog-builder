@@ -116,9 +116,9 @@ export const defaultBlogSettings: BlogSettings = {
       primary: '#2D2D2D',
       background: '#FFFFFF',
       foreground: '#18181B',
-      muted: '#71717A',
+      muted: '#FAFAFA',
       border: '#E4E4E7',
-      card: '#FAFAFA',
+      card: '#FFFFFF',
     },
     darkMode: {
       enabled: true,

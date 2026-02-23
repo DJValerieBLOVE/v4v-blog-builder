@@ -113,9 +113,9 @@ interface AboutSectionRendererProps {
 function AboutSectionRenderer({ section, metadata, npub }: AboutSectionRendererProps) {
   switch (section.type) {
     case 'hero':
-      // Image on left, text on right layout - NO overlay
+      // Image on left, text on right layout - NO gray backgrounds
       return (
-        <div className="rounded-2xl overflow-hidden border bg-card shadow-sm">
+        <div className="rounded-2xl overflow-hidden border bg-white shadow-sm">
           <div className="flex flex-col md:flex-row min-h-[280px]">
             {/* Image on left - takes 50% width */}
             <div className="md:w-1/2 relative">
@@ -126,13 +126,13 @@ function AboutSectionRenderer({ section, metadata, npub }: AboutSectionRendererP
                   className="w-full h-64 md:h-full md:absolute md:inset-0 object-cover"
                 />
               ) : (
-                <div className="w-full h-64 md:h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                  <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+                <div className="w-full h-64 md:h-full bg-white border-r flex items-center justify-center">
+                  <ImageIcon className="h-12 w-12 text-gray-200" />
                 </div>
               )}
             </div>
             {/* Text on right - takes 50% width */}
-            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-card">
+            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white">
               <h1 className="font-heading text-3xl md:text-4xl mb-4 text-foreground">
                 {section.title || 'About This Blog'}
               </h1>

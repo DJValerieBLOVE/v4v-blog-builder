@@ -42,12 +42,15 @@ export function BlogSettingsProvider({ authorPubkey, children }: BlogSettingsPro
       root.style.setProperty('--ring', hexToHsl(colors.primary));
     }
     
-    // IMPORTANT: Accent color should be LIGHT (for hover states)
-    // Use muted color or a very light gray - NEVER the primary dark color
-    if (colors.muted) {
-      root.style.setProperty('--accent', hexToHsl(colors.muted));
-      root.style.setProperty('--accent-foreground', hexToHsl(colors.foreground || '#18181B'));
-    }
+    // CRITICAL: Accent color for hover states must ALWAYS be very light
+    // NEVER use muted (which can be gray) or primary (which is dark)
+    // Use a fixed near-white color: 0 0% 98% (almost white)
+    root.style.setProperty('--accent', '0 0% 98%');
+    root.style.setProperty('--accent-foreground', hexToHsl(colors.foreground || '#18181B'));
+    
+    // Also ensure secondary and muted-background are light for hover states
+    root.style.setProperty('--secondary', '0 0% 98%');
+    root.style.setProperty('--sidebar-accent', '0 0% 98%');
 
     // Set background color
     if (colors.background) {
