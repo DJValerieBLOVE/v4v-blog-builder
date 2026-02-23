@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
+import typography from "@tailwindcss/typography";
 
 export default {
 	darkMode: ["class"],
@@ -15,10 +16,19 @@ export default {
 			center: true,
 			padding: '2rem',
 			screens: {
-				'2xl': '1400px'
+				'2xl': '1200px'
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter Variable', 'Inter', 'system-ui', 'sans-serif'],
+				heading: ['Marcellus', 'Georgia', 'serif'],
+				serif: ['Marcellus', 'Georgia', 'serif'],
+			},
+			fontSize: {
+				'article-title': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
+				'article-xl': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -67,7 +77,11 @@ export default {
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				sm: 'calc(var(--radius) - 4px)',
+				'pill': '9999px',
+			},
+			aspectRatio: {
+				'article': '16 / 9',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -85,13 +99,47 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					from: {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					to: {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fade-up': {
+					from: {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					to: {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.5s ease-out forwards',
+				'fade-up': 'fade-up 0.6s ease-out forwards',
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						'--tw-prose-headings': 'hsl(var(--foreground))',
+						'h1, h2, h3, h4': {
+							fontFamily: 'Marcellus, Georgia, serif',
+							fontWeight: '400',
+						},
+						maxWidth: '70ch',
+					},
+				},
+			},
 		}
 	},
-	plugins: [tailwindcssAnimate],
+	plugins: [tailwindcssAnimate, typography],
 } satisfies Config;
