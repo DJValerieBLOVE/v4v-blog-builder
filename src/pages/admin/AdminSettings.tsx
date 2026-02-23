@@ -1,9 +1,10 @@
 import { useHead } from '@unhead/react';
-import { User, Palette, Zap, Rss, Database } from 'lucide-react';
+import { User, Palette, Zap, Database } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EditProfileForm } from '@/components/EditProfileForm';
 import { RelayListManager } from '@/components/RelayListManager';
+import { ThemeSettings } from '@/components/theme/ThemeSettings';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useAuthor } from '@/hooks/useAuthor';
 
@@ -64,24 +65,7 @@ export function AdminSettings() {
 
         {/* Theme Tab */}
         <TabsContent value="theme">
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-heading">Theme Settings</CardTitle>
-              <CardDescription>
-                Customize the appearance of your blog
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-12">
-                <Palette className="h-16 w-16 mx-auto text-muted-foreground/50 mb-6" />
-                <h3 className="font-heading text-xl mb-4">Coming Soon</h3>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  Theme customization including layout presets (Magazine, Newsletter, Minimal), 
-                  color schemes, and font selection will be available in Phase 4.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <ThemeSettings />
         </TabsContent>
 
         {/* Payments Tab */}
