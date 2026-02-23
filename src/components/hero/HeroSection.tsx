@@ -1,4 +1,4 @@
-import { Sparkles, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import { SubscribeForm } from './SubscribeForm';
 import { NostrFollowButton } from './NostrFollowButton';
 import { useBlogSettingsContext } from '@/components/theme/BlogSettingsProvider';
@@ -96,8 +96,8 @@ function FullWidthHero({
       {/* Content */}
       <div className="container relative z-10">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm text-primary backdrop-blur mb-6">
-            <Sparkles className="h-4 w-4" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary px-4 py-2 text-sm text-primary backdrop-blur mb-6">
+            <Zap className="h-4 w-4" />
             <span>Powered by Nostr & Lightning</span>
           </div>
 

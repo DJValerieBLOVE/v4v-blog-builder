@@ -34,7 +34,7 @@
     --input: 240 6% 90%;
     --ring: 319 100% 46%;
 
-    --radius: 9999px;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -104,14 +104,26 @@
   }
 }
 
+@layer base {
+  /* Base font size 18px for body text */
+  html {
+    font-size: 18px;
+  }
+}
+
 @layer utilities {
-  /* Custom utility for pill buttons */
+  /* Custom utility for pill buttons (use only where needed) */
   .btn-pill {
-    @apply rounded-full px-8 py-3 text-base;
+    @apply rounded-full px-8 py-3;
   }
 
   /* Article card aspect ratio */
   .aspect-article {
     aspect-ratio: 16 / 9;
+  }
+
+  /* Footer uses smaller text */
+  .footer-text {
+    font-size: 16px;
   }
 }

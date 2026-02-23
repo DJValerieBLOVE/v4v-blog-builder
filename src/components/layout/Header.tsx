@@ -48,7 +48,7 @@ export function Header({ blogName = 'V4V Blog', showSearch = true, className }: 
             <Link
               key={item.href}
               to={item.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.label}
             </Link>

@@ -112,8 +112,8 @@ export const defaultBlogSettings: BlogSettings = {
   hero: {
     enabled: true,
     style: 'fullWidth',
-    title: 'Welcome to My Blog',
-    subtitle: 'Thoughts on Bitcoin, freedom, and more.',
+    title: 'Build Your Value for Value Blog',
+    subtitle: 'Own your content. Get paid in Bitcoin.',
     showSubscribe: true,
   },
   
