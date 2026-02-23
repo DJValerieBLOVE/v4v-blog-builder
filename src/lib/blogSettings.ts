@@ -85,7 +85,7 @@ export const defaultBlogSettings: BlogSettings = {
   theme: {
     preset: 'magazine',
     colors: {
-      primary: '#8B5CF6',
+      primary: '#2D2D2D',
       background: '#FFFFFF',
       foreground: '#18181B',
       muted: '#71717A',
@@ -95,6 +95,7 @@ export const defaultBlogSettings: BlogSettings = {
     darkMode: {
       enabled: true,
       colors: {
+        primary: '#FAFAFA',
         background: '#09090B',
         foreground: '#FAFAFA',
         muted: '#A1A1AA',
@@ -104,9 +105,9 @@ export const defaultBlogSettings: BlogSettings = {
     },
     fonts: {
       heading: 'Marcellus',
-      body: 'Inter',
+      body: 'Marcellus',
     },
-    borderRadius: 'full',
+    borderRadius: 'md',
   },
   
   hero: {

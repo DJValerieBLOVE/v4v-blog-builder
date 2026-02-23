@@ -36,9 +36,41 @@ export function BlogSettingsProvider({ authorPubkey, children }: BlogSettingsPro
       ? { ...settings.theme.colors, ...settings.theme.darkMode.colors }
       : settings.theme.colors;
 
-    // Set primary color
+    // Set primary color (buttons, accents)
     if (colors.primary) {
       root.style.setProperty('--primary', hexToHsl(colors.primary));
+      root.style.setProperty('--accent', hexToHsl(colors.primary));
+      root.style.setProperty('--ring', hexToHsl(colors.primary));
+    }
+
+    // Set background color
+    if (colors.background) {
+      root.style.setProperty('--background', hexToHsl(colors.background));
+    }
+
+    // Set text color (foreground)
+    if (colors.foreground) {
+      root.style.setProperty('--foreground', hexToHsl(colors.foreground));
+      root.style.setProperty('--card-foreground', hexToHsl(colors.foreground));
+      root.style.setProperty('--popover-foreground', hexToHsl(colors.foreground));
+    }
+
+    // Set card background
+    if (colors.card) {
+      root.style.setProperty('--card', hexToHsl(colors.card));
+      root.style.setProperty('--popover', hexToHsl(colors.card));
+    }
+
+    // Set muted color
+    if (colors.muted) {
+      root.style.setProperty('--muted', hexToHsl(colors.muted));
+      root.style.setProperty('--secondary', hexToHsl(colors.muted));
+    }
+
+    // Set border color
+    if (colors.border) {
+      root.style.setProperty('--border', hexToHsl(colors.border));
+      root.style.setProperty('--input', hexToHsl(colors.border));
     }
 
     // Set border radius
@@ -49,7 +81,7 @@ export function BlogSettingsProvider({ authorPubkey, children }: BlogSettingsPro
       lg: '0.75rem',
       full: '9999px',
     };
-    root.style.setProperty('--radius', radiusMap[settings.theme.borderRadius] ?? '0.75rem');
+    root.style.setProperty('--radius', radiusMap[settings.theme.borderRadius] ?? '0.5rem');
 
   }, [settings, theme]);
 

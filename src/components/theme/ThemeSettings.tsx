@@ -287,12 +287,12 @@ export function ThemeSettings() {
           <Card>
             <CardHeader>
               <CardTitle className="font-heading">Theme Colors</CardTitle>
-              <CardDescription>Choose your blog's color scheme</CardDescription>
+              <CardDescription>Customize your blog's colors and appearance</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Color Presets */}
               <div className="space-y-3">
-                <Label>Accent Color</Label>
+                <Label>Quick Color Presets</Label>
                 <div className="grid grid-cols-6 gap-3">
                   {Object.entries(colorPresets).map(([key, preset]) => (
                     <button
@@ -306,8 +306,8 @@ export function ThemeSettings() {
                             primary: preset.primary,
                           },
                           darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Inter' },
-                          borderRadius: currentSettings?.theme?.borderRadius ?? 'full',
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
                         },
                       })}
                       className={cn(
@@ -323,14 +323,15 @@ export function ThemeSettings() {
                 </div>
               </div>
 
-              {/* Custom Color */}
+              {/* Button / Accent Color */}
               <div className="space-y-2">
-                <Label htmlFor="customColor">Custom Color</Label>
+                <Label htmlFor="primaryColor">Button & Accent Color</Label>
+                <p className="text-sm text-muted-foreground">Used for buttons, links, and highlights</p>
                 <div className="flex gap-2">
                   <Input
-                    id="customColor"
+                    id="primaryColor"
                     type="color"
-                    value={currentSettings?.theme?.colors?.primary ?? '#8B5CF6'}
+                    value={currentSettings?.theme?.colors?.primary ?? '#2D2D2D'}
                     onChange={(e) => updateLocal({
                       theme: {
                         ...currentSettings?.theme,
@@ -340,14 +341,14 @@ export function ThemeSettings() {
                           primary: e.target.value,
                         },
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Inter' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'full',
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
                       },
                     })}
                     className="w-16 h-10 p-1 cursor-pointer"
                   />
                   <Input
-                    value={currentSettings?.theme?.colors?.primary ?? '#8B5CF6'}
+                    value={currentSettings?.theme?.colors?.primary ?? '#2D2D2D'}
                     onChange={(e) => updateLocal({
                       theme: {
                         ...currentSettings?.theme,
@@ -357,18 +358,153 @@ export function ThemeSettings() {
                           primary: e.target.value,
                         },
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Inter' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'full',
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
                       },
                     })}
-                    placeholder="#8B5CF6"
+                    placeholder="#2D2D2D"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+
+              {/* Background Color */}
+              <div className="space-y-2">
+                <Label htmlFor="bgColor">Background Color</Label>
+                <p className="text-sm text-muted-foreground">Main page background</p>
+                <div className="flex gap-2">
+                  <Input
+                    id="bgColor"
+                    type="color"
+                    value={currentSettings?.theme?.colors?.background ?? '#FFFFFF'}
+                    onChange={(e) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: {
+                          ...currentSettings?.theme?.colors,
+                          background: e.target.value,
+                        },
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                    className="w-16 h-10 p-1 cursor-pointer"
+                  />
+                  <Input
+                    value={currentSettings?.theme?.colors?.background ?? '#FFFFFF'}
+                    onChange={(e) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: {
+                          ...currentSettings?.theme?.colors,
+                          background: e.target.value,
+                        },
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                    placeholder="#FFFFFF"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+
+              {/* Text Color */}
+              <div className="space-y-2">
+                <Label htmlFor="textColor">Text Color</Label>
+                <p className="text-sm text-muted-foreground">Main text and headings</p>
+                <div className="flex gap-2">
+                  <Input
+                    id="textColor"
+                    type="color"
+                    value={currentSettings?.theme?.colors?.foreground ?? '#18181B'}
+                    onChange={(e) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: {
+                          ...currentSettings?.theme?.colors,
+                          foreground: e.target.value,
+                        },
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                    className="w-16 h-10 p-1 cursor-pointer"
+                  />
+                  <Input
+                    value={currentSettings?.theme?.colors?.foreground ?? '#18181B'}
+                    onChange={(e) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: {
+                          ...currentSettings?.theme?.colors,
+                          foreground: e.target.value,
+                        },
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                    placeholder="#18181B"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+
+              {/* Card Background Color */}
+              <div className="space-y-2">
+                <Label htmlFor="cardColor">Card Background</Label>
+                <p className="text-sm text-muted-foreground">Article cards and panels</p>
+                <div className="flex gap-2">
+                  <Input
+                    id="cardColor"
+                    type="color"
+                    value={currentSettings?.theme?.colors?.card ?? '#FAFAFA'}
+                    onChange={(e) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: {
+                          ...currentSettings?.theme?.colors,
+                          card: e.target.value,
+                        },
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                    className="w-16 h-10 p-1 cursor-pointer"
+                  />
+                  <Input
+                    value={currentSettings?.theme?.colors?.card ?? '#FAFAFA'}
+                    onChange={(e) => updateLocal({
+                      theme: {
+                        ...currentSettings?.theme,
+                        preset: currentSettings?.theme?.preset ?? 'magazine',
+                        colors: {
+                          ...currentSettings?.theme?.colors,
+                          card: e.target.value,
+                        },
+                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                      },
+                    })}
+                    placeholder="#FAFAFA"
                     className="flex-1"
                   />
                 </div>
               </div>
 
               {/* Dark Mode */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between pt-4 border-t">
                 <div className="space-y-0.5">
                   <Label>Dark Mode</Label>
                   <p className="text-sm text-muted-foreground">
@@ -381,10 +517,10 @@ export function ThemeSettings() {
                     theme: {
                       ...currentSettings?.theme,
                       preset: currentSettings?.theme?.preset ?? 'magazine',
-                      colors: currentSettings?.theme?.colors ?? { primary: '#8B5CF6', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
+                      colors: currentSettings?.theme?.colors ?? { primary: '#2D2D2D', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
                       darkMode: { ...currentSettings?.theme?.darkMode, enabled: checked },
-                      fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Inter' },
-                      borderRadius: currentSettings?.theme?.borderRadius ?? 'full',
+                      fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                      borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
                     },
                   })}
                 />
@@ -402,20 +538,20 @@ export function ThemeSettings() {
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Layout Presets */}
-              <RadioGroup
-                value={currentSettings?.theme?.preset ?? 'magazine'}
-                onValueChange={(value) => updateLocal({
-                  theme: {
-                    ...currentSettings?.theme,
-                    preset: value as 'magazine' | 'newsletter' | 'minimal',
-                    colors: currentSettings?.theme?.colors ?? { primary: '#8B5CF6', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
-                    darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                    fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Inter' },
-                    borderRadius: currentSettings?.theme?.borderRadius ?? 'full',
-                  },
-                })}
-                className="grid grid-cols-1 md:grid-cols-3 gap-4"
-              >
+                <RadioGroup
+                  value={currentSettings?.theme?.preset ?? 'magazine'}
+                  onValueChange={(value) => updateLocal({
+                    theme: {
+                      ...currentSettings?.theme,
+                      preset: value as 'magazine' | 'newsletter' | 'minimal',
+                      colors: currentSettings?.theme?.colors ?? { primary: '#2D2D2D', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
+                      darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                      fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                      borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                    },
+                  })}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                >
                 {Object.entries(themePresets).map(([key, preset]) => (
                   <Label
                     key={key}
@@ -441,14 +577,14 @@ export function ThemeSettings() {
               <div className="space-y-3">
                 <Label>Corner Roundness</Label>
                 <RadioGroup
-                  value={currentSettings?.theme?.borderRadius ?? 'full'}
+                  value={currentSettings?.theme?.borderRadius ?? 'md'}
                   onValueChange={(value) => updateLocal({
                     theme: {
                       ...currentSettings?.theme,
                       preset: currentSettings?.theme?.preset ?? 'magazine',
-                      colors: currentSettings?.theme?.colors ?? { primary: '#8B5CF6', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
+                      colors: currentSettings?.theme?.colors ?? { primary: '#2D2D2D', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
                       darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                      fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Inter' },
+                      fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                       borderRadius: value as 'none' | 'sm' | 'md' | 'lg' | 'full',
                     },
                   })}
