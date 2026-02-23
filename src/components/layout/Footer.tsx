@@ -87,10 +87,7 @@ export function Footer({ blogName = 'V4V Blog', className }: FooterProps) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} {blogName}. All rights reserved.
-          </p>
+        <div className="mt-12 pt-8 border-t flex justify-center items-center">
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <span>Vibed with</span>
             <Heart className="h-4 w-4 text-primary" />
