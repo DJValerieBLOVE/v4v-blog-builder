@@ -7,13 +7,16 @@ import {
   Bookmark,
   ChevronLeft,
   Menu,
-  Zap
+  Zap,
+  AlertTriangle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useAuthor } from '@/hooks/useAuthor';
+import { useBlogOwner } from '@/hooks/useBlogOwner';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -27,6 +30,7 @@ const navItems = [
 
 export function AdminLayout() {
   const { user } = useCurrentUser();
+  const { isOwner, isBuilderMode } = useBlogOwner();
   const author = useAuthor(user?.pubkey);
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,6 +39,25 @@ export function AdminLayout() {
   // Require login for admin area
   if (!user) {
     return <Navigate to="/" replace />;
+  }
+
+  // Only blog owner can access admin
+  if (!isOwner) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="max-w-md text-center space-y-4">
+          <AlertTriangle className="h-16 w-16 mx-auto text-muted-foreground" />
+          <h1 className="font-heading text-2xl">Access Denied</h1>
+          <p className="text-muted-foreground">
+            Only the blog owner can access the admin area. 
+            You can still read articles, leave comments, and zap content!
+          </p>
+          <Button asChild className="rounded-full">
+            <Link to="/">Back to Blog</Link>
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -155,6 +178,16 @@ export function AdminLayout() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-auto">
+          {/* Builder Mode Warning */}
+          {isBuilderMode && (
+            <Alert className="m-4 border-yellow-500/50 bg-yellow-500/10">
+              <AlertTriangle className="h-4 w-4 text-yellow-600" />
+              <AlertDescription className="text-yellow-800 dark:text-yellow-200">
+                <strong>Builder Mode:</strong> No owner is configured. Anyone who logs in can access admin features. 
+                Set <code className="bg-yellow-500/20 px-1 rounded">BLOG_OWNER_PUBKEY</code> in <code className="bg-yellow-500/20 px-1 rounded">src/lib/blogOwner.ts</code> before deploying.
+              </AlertDescription>
+            </Alert>
+          )}
           <Outlet />
         </main>
       </div>

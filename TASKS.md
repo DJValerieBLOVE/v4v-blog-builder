@@ -287,6 +287,16 @@ Phases 1-6 complete. Post-phase polish complete.
 - [x] Fix BlockEditor markdown storage fallback
 - [x] Fix ArticleCard formatShortDate import
 
+### Blog Owner System ✅
+- [x] Create `src/lib/blogOwner.ts` with owner pubkey config
+- [x] Create `useBlogOwner` hook for owner status checks
+- [x] Update AdminLayout - only owner can access admin
+- [x] Show "Access Denied" page for non-owners trying to access /admin
+- [x] Hide "New Article" button from non-owners in Header
+- [x] Add Dashboard icon button for owners in Header
+- [x] Add "Builder Mode" warning banner when no owner configured
+- [x] Visitors can still login to comment/zap (not blocked)
+
 ---
 
 ## Design Notes

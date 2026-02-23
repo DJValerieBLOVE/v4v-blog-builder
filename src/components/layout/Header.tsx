@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, Zap, PenSquare } from 'lucide-react';
+import { Search, Menu, X, Zap, PenSquare, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { LoginArea } from '@/components/auth/LoginArea';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useBlogOwner } from '@/hooks/useBlogOwner';
 import { cn } from '@/lib/utils';
 
 interface HeaderProps {
@@ -20,6 +21,7 @@ export function Header({ blogName = 'V4V Blog', showSearch = true, className }: 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useCurrentUser();
+  const { isOwner } = useBlogOwner();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,13 +97,20 @@ export function Header({ blogName = 'V4V Blog', showSearch = true, className }: 
               )}
             </>
           )}
-          {user && (
-            <Button asChild className="rounded-full gap-2">
-              <Link to="/admin/editor">
-                <PenSquare className="h-4 w-4" />
-                New Article
-              </Link>
-            </Button>
+          {isOwner && (
+            <>
+              <Button asChild variant="ghost" size="icon">
+                <Link to="/admin" aria-label="Dashboard">
+                  <LayoutDashboard className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild className="rounded-full gap-2">
+                <Link to="/admin/editor">
+                  <PenSquare className="h-4 w-4" />
+                  New Article
+                </Link>
+              </Button>
+            </>
           )}
           <LoginArea className="max-w-48" />
         </div>
@@ -138,8 +147,14 @@ export function Header({ blogName = 'V4V Blog', showSearch = true, className }: 
                     </Link>
                   ))}
                 </nav>
-                {user && (
-                  <div className="pt-4 border-t">
+                {isOwner && (
+                  <div className="pt-4 border-t space-y-2">
+                    <Button asChild variant="outline" className="w-full rounded-full gap-2">
+                      <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>
+                        <LayoutDashboard className="h-4 w-4" />
+                        Dashboard
+                      </Link>
+                    </Button>
                     <Button asChild className="w-full rounded-full gap-2">
                       <Link to="/admin/editor" onClick={() => setMobileMenuOpen(false)}>
                         <PenSquare className="h-4 w-4" />

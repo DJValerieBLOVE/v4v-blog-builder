@@ -186,6 +186,31 @@ ADMIN ROUTES (requires login)
 
 ---
 
+### Phase 6.6: Owner/Visitor Separation ✅
+**Goal**: Proper access control for deployed blogs
+
+- [x] Blog owner configuration (`src/lib/blogOwner.ts`)
+- [x] `useBlogOwner` hook for checking owner status
+- [x] Admin area restricted to blog owner only
+- [x] "Access Denied" page for non-owners
+- [x] Owner-only controls (Dashboard, New Article) hidden from visitors
+- [x] Builder mode warning when no owner configured
+- [x] Visitors can still login to comment, zap, bookmark
+
+**Architecture:**
+```
+BLOG OWNER (you)          VISITORS (readers who login)
+├── Full admin access      ├── Read articles
+├── Create/edit articles   ├── Comment on posts
+├── Theme customization    ├── Zap articles
+├── Newsletter settings    ├── Bookmark articles
+└── Blog settings          └── Follow author
+```
+
+**Deliverable**: Proper owner vs visitor separation
+
+---
+
 ## Data Models
 
 ### Article (kind:30023)
