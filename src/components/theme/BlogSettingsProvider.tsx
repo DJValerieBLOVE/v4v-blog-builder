@@ -36,11 +36,17 @@ export function BlogSettingsProvider({ authorPubkey, children }: BlogSettingsPro
       ? { ...settings.theme.colors, ...settings.theme.darkMode.colors }
       : settings.theme.colors;
 
-    // Set primary color (buttons, accents)
+    // Set primary color (buttons only - NOT accent/hover states)
     if (colors.primary) {
       root.style.setProperty('--primary', hexToHsl(colors.primary));
-      root.style.setProperty('--accent', hexToHsl(colors.primary));
       root.style.setProperty('--ring', hexToHsl(colors.primary));
+    }
+    
+    // IMPORTANT: Accent color should be LIGHT (for hover states)
+    // Use muted color or a very light gray - NEVER the primary dark color
+    if (colors.muted) {
+      root.style.setProperty('--accent', hexToHsl(colors.muted));
+      root.style.setProperty('--accent-foreground', hexToHsl(colors.foreground || '#18181B'));
     }
 
     // Set background color
