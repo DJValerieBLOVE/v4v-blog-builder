@@ -200,13 +200,18 @@ export function useZaps(
       const zapAmount = amount * 1000; // convert to millisats
 
       // Build zap request with correct event type
-      const zapRequest = nip57.makeZapRequest({
+      // For addressable events, we need to pass the full event object
+      // For regular events, we pass the event ID string
+      const zapRequestParams = {
         profile: actualTarget.pubkey,
-        event: isAddressable ? actualTarget as NostrEvent : actualTarget.id,
         amount: zapAmount,
         relays: config.relayMetadata.relays.map(r => r.url),
         comment
-      });
+      };
+      
+      const zapRequest = isAddressable 
+        ? nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget as NostrEvent })
+        : nip57.makeZapRequest({ ...zapRequestParams, event: actualTarget.id });
 
       // Sign the zap request (but don't publish to relays - only send to LNURL endpoint)
       if (!user.signer) {
