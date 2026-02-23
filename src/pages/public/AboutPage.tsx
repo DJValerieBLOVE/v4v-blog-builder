@@ -1,7 +1,7 @@
 import { useHead } from '@unhead/react';
 import { nip19 } from 'nostr-tools';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Globe, Zap, Mail, Edit } from 'lucide-react';
+import { ArrowLeft, Globe, Zap, Mail, Edit, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
@@ -113,31 +113,31 @@ interface AboutSectionRendererProps {
 function AboutSectionRenderer({ section, metadata, npub }: AboutSectionRendererProps) {
   switch (section.type) {
     case 'hero':
-      // Image on left, text on right layout
+      // Image on left, text on right layout - NO overlay
       return (
-        <div className="rounded-2xl overflow-hidden border bg-card">
-          <div className="flex flex-col md:flex-row">
-            {/* Image on left */}
-            {section.image ? (
-              <div className="md:w-1/2">
+        <div className="rounded-2xl overflow-hidden border bg-card shadow-sm">
+          <div className="flex flex-col md:flex-row min-h-[280px]">
+            {/* Image on left - takes 50% width */}
+            <div className="md:w-1/2 relative">
+              {section.image ? (
                 <img 
                   src={section.image} 
                   alt={section.title || 'About'} 
-                  className="w-full h-48 md:h-full object-cover"
+                  className="w-full h-64 md:h-full md:absolute md:inset-0 object-cover"
                 />
-              </div>
-            ) : (
-              <div className="md:w-1/2 bg-muted flex items-center justify-center min-h-[12rem]">
-                <span className="text-muted-foreground text-sm">Add an image</span>
-              </div>
-            )}
-            {/* Text on right */}
-            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-              <h1 className="font-heading text-3xl md:text-4xl mb-4">
+              ) : (
+                <div className="w-full h-64 md:h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                  <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+                </div>
+              )}
+            </div>
+            {/* Text on right - takes 50% width */}
+            <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-card">
+              <h1 className="font-heading text-3xl md:text-4xl mb-4 text-foreground">
                 {section.title || 'About This Blog'}
               </h1>
               {section.content && (
-                <p className="text-lg text-muted-foreground whitespace-pre-wrap">
+                <p className="text-lg text-muted-foreground whitespace-pre-wrap leading-relaxed">
                   {section.content}
                 </p>
               )}

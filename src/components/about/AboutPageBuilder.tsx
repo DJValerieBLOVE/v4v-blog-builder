@@ -490,23 +490,31 @@ function AboutPreview({ sections, metadata, blogSettings }: AboutPreviewProps) {
           enabledSections.map((section) => (
             <div key={section.id} className="p-4">
               {section.type === 'hero' && (
-                <div 
-                  className="rounded-lg p-4 text-center"
-                  style={{
-                    backgroundImage: section.image ? `url(${section.image})` : undefined,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundColor: section.image ? undefined : 'hsl(var(--muted))',
-                  }}
-                >
-                  {section.image && <div className="absolute inset-0 bg-black/40 rounded-lg" />}
-                  <div className="relative">
-                    <h2 className="font-heading text-base mb-1" style={{ color: section.image ? 'white' : undefined }}>
-                      {section.title || 'About This Blog'}
-                    </h2>
-                    <p className="text-xs" style={{ color: section.image ? 'rgba(255,255,255,0.8)' : 'hsl(var(--muted-foreground))' }}>
-                      {section.content || 'Your blog description here...'}
-                    </p>
+                <div className="rounded-lg overflow-hidden border bg-card">
+                  <div className="flex">
+                    {/* Image on left */}
+                    {section.image ? (
+                      <div className="w-1/2">
+                        <img 
+                          src={section.image} 
+                          alt={section.title || 'About'} 
+                          className="w-full h-full object-cover min-h-[80px]"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-1/2 bg-muted flex items-center justify-center min-h-[80px]">
+                        <span className="text-muted-foreground text-[10px]">Image</span>
+                      </div>
+                    )}
+                    {/* Text on right */}
+                    <div className="w-1/2 p-3 flex flex-col justify-center">
+                      <h2 className="font-heading text-sm mb-1">
+                        {section.title || 'About This Blog'}
+                      </h2>
+                      <p className="text-[10px] text-muted-foreground line-clamp-3">
+                        {section.content || 'Your blog description here...'}
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

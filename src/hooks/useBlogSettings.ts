@@ -67,6 +67,16 @@ function mergeBlogSettings(target: BlogSettings, source: Partial<BlogSettings>):
     };
   }
 
+  // Merge about - IMPORTANT: About sections need special handling
+  if (source.about) {
+    result.about = {
+      ...target.about,
+      ...source.about,
+      // Sections are replaced entirely, not merged
+      sections: source.about.sections ?? target.about.sections,
+    };
+  }
+
   // Simple overwrites
   if (source.version !== undefined) result.version = source.version;
   if (source.categories !== undefined) result.categories = source.categories;

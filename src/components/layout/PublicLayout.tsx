@@ -2,17 +2,17 @@ import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { BlogSettingsProvider, useBlogSettingsContext } from '@/components/theme/BlogSettingsProvider';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { BLOG_OWNER_PUBKEY } from '@/lib/blogOwner';
 
 interface PublicLayoutProps {
   children?: React.ReactNode;
 }
 
 export function PublicLayout({ children }: PublicLayoutProps) {
-  const { user } = useCurrentUser();
-
+  // Always use the BLOG OWNER's settings for the public site
+  // This ensures visitors see the owner's customizations, not their own
   return (
-    <BlogSettingsProvider authorPubkey={user?.pubkey}>
+    <BlogSettingsProvider authorPubkey={BLOG_OWNER_PUBKEY ?? undefined}>
       <PublicLayoutContent>{children}</PublicLayoutContent>
     </BlogSettingsProvider>
   );
