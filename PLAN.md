@@ -226,6 +226,32 @@ ADMIN ROUTES (requires login)
 
 ---
 
+## Phase 7: RSS & Import (Upcoming)
+**Goal**: SEO authority and content migration
+
+- [ ] RSS feed generation (XML)
+- [ ] RSS feed auto-discovery meta tag
+- [ ] RSS import from external feeds
+- [ ] Content migration from Ghost/Substack/WordPress
+
+**Deliverable**: Proper blog SEO with feed support
+
+---
+
+## Phase 8: AI Writing Assistant (Future)
+**Goal**: AI-powered content creation
+
+- [ ] AI assistant panel in editor
+- [ ] User brings own API key (stored locally)
+- [ ] Generate/improve article content
+- [ ] SEO title and summary suggestions
+- [ ] Tag and category suggestions
+- [ ] Readability improvements
+
+**Deliverable**: AI-assisted blogging experience
+
+---
+
 ## Future Enhancements
 
 - Multi-author support
@@ -233,6 +259,4 @@ ADMIN ROUTES (requires login)
 - Paid content (zap to unlock)
 - Scheduled publishing
 - Analytics integration
-- RSS feed generation
-- Import from Ghost/Substack/WordPress
 - Custom domain support

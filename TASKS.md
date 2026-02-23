@@ -202,25 +202,78 @@
 
 ---
 
-## Summary
+## Post-Phase Polish ✅ COMPLETE
 
-All 6 phases have been completed:
+### Typography & Sizing
+- [x] Set base font size to 18px
+- [x] Marcellus font for ALL text (headings and body)
+- [x] Header navigation text size 18px (text-base)
+- [x] Footer text size 16px
+- [x] Button heights reduced (h-8 default, h-7 sm, h-9 lg)
+- [x] Button horizontal padding increased (px-5 default, px-4 sm, px-8 lg)
 
-1. **Phase 1: Foundation** - Routes, layouts, article display, search
-2. **Phase 2: Engagement** - Zaps, likes, comments, shares, bookmarks
-3. **Phase 3: Admin & Editor** - TipTap block editor, article publishing
-4. **Phase 4: Theme System** - 3 themes, settings UI, color customization
-5. **Phase 5: Newsletter & Hero** - Email providers, subscribe form, hero variants
-6. **Phase 6: Polish & SEO** - JSON-LD, meta tags, 404 page, accessibility
+### Color System
+- [x] Change default theme from pink to neutral dark gray (#2D2D2D)
+- [x] Add full color customization in Theme Settings:
+  - [x] Button & Accent Color picker
+  - [x] Background Color picker
+  - [x] Text Color picker
+  - [x] Card Background Color picker
+- [x] Apply all custom colors via CSS variables
+- [x] Keep quick color presets (purple, blue, green, orange, pink, red)
+
+### UI Fixes
+- [x] Hero badge: border outline instead of light pink background
+- [x] Hero badge: lightning bolt icon instead of sparkles
+- [x] Hero text: "Build Your Value for Value Blog"
+- [x] Hero subtitle: "Own your content. Get paid in Bitcoin."
+- [x] Default border radius: 'md' instead of 'full' (pill)
+- [x] Subscribe form inputs/buttons: keep pill shape (rounded-full)
+- [x] Remove light pink hover states from outline/ghost buttons
 
 ---
 
-## Notes
+## Phase 7: RSS & Import (PRIORITY - Next)
+
+### RSS Feed Generation
+- [ ] Create RSS feed endpoint/generator
+- [ ] Add RSS auto-discovery meta tag
+- [ ] Include proper schema for blog authority
+
+### RSS Import
+- [ ] Parse RSS/Atom feed URLs
+- [ ] Extract title, content, date, images
+- [ ] Convert to NIP-23 articles
+- [ ] Review/edit before publishing to Nostr
+
+---
+
+## Phase 8: AI Writing Assistant (Future)
+
+- [ ] AI assistant panel in editor sidebar
+- [ ] User API key input (stored in localStorage)
+- [ ] Generate/improve article content
+- [ ] SEO title and summary suggestions
+- [ ] Tag and category suggestions
+- [ ] Readability improvements
+
+---
+
+## Summary
+
+Phases 1-6 complete. Post-phase polish complete.
+
+**Next Priority**: Phase 7 (RSS Feed Generation & Import) - Critical for SEO/AI authority
+
+---
+
+## Design Notes
 
 - All thumbnails use 16:9 ratio
-- Marcellus font for headings (no bold)
-- Large rounded (pill) buttons throughout
-- Elegant/luxury aesthetic achieved
+- Marcellus font for ALL text (no bold, weight 400)
+- Pill-shaped subscribe form (email input + button)
+- Neutral default theme (users customize via settings)
 - Settings stored in kind:30078 (public, syncs across devices)
 - Theme presets: Magazine, Newsletter, Minimal
 - Color presets: Purple, Blue, Green, Orange, Pink, Red
+- Full color customization: accent, background, text, card colors
