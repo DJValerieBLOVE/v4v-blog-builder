@@ -2,6 +2,7 @@ import { Zap } from 'lucide-react';
 import { SubscribeForm } from './SubscribeForm';
 import { NostrFollowButton } from './NostrFollowButton';
 import { useBlogSettingsContext } from '@/components/theme/BlogSettingsProvider';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { cn } from '@/lib/utils';
 
 interface HeroSectionProps {
@@ -11,9 +12,11 @@ interface HeroSectionProps {
 
 export function HeroSection({ authorPubkey, className }: HeroSectionProps) {
   const { settings, isLoading } = useBlogSettingsContext();
+  const { user } = useCurrentUser();
 
-  // Don't render if hero is disabled
-  if (!settings.hero.enabled || isLoading) {
+  // Don't render if hero is disabled, still loading, or user is logged in
+  // Logged-in users (both admin and readers) don't need to see the hero - they're already engaged
+  if (!settings.hero.enabled || isLoading || user) {
     return null;
   }
 

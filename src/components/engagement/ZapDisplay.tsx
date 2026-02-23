@@ -72,7 +72,7 @@ export function ZapDisplay({
       {showTotal && (
         <div className="flex items-center gap-1.5 text-primary">
           <Zap className="h-5 w-5 fill-primary" />
-          <span className="font-semibold">{formatSats(zapTotal)}</span>
+          <span>{formatSats(zapTotal)}</span>
         </div>
       )}
 
@@ -111,7 +111,7 @@ function ZapperAvatar({ pubkey, amount }: { pubkey: string; amount: number }) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="text-center">
-          <p className="font-medium">{metadata?.name ?? 'Anonymous'}</p>
+          <p>{metadata?.name ?? 'Anonymous'}</p>
           <p className="text-xs text-muted-foreground">{formatSats(amount)} zapped</p>
         </div>
       </TooltipContent>

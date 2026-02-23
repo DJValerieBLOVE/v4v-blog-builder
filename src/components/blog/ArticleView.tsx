@@ -77,7 +77,7 @@ export function ArticleView({ article, className }: ArticleViewProps) {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-medium">{metadata?.name ?? 'Anonymous'}</p>
+                <p>{metadata?.name ?? 'Anonymous'}</p>
                 {metadata?.nip05 && (
                   <p className="text-sm text-muted-foreground">{metadata.nip05}</p>
                 )}

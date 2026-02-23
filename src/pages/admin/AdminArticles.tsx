@@ -146,7 +146,7 @@ function ArticlesTable({ articles, userPubkey }: ArticlesTableProps) {
             <TableRow key={article.id}>
               <TableCell>
                 <div>
-                  <p className="font-medium line-clamp-1">{article.title}</p>
+                  <p className="line-clamp-1">{article.title}</p>
                   {article.tags.length > 0 && (
                     <div className="flex gap-1 mt-1 flex-wrap">
                       {article.tags.slice(0, 3).map((tag) => (

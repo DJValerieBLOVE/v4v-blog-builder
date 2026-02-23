@@ -57,7 +57,7 @@ export function ArticleMeta({
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-medium text-sm">{metadata?.name ?? 'Anonymous'}</p>
+              <p className="text-sm">{metadata?.name ?? 'Anonymous'}</p>
             </div>
           </Link>
         )}

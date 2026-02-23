@@ -77,7 +77,7 @@ export function AdminDashboard() {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">{stat.title}</p>
-                    <p className="text-2xl font-semibold">{stat.value}</p>
+                    <p className="text-2xl">{stat.value}</p>
                   </div>
                 </div>
               </CardContent>

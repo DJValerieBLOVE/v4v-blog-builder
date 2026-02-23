@@ -174,7 +174,7 @@ function CommentItem({ comment, getDirectReplies, article, depth = 0 }: CommentI
         </Avatar>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-medium text-sm truncate">
+            <span className="text-sm truncate">
               {metadata?.name ?? 'Anonymous'}
             </span>
             <span className="text-xs text-muted-foreground">{timeAgo}</span>
