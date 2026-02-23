@@ -131,3 +131,20 @@
     font-size: 16px;
   }
 }
+
+/* Global prose line spacing fix (matches Notion/Primal) */
+.prose p,
+.prose li {
+  line-height: 1.6;
+}
+
+.prose p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.prose ul,
+.prose ol {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

@@ -431,10 +431,11 @@ Phases 1-6 complete. Post-phase polish complete.
 - [x] `bg-muted` respects theme (light gray in both light/dark mode)
 - [x] Applied to both desktop and mobile navigation
 
-### Article Line Spacing
+### Article Line Spacing (GLOBAL)
 - [x] Set line-height to 1.6 (matching Notion/Primal styling)
-- [x] Override Tailwind prose defaults with specific selectors
-- [x] Tighter paragraph margins (my-4 instead of prose default)
+- [x] Added global prose styles in `src/index.css`
+- [x] Applies to all `.prose` elements (ArticleView, Editor, Preview)
+- [x] Tighter paragraph margins (1rem instead of prose default)
 
 ### Header Scroll Behavior
 - [x] Added scroll detection with useState/useEffect
