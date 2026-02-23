@@ -24,8 +24,8 @@
     --muted: 240 5% 96%;
     --muted-foreground: 240 4% 46%;
 
-    --accent: 319 100% 96%;
-    --accent-foreground: 319 100% 35%;
+    --accent: 319 100% 46%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -66,8 +66,8 @@
     --muted: 240 4% 16%;
     --muted-foreground: 240 5% 65%;
 
-    --accent: 319 50% 20%;
-    --accent-foreground: 319 100% 75%;
+    --accent: 319 100% 46%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 98%;
@@ -94,18 +94,13 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
+    font-family: 'Marcellus', Georgia, serif;
   }
 
-  /* Headings use Marcellus - no bold */
-  h1, h2, h3, h4, h5, h6 {
+  /* All text uses Marcellus - no bold */
+  h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label {
     font-family: 'Marcellus', Georgia, serif;
     font-weight: 400;
-  }
-
-  /* Body text uses Inter */
-  p, span, div, a, button, input, textarea, label {
-    font-family: 'Inter Variable', 'Inter', system-ui, sans-serif;
   }
 }
 
