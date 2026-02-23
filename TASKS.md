@@ -432,9 +432,15 @@ Phases 1-6 complete. Post-phase polish complete.
 - [x] Applied to both desktop and mobile navigation
 
 ### Article Line Spacing
-- [x] Added `leading-normal` class to article content
-- [x] Paragraphs and list items now use 1.5 line height
-- [x] Improved readability for long-form content
+- [x] Set line-height to 1.6 (matching Notion/Primal styling)
+- [x] Override Tailwind prose defaults with specific selectors
+- [x] Tighter paragraph margins (my-4 instead of prose default)
+
+### Header Scroll Behavior
+- [x] Added scroll detection with useState/useEffect
+- [x] Header becomes solid (`bg-background`) when scrolled > 10px
+- [x] Transparent with blur when at top of page
+- [x] Smooth transition between states
 
 ---
 

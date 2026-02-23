@@ -307,7 +307,8 @@ BLOG OWNER (you)          VISITORS (readers who login)
 
 - [x] Remove copyright text from footer ("© 2026 All rights reserved")
 - [x] Fix sidebar hover color (gray-100 → muted for theme compatibility)
-- [x] Set article content line spacing to 1.5 (leading-normal)
+- [x] Set article content line spacing to 1.6 (matching Notion/Primal)
+- [x] Solid header background when user scrolls (no transparency)
 
 **Deliverable**: Cleaner footer and improved article readability
 

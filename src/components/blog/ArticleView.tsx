@@ -116,7 +116,7 @@ export function ArticleView({ article, className }: ArticleViewProps) {
       )}
 
       {/* Article Content */}
-      <div className="prose prose-lg dark:prose-invert max-w-none mb-12 leading-relaxed [&_p]:leading-normal [&_li]:leading-normal">
+      <div className="prose prose-lg dark:prose-invert max-w-none mb-12 [&_p]:leading-[1.6] [&_li]:leading-[1.6] [&_ul]:my-4 [&_ol]:my-4 [&_p]:my-4">
         <ArticleContent content={article.content} />
       </div>
 
