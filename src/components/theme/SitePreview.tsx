@@ -130,6 +130,41 @@ export function SitePreview({ settings, className }: SitePreviewProps) {
         </div>
       )}
 
+      {/* Featured Article Hero Section - Same for all layouts */}
+      <div 
+        className="relative overflow-hidden"
+        style={{ borderRadius }}
+      >
+        {/* Featured Image Background */}
+        <div className="aspect-[16/9] bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 relative">
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          
+          {/* Featured Content */}
+          <div className="absolute inset-0 flex flex-col justify-end p-3">
+            <Badge 
+              variant="secondary" 
+              className="w-fit text-[7px] mb-1 px-1.5 py-0"
+              style={{ backgroundColor: colors.primary, color: colors.background }}
+            >
+              Featured
+            </Badge>
+            <p 
+              className="text-[11px] font-semibold text-white line-clamp-2 mb-0.5"
+              style={{ fontFamily: theme.fonts.heading }}
+            >
+              The Featured Article Title
+            </p>
+            <p className="text-[8px] text-white/70 line-clamp-1">
+              A compelling summary that draws readers in...
+            </p>
+            <p className="text-[7px] text-white/50 mt-1">
+              Feb 23, 2026
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Mini Articles */}
       <div className="p-4">
         <h3 
@@ -140,86 +175,27 @@ export function SitePreview({ settings, className }: SitePreviewProps) {
         </h3>
 
         {layout === 'magazine' && (
-          <div className="space-y-3">
-            {/* Featured article */}
-            <Card style={{ backgroundColor: colors.card, borderColor: colors.border, borderRadius }}>
-              <div className="flex gap-2">
-                <AspectRatio ratio={16/10} className="w-1/2 overflow-hidden" style={{ borderRadius }}>
+          <div className="grid grid-cols-3 gap-2">
+            {[1, 2, 3].map((i) => (
+              <Card key={i} style={{ backgroundColor: colors.card, borderColor: colors.border, borderRadius }}>
+                <AspectRatio ratio={16/9} className="overflow-hidden" style={{ borderTopLeftRadius: borderRadius, borderTopRightRadius: borderRadius }}>
                   <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300" />
                 </AspectRatio>
-                <CardContent className="flex-1 p-2 flex flex-col justify-center">
-                  <Badge 
-                    variant="secondary" 
-                    className="w-fit text-[8px] mb-1 px-1 py-0"
-                    style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
-                  >
-                    Featured
-                  </Badge>
+                <CardContent className="p-2">
                   <p 
-                    className="text-[10px] font-medium line-clamp-2"
+                    className="text-[8px] font-medium line-clamp-2"
                     style={{ fontFamily: theme.fonts.heading }}
                   >
-                    Welcome to My Blog
-                  </p>
-                  <p className="text-[8px] mt-1" style={{ color: colors.muted }}>
-                    Feb 23, 2026
+                    Article Title {i}
                   </p>
                 </CardContent>
-              </div>
-            </Card>
-            {/* Grid articles */}
-            <div className="grid grid-cols-3 gap-2">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} style={{ backgroundColor: colors.card, borderColor: colors.border, borderRadius }}>
-                  <AspectRatio ratio={16/9} className="overflow-hidden" style={{ borderTopLeftRadius: borderRadius, borderTopRightRadius: borderRadius }}>
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300" />
-                  </AspectRatio>
-                  <CardContent className="p-2">
-                    <p 
-                      className="text-[8px] font-medium line-clamp-2"
-                      style={{ fontFamily: theme.fonts.heading }}
-                    >
-                      Article Title {i}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+              </Card>
+            ))}
           </div>
         )}
 
         {layout === 'newsletter' && (
           <div className="space-y-2">
-            {/* Featured article for newsletter */}
-            <Card 
-              className="overflow-hidden" 
-              style={{ backgroundColor: colors.card, borderColor: colors.border, borderRadius }}
-            >
-              <div className="p-2 border-b" style={{ borderColor: colors.border }}>
-                <Badge 
-                  variant="secondary" 
-                  className="text-[8px] px-1 py-0"
-                  style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
-                >
-                  Featured
-                </Badge>
-              </div>
-              <div className="flex gap-2">
-                <div className="w-20 h-14 bg-gradient-to-br from-gray-200 to-gray-300 flex-shrink-0" />
-                <div className="p-2 flex-1">
-                  <p 
-                    className="text-[9px] font-medium line-clamp-2"
-                    style={{ fontFamily: theme.fonts.heading }}
-                  >
-                    Featured Newsletter Article
-                  </p>
-                  <p className="text-[7px] line-clamp-1" style={{ color: colors.muted }}>
-                    The most important article for your readers...
-                  </p>
-                </div>
-              </div>
-            </Card>
-            {/* Regular articles */}
             {[1, 2, 3].map((i) => (
               <Card 
                 key={i} 
@@ -245,29 +221,6 @@ export function SitePreview({ settings, className }: SitePreviewProps) {
 
         {layout === 'minimal' && (
           <div className="space-y-2 max-w-[180px] mx-auto">
-            {/* Featured article for minimal */}
-            <div 
-              className="py-2 border-b"
-              style={{ borderColor: colors.border }}
-            >
-              <Badge 
-                variant="secondary" 
-                className="text-[7px] px-1 py-0 mb-1"
-                style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
-              >
-                Featured
-              </Badge>
-              <p 
-                className="text-[10px] font-medium"
-                style={{ fontFamily: theme.fonts.heading }}
-              >
-                Featured Minimal Article
-              </p>
-              <p className="text-[7px]" style={{ color: colors.muted }}>
-                Feb 23, 2026
-              </p>
-            </div>
-            {/* Regular articles */}
             {[1, 2, 3].map((i) => (
               <div 
                 key={i} 
