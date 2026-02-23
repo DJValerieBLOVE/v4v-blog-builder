@@ -169,6 +169,23 @@ ADMIN ROUTES (requires login)
 
 ---
 
+### Phase 6.5: UX Improvements ✅
+**Goal**: Enhanced user experience
+
+- [x] "New Article" button in header (logged-in users)
+- [x] Fixed footer background color
+- [x] Fixed dropdown menu accent colors
+- [x] Strip markdown artifacts (** bold markers)
+- [x] White background for article cards
+- [x] Show category + 1 tag on cards (instead of read time)
+- [x] Spread out action icons under posts
+- [x] Zap button at top of article (author area)
+- [x] Toggle comments (hidden by default)
+
+**Deliverable**: Cleaner, more intuitive UI
+
+---
+
 ## Data Models
 
 ### Article (kind:30023)

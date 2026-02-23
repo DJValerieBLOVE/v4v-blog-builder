@@ -254,7 +254,7 @@ function ReplyForm({ article, parentComment, onClose }: ReplyFormProps) {
       await postComment({
         content: reply.trim(),
         root: article,
-        replyTo: parentComment,
+        reply: parentComment,
       });
       setReply('');
       onClose();

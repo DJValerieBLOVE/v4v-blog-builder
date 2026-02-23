@@ -267,6 +267,28 @@ Phases 1-6 complete. Post-phase polish complete.
 
 ---
 
+## Recent Updates (February 2026)
+
+### UI/UX Improvements ✅
+- [x] Add "New Article" button in header for logged-in users
+- [x] Fix footer background color (use white/background)
+- [x] Fix dropdown menu accent colors (was dark on dark)
+- [x] Strip ** markdown artifacts from article content
+- [x] Make article cards have white background
+- [x] Show category and 1 tag instead of reading time on cards
+- [x] Spread out action icons under posts
+- [x] Add zap button at top of article (next to author info)
+- [x] Make comments section togglable (click to show/hide)
+
+### TypeScript Fixes ✅
+- [x] Fix ThemeSettings color type mismatches
+- [x] Fix ZapButton props (support both `target` and `event`)
+- [x] Fix CommentSection `replyTo` → `reply` property
+- [x] Fix BlockEditor markdown storage fallback
+- [x] Fix ArticleCard formatShortDate import
+
+---
+
 ## Design Notes
 
 - All thumbnails use 16:9 ratio

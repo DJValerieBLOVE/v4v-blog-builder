@@ -7,31 +7,37 @@ import { Zap } from 'lucide-react';
 import type { Event } from 'nostr-tools';
 
 interface ZapButtonProps {
-  target: Event;
+  target?: Event;
+  event?: Event;
   className?: string;
   showCount?: boolean;
   zapData?: { count: number; totalSats: number; isLoading?: boolean };
+  variant?: 'default' | 'compact';
 }
 
 export function ZapButton({
   target,
+  event,
   className = "text-xs ml-1",
   showCount = true,
-  zapData: externalZapData
+  zapData: externalZapData,
+  variant = 'default',
 }: ZapButtonProps) {
+  // Support both target and event props for backwards compatibility
+  const zapTarget = target ?? event;
   const { user } = useCurrentUser();
-  const { data: author } = useAuthor(target?.pubkey || '');
+  const { data: author } = useAuthor(zapTarget?.pubkey || '');
   const { webln, activeNWC } = useWallet();
 
   // Only fetch data if not provided externally
   const { totalSats: fetchedTotalSats, isLoading } = useZaps(
-    externalZapData ? [] : target ?? [], // Empty array prevents fetching if external data provided
+    externalZapData ? [] : zapTarget ?? [], // Empty array prevents fetching if external data provided
     webln,
     activeNWC
   );
 
   // Don't show zap button if user is not logged in, is the author, or author has no lightning address
-  if (!user || !target || user.pubkey === target.pubkey || (!author?.metadata?.lud16 && !author?.metadata?.lud06)) {
+  if (!user || !zapTarget || user.pubkey === zapTarget.pubkey || (!author?.metadata?.lud16 && !author?.metadata?.lud06)) {
     return null;
   }
 
@@ -40,7 +46,7 @@ export function ZapButton({
   const showLoading = externalZapData?.isLoading || isLoading;
 
   return (
-    <ZapDialog target={target}>
+    <ZapDialog target={zapTarget}>
       <div className={`flex items-center gap-1 ${className}`}>
         <Zap className="h-4 w-4" />
         <span className="text-xs">

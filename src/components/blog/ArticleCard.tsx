@@ -6,7 +6,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuthor } from '@/hooks/useAuthor';
-import { type ArticleData } from '@/lib/article';
+import { formatShortDate, type ArticleData } from '@/lib/article';
 import { cn } from '@/lib/utils';
 
 interface ArticleCardProps {

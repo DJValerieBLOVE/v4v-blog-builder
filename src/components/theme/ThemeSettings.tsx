@@ -14,10 +14,22 @@ import { useBlogSettings, useUpdateBlogSettings } from '@/hooks/useBlogSettings'
 import { useToast } from '@/hooks/useToast';
 import { 
   type BlogSettings,
+  type ThemeColors,
   themePresets, 
   colorPresets,
+  defaultBlogSettings,
 } from '@/lib/blogSettings';
 import { cn } from '@/lib/utils';
+
+// Helper to build complete theme colors
+const buildColors = (currentColors: Partial<ThemeColors> | undefined, updates: Partial<ThemeColors>): ThemeColors => ({
+  primary: updates.primary ?? currentColors?.primary ?? defaultBlogSettings.theme.colors.primary,
+  background: updates.background ?? currentColors?.background ?? defaultBlogSettings.theme.colors.background,
+  foreground: updates.foreground ?? currentColors?.foreground ?? defaultBlogSettings.theme.colors.foreground,
+  muted: updates.muted ?? currentColors?.muted ?? defaultBlogSettings.theme.colors.muted,
+  border: updates.border ?? currentColors?.border ?? defaultBlogSettings.theme.colors.border,
+  card: updates.card ?? currentColors?.card ?? defaultBlogSettings.theme.colors.card,
+});
 
 export function ThemeSettings() {
   const { data: settings, isLoading } = useBlogSettings();
@@ -301,10 +313,7 @@ export function ThemeSettings() {
                         theme: {
                           ...currentSettings?.theme,
                           preset: currentSettings?.theme?.preset ?? 'magazine',
-                          colors: {
-                            ...currentSettings?.theme?.colors,
-                            primary: preset.primary,
-                          },
+                          colors: buildColors(currentSettings?.theme?.colors, { primary: preset.primary }),
                           darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                           fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                           borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -336,10 +345,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          primary: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { primary: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -353,10 +359,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          primary: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { primary: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -381,10 +384,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          background: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { background: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -398,10 +398,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          background: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { background: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -426,10 +423,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          foreground: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { foreground: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -443,10 +437,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          foreground: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { foreground: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -471,10 +462,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          card: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { card: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -488,10 +476,7 @@ export function ThemeSettings() {
                       theme: {
                         ...currentSettings?.theme,
                         preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: {
-                          ...currentSettings?.theme?.colors,
-                          card: e.target.value,
-                        },
+                        colors: buildColors(currentSettings?.theme?.colors, { card: e.target.value }),
                         darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                         fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                         borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -517,7 +502,7 @@ export function ThemeSettings() {
                     theme: {
                       ...currentSettings?.theme,
                       preset: currentSettings?.theme?.preset ?? 'magazine',
-                      colors: currentSettings?.theme?.colors ?? { primary: '#2D2D2D', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
+                      colors: buildColors(currentSettings?.theme?.colors, {}),
                       darkMode: { ...currentSettings?.theme?.darkMode, enabled: checked },
                       fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                       borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -544,7 +529,7 @@ export function ThemeSettings() {
                     theme: {
                       ...currentSettings?.theme,
                       preset: value as 'magazine' | 'newsletter' | 'minimal',
-                      colors: currentSettings?.theme?.colors ?? { primary: '#2D2D2D', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
+                      colors: buildColors(currentSettings?.theme?.colors, {}),
                       darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                       fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                       borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
@@ -582,7 +567,7 @@ export function ThemeSettings() {
                     theme: {
                       ...currentSettings?.theme,
                       preset: currentSettings?.theme?.preset ?? 'magazine',
-                      colors: currentSettings?.theme?.colors ?? { primary: '#2D2D2D', background: '#FFFFFF', foreground: '#18181B', muted: '#71717A', border: '#E4E4E7', card: '#FAFAFA' },
+                      colors: buildColors(currentSettings?.theme?.colors, {}),
                       darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
                       fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
                       borderRadius: value as 'none' | 'sm' | 'md' | 'lg' | 'full',

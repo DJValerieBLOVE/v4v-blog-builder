@@ -77,11 +77,13 @@ export function BlockEditor({
     },
     onUpdate: ({ editor }) => {
       // Get content as markdown-like text
-      const text = editor.storage.markdown?.getMarkdown?.() ?? editor.getText();
+      // Try to get markdown from storage, fallback to converting HTML
+      const html = editor.getHTML();
+      const text = htmlToMarkdown(html);
       onChange?.(text);
       
       // Also provide HTML for preview
-      onHtmlChange?.(editor.getHTML());
+      onHtmlChange?.(html);
     },
   });
 
