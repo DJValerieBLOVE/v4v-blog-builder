@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 interface ArticleCardProps {
   article: ArticleData;
-  layout?: 'grid' | 'list' | 'minimal';
+  layout?: 'grid' | 'list' | 'minimal' | 'featured';
   showThumbnail?: boolean;
   showSummary?: boolean;
   showMeta?: boolean;
@@ -34,6 +34,58 @@ export function ArticleCard({
 
   // Default placeholder image for articles without thumbnails
   const placeholderImage = `https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=450&fit=crop`;
+
+  // Featured layout - large hero-style card like Ghost
+  if (layout === 'featured') {
+    return (
+      <Link to={articleUrl} className={cn('group block', className)}>
+        <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-card">
+          <div className="grid md:grid-cols-2 gap-0">
+            {/* Large image on left */}
+            <div className="relative">
+              <AspectRatio ratio={16 / 10} className="md:absolute md:inset-0">
+                <img
+                  src={article.image ?? placeholderImage}
+                  alt={article.title}
+                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                />
+              </AspectRatio>
+            </div>
+            {/* Content on right */}
+            <CardContent className="p-8 md:p-10 flex flex-col justify-center">
+              {article.category && (
+                <Badge variant="secondary" className="w-fit mb-4">
+                  {article.category}
+                </Badge>
+              )}
+              <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl mb-4 group-hover:text-primary transition-colors line-clamp-3">
+                {article.title}
+              </h2>
+              {article.summary && (
+                <p className="text-muted-foreground text-base md:text-lg line-clamp-3 mb-6">
+                  {article.summary}
+                </p>
+              )}
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                {showAuthor && author.data?.metadata && (
+                  <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={author.data.metadata.picture} />
+                      <AvatarFallback className="text-xs">
+                        {author.data.metadata.name?.[0]?.toUpperCase() ?? '?'}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span>{author.data.metadata.name}</span>
+                  </div>
+                )}
+                <span>{formatShortDate(article.publishedAt)}</span>
+              </div>
+            </CardContent>
+          </div>
+        </Card>
+      </Link>
+    );
+  }
 
   if (layout === 'minimal') {
     return (
@@ -164,7 +216,30 @@ export function ArticleCard({
   );
 }
 
-export function ArticleCardSkeleton({ layout = 'grid' }: { layout?: 'grid' | 'list' | 'minimal' }) {
+export function ArticleCardSkeleton({ layout = 'grid' }: { layout?: 'grid' | 'list' | 'minimal' | 'featured' }) {
+  if (layout === 'featured') {
+    return (
+      <Card className="overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-0">
+          <AspectRatio ratio={16 / 10}>
+            <Skeleton className="w-full h-full" />
+          </AspectRatio>
+          <CardContent className="p-8 md:p-10 flex flex-col justify-center">
+            <Skeleton className="h-6 w-24 mb-4" />
+            <Skeleton className="h-10 w-full mb-2" />
+            <Skeleton className="h-10 w-3/4 mb-4" />
+            <Skeleton className="h-5 w-full mb-1" />
+            <Skeleton className="h-5 w-2/3 mb-6" />
+            <div className="flex items-center gap-3">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          </CardContent>
+        </div>
+      </Card>
+    );
+  }
+
   if (layout === 'minimal') {
     return (
       <div className="py-4 border-b">

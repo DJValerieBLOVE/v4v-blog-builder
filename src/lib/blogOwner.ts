@@ -25,7 +25,7 @@
  * Leave as null for "builder mode" where anyone logged in is treated as owner
  * (useful for development/testing)
  */
-export const BLOG_OWNER_PUBKEY: string | null = null;
+export const BLOG_OWNER_PUBKEY: string | null = '3d70ec1ea586650a0474d6858454209d222158f4079e8db806f017ef5e30e767';
 
 /**
  * Check if a pubkey is the blog owner

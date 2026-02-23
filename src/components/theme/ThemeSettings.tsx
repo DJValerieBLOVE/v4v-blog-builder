@@ -150,26 +150,27 @@ export function ThemeSettings() {
       )}
 
       <Tabs defaultValue="identity" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="identity" className="gap-2">
+        {/* Bubble-style tabs - NOT full width */}
+        <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
+          <TabsTrigger value="identity" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
             <Type className="h-4 w-4" />
             <span className="hidden sm:inline">Identity</span>
           </TabsTrigger>
-          <TabsTrigger value="theme" className="gap-2">
+          <TabsTrigger value="theme" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
             <Palette className="h-4 w-4" />
             <span className="hidden sm:inline">Theme</span>
           </TabsTrigger>
-          <TabsTrigger value="layout" className="gap-2">
+          <TabsTrigger value="layout" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
             <Layout className="h-4 w-4" />
             <span className="hidden sm:inline">Layout</span>
           </TabsTrigger>
-          <TabsTrigger value="hero" className="gap-2">
+          <TabsTrigger value="hero" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
             <Image className="h-4 w-4" />
             <span className="hidden sm:inline">Hero</span>
           </TabsTrigger>
         </TabsList>
 
-        {/* Identity Tab */}
+        {/* Identity Tab - 2 column layout */}
         <TabsContent value="identity">
           <Card>
             <CardHeader>
@@ -177,39 +178,42 @@ export function ThemeSettings() {
               <CardDescription>Set your blog name, tagline, and logo</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Blog Name */}
-              <div className="space-y-2">
-                <Label htmlFor="blogName">Blog Name</Label>
-                <Input
-                  id="blogName"
-                  value={currentSettings?.identity?.blogName ?? ''}
-                  onChange={(e) => updateLocal({
-                    identity: {
-                      ...currentSettings?.identity,
-                      blogName: e.target.value,
-                      logo: currentSettings?.identity?.logo ?? { type: 'text' },
-                    },
-                  })}
-                  placeholder="My Awesome Blog"
-                />
-              </div>
+              {/* 2-column grid for basic fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Blog Name */}
+                <div className="space-y-2">
+                  <Label htmlFor="blogName">Blog Name</Label>
+                  <Input
+                    id="blogName"
+                    value={currentSettings?.identity?.blogName ?? ''}
+                    onChange={(e) => updateLocal({
+                      identity: {
+                        ...currentSettings?.identity,
+                        blogName: e.target.value,
+                        logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                      },
+                    })}
+                    placeholder="My Awesome Blog"
+                  />
+                </div>
 
-              {/* Tagline */}
-              <div className="space-y-2">
-                <Label htmlFor="tagline">Tagline</Label>
-                <Input
-                  id="tagline"
-                  value={currentSettings?.identity?.tagline ?? ''}
-                  onChange={(e) => updateLocal({
-                    identity: {
-                      ...currentSettings?.identity,
-                      blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
-                      tagline: e.target.value,
-                      logo: currentSettings?.identity?.logo ?? { type: 'text' },
-                    },
-                  })}
-                  placeholder="Thoughts on Bitcoin and Freedom"
-                />
+                {/* Tagline */}
+                <div className="space-y-2">
+                  <Label htmlFor="tagline">Tagline</Label>
+                  <Input
+                    id="tagline"
+                    value={currentSettings?.identity?.tagline ?? ''}
+                    onChange={(e) => updateLocal({
+                      identity: {
+                        ...currentSettings?.identity,
+                        blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                        tagline: e.target.value,
+                        logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                      },
+                    })}
+                    placeholder="Thoughts on Bitcoin and Freedom"
+                  />
+                </div>
               </div>
 
               {/* Logo */}
@@ -299,42 +303,106 @@ export function ThemeSettings() {
                 )}
               </div>
 
-              {/* Publication Icon (Favicon) */}
-              <div className="space-y-2 pt-4 border-t">
-                <Label>Publication Icon</Label>
-                <p className="text-sm text-muted-foreground">A square icon, at least 60x60px. Used as favicon.</p>
-                <div className="flex items-center gap-4">
-                  {currentSettings?.identity?.icon && (
-                    <div className="w-16 h-16 rounded-lg border overflow-hidden bg-gray-100 flex-shrink-0">
-                      <img
-                        src={currentSettings.identity.icon}
-                        alt="Icon"
-                        className="w-full h-full object-cover"
+              {/* 2-column grid for icon and cover */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t">
+                {/* Publication Icon (Favicon) */}
+                <div className="space-y-2">
+                  <Label>Publication Icon</Label>
+                  <p className="text-sm text-muted-foreground">A square icon, at least 60x60px. Used as favicon.</p>
+                  <div className="flex items-center gap-4">
+                    {currentSettings?.identity?.icon && (
+                      <div className="w-12 h-12 rounded-lg border overflow-hidden bg-gray-100 flex-shrink-0">
+                        <img
+                          src={currentSettings.identity.icon}
+                          alt="Icon"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="flex gap-2 flex-1">
+                      <Input
+                        value={currentSettings?.identity?.icon ?? ''}
+                        onChange={(e) => updateLocal({
+                          identity: {
+                            ...currentSettings?.identity,
+                            blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                            logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                            icon: e.target.value || undefined,
+                          },
+                        })}
+                        placeholder="https://..."
+                        className="flex-1"
+                      />
+                      <Label
+                        htmlFor="icon-upload"
+                        className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-3 cursor-pointer"
+                      >
+                        {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
+                      </Label>
+                      <input
+                        id="icon-upload"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          try {
+                            const [[, url]] = await uploadFile(file);
+                            updateLocal({
+                              identity: {
+                                ...currentSettings?.identity,
+                                blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
+                                logo: currentSettings?.identity?.logo ?? { type: 'text' },
+                                icon: url,
+                              },
+                            });
+                            toast({ title: 'Icon uploaded' });
+                          } catch {
+                            toast({ title: 'Upload failed', variant: 'destructive' });
+                          }
+                        }}
+                        disabled={isUploading}
                       />
                     </div>
+                  </div>
+                </div>
+
+                {/* Publication Cover Image */}
+                <div className="space-y-2">
+                  <Label>Publication Cover</Label>
+                  <p className="text-sm text-muted-foreground">A large banner image for homepage and social sharing.</p>
+                  {currentSettings?.identity?.coverImage && (
+                    <AspectRatio ratio={16 / 9} className="rounded-lg overflow-hidden border max-w-xs">
+                      <img
+                        src={currentSettings.identity.coverImage}
+                        alt="Cover"
+                        className="w-full h-full object-cover"
+                      />
+                    </AspectRatio>
                   )}
-                  <div className="flex gap-2 flex-1">
+                  <div className="flex gap-2">
                     <Input
-                      value={currentSettings?.identity?.icon ?? ''}
+                      value={currentSettings?.identity?.coverImage ?? ''}
                       onChange={(e) => updateLocal({
                         identity: {
                           ...currentSettings?.identity,
                           blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
                           logo: currentSettings?.identity?.logo ?? { type: 'text' },
-                          icon: e.target.value || undefined,
+                          coverImage: e.target.value || undefined,
                         },
                       })}
                       placeholder="https://..."
                       className="flex-1"
                     />
                     <Label
-                      htmlFor="icon-upload"
-                      className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-4 cursor-pointer"
+                      htmlFor="cover-upload"
+                      className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-3 cursor-pointer"
                     >
                       {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
                     </Label>
                     <input
-                      id="icon-upload"
+                      id="cover-upload"
                       type="file"
                       accept="image/*"
                       className="hidden"
@@ -348,10 +416,10 @@ export function ThemeSettings() {
                               ...currentSettings?.identity,
                               blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
                               logo: currentSettings?.identity?.logo ?? { type: 'text' },
-                              icon: url,
+                              coverImage: url,
                             },
                           });
-                          toast({ title: 'Icon uploaded' });
+                          toast({ title: 'Cover image uploaded' });
                         } catch {
                           toast({ title: 'Upload failed', variant: 'destructive' });
                         }
@@ -361,72 +429,11 @@ export function ThemeSettings() {
                   </div>
                 </div>
               </div>
-
-              {/* Publication Cover Image */}
-              <div className="space-y-2 pt-4 border-t">
-                <Label>Publication Cover</Label>
-                <p className="text-sm text-muted-foreground">A large banner image for your homepage and social sharing.</p>
-                {currentSettings?.identity?.coverImage && (
-                  <AspectRatio ratio={16 / 9} className="rounded-lg overflow-hidden border">
-                    <img
-                      src={currentSettings.identity.coverImage}
-                      alt="Cover"
-                      className="w-full h-full object-cover"
-                    />
-                  </AspectRatio>
-                )}
-                <div className="flex gap-2">
-                  <Input
-                    value={currentSettings?.identity?.coverImage ?? ''}
-                    onChange={(e) => updateLocal({
-                      identity: {
-                        ...currentSettings?.identity,
-                        blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
-                        logo: currentSettings?.identity?.logo ?? { type: 'text' },
-                        coverImage: e.target.value || undefined,
-                      },
-                    })}
-                    placeholder="https://..."
-                    className="flex-1"
-                  />
-                  <Label
-                    htmlFor="cover-upload"
-                    className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-4 cursor-pointer"
-                  >
-                    {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
-                  </Label>
-                  <input
-                    id="cover-upload"
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={async (e) => {
-                      const file = e.target.files?.[0];
-                      if (!file) return;
-                      try {
-                        const [[, url]] = await uploadFile(file);
-                        updateLocal({
-                          identity: {
-                            ...currentSettings?.identity,
-                            blogName: currentSettings?.identity?.blogName ?? 'V4V Blog',
-                            logo: currentSettings?.identity?.logo ?? { type: 'text' },
-                            coverImage: url,
-                          },
-                        });
-                        toast({ title: 'Cover image uploaded' });
-                      } catch {
-                        toast({ title: 'Upload failed', variant: 'destructive' });
-                      }
-                    }}
-                    disabled={isUploading}
-                  />
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        {/* Theme Tab */}
+        {/* Theme Tab - 2 column layout */}
         <TabsContent value="theme">
           <Card>
             <CardHeader>
@@ -434,10 +441,10 @@ export function ThemeSettings() {
               <CardDescription>Customize your blog's colors and appearance</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Color Presets */}
-              <div className="space-y-3">
+              {/* Color Presets - small bubbles */}
+              <div className="space-y-2">
                 <Label>Quick Color Presets</Label>
-                <div className="grid grid-cols-6 gap-3">
+                <div className="flex gap-2 flex-wrap">
                   {Object.entries(colorPresets).map(([key, preset]) => (
                     <button
                       key={key}
@@ -452,10 +459,10 @@ export function ThemeSettings() {
                         },
                       })}
                       className={cn(
-                        'w-full aspect-square rounded-full border-2 transition-all',
+                        'w-6 h-6 rounded-full border-2 transition-all flex-shrink-0',
                         currentSettings?.theme?.colors?.primary === preset.primary
-                          ? 'border-foreground scale-110'
-                          : 'border-transparent hover:scale-105'
+                          ? 'border-foreground ring-2 ring-offset-2 ring-foreground scale-110'
+                          : 'border-transparent hover:scale-110'
                       )}
                       style={{ backgroundColor: preset.primary }}
                       title={preset.name}
@@ -464,237 +471,232 @@ export function ThemeSettings() {
                 </div>
               </div>
 
-              {/* Button / Accent Color */}
-              <div className="space-y-2">
-                <Label htmlFor="primaryColor">Button & Accent Color</Label>
-                <p className="text-sm text-muted-foreground">Used for buttons, links, and highlights</p>
-                <div className="flex gap-2">
-                  <Input
-                    id="primaryColor"
-                    type="color"
-                    value={currentSettings?.theme?.colors?.primary ?? '#2D2D2D'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { primary: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    className="w-16 h-10 p-1 cursor-pointer"
-                  />
-                  <Input
-                    value={currentSettings?.theme?.colors?.primary ?? '#2D2D2D'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { primary: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    placeholder="#2D2D2D"
-                    className="flex-1"
-                  />
+              {/* 2-column grid for color pickers */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Button / Accent Color */}
+                <div className="space-y-2">
+                  <Label htmlFor="primaryColor">Accent Color</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="primaryColor"
+                      type="color"
+                      value={currentSettings?.theme?.colors?.primary ?? '#2D2D2D'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { primary: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      className="w-10 h-10 p-1 cursor-pointer"
+                    />
+                    <Input
+                      value={currentSettings?.theme?.colors?.primary ?? '#2D2D2D'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { primary: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      placeholder="#2D2D2D"
+                      className="flex-1"
+                    />
+                  </div>
+                </div>
+
+                {/* Background Color */}
+                <div className="space-y-2">
+                  <Label htmlFor="bgColor">Background</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="bgColor"
+                      type="color"
+                      value={currentSettings?.theme?.colors?.background ?? '#FFFFFF'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { background: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      className="w-10 h-10 p-1 cursor-pointer"
+                    />
+                    <Input
+                      value={currentSettings?.theme?.colors?.background ?? '#FFFFFF'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { background: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      placeholder="#FFFFFF"
+                      className="flex-1"
+                    />
+                  </div>
+                </div>
+
+                {/* Text Color */}
+                <div className="space-y-2">
+                  <Label htmlFor="textColor">Text Color</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="textColor"
+                      type="color"
+                      value={currentSettings?.theme?.colors?.foreground ?? '#18181B'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { foreground: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      className="w-10 h-10 p-1 cursor-pointer"
+                    />
+                    <Input
+                      value={currentSettings?.theme?.colors?.foreground ?? '#18181B'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { foreground: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      placeholder="#18181B"
+                      className="flex-1"
+                    />
+                  </div>
+                </div>
+
+                {/* Card Background Color */}
+                <div className="space-y-2">
+                  <Label htmlFor="cardColor">Card Background</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="cardColor"
+                      type="color"
+                      value={currentSettings?.theme?.colors?.card ?? '#FAFAFA'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { card: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      className="w-10 h-10 p-1 cursor-pointer"
+                    />
+                    <Input
+                      value={currentSettings?.theme?.colors?.card ?? '#FAFAFA'}
+                      onChange={(e) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, { card: e.target.value }),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                        },
+                      })}
+                      placeholder="#FAFAFA"
+                      className="flex-1"
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Background Color */}
-              <div className="space-y-2">
-                <Label htmlFor="bgColor">Background Color</Label>
-                <p className="text-sm text-muted-foreground">Main page background</p>
-                <div className="flex gap-2">
-                  <Input
-                    id="bgColor"
-                    type="color"
-                    value={currentSettings?.theme?.colors?.background ?? '#FFFFFF'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { background: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    className="w-16 h-10 p-1 cursor-pointer"
-                  />
-                  <Input
-                    value={currentSettings?.theme?.colors?.background ?? '#FFFFFF'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { background: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    placeholder="#FFFFFF"
-                    className="flex-1"
-                  />
-                </div>
-              </div>
-
-              {/* Text Color */}
-              <div className="space-y-2">
-                <Label htmlFor="textColor">Text Color</Label>
-                <p className="text-sm text-muted-foreground">Main text and headings</p>
-                <div className="flex gap-2">
-                  <Input
-                    id="textColor"
-                    type="color"
-                    value={currentSettings?.theme?.colors?.foreground ?? '#18181B'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { foreground: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    className="w-16 h-10 p-1 cursor-pointer"
-                  />
-                  <Input
-                    value={currentSettings?.theme?.colors?.foreground ?? '#18181B'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { foreground: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    placeholder="#18181B"
-                    className="flex-1"
-                  />
-                </div>
-              </div>
-
-              {/* Card Background Color */}
-              <div className="space-y-2">
-                <Label htmlFor="cardColor">Card Background</Label>
-                <p className="text-sm text-muted-foreground">Article cards and panels</p>
-                <div className="flex gap-2">
-                  <Input
-                    id="cardColor"
-                    type="color"
-                    value={currentSettings?.theme?.colors?.card ?? '#FAFAFA'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { card: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    className="w-16 h-10 p-1 cursor-pointer"
-                  />
-                  <Input
-                    value={currentSettings?.theme?.colors?.card ?? '#FAFAFA'}
-                    onChange={(e) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, { card: e.target.value }),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                    placeholder="#FAFAFA"
-                    className="flex-1"
-                  />
-                </div>
-              </div>
-
-              {/* Typography */}
+              {/* Typography - 2 column */}
               <div className="space-y-4 pt-4 border-t">
                 <div>
                   <Label className="text-base">Typography</Label>
                   <p className="text-sm text-muted-foreground">Choose fonts for your blog</p>
                 </div>
 
-                {/* Heading Font */}
-                <div className="space-y-2">
-                  <Label htmlFor="headingFont">Heading Font</Label>
-                  <Select
-                    value={currentSettings?.theme?.fonts?.heading ?? 'Marcellus'}
-                    onValueChange={(value) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, {}),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: { 
-                          heading: value, 
-                          body: currentSettings?.theme?.fonts?.body ?? 'Marcellus' 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Heading Font */}
+                  <div className="space-y-2">
+                    <Label htmlFor="headingFont">Heading Font</Label>
+                    <Select
+                      value={currentSettings?.theme?.fonts?.heading ?? 'Marcellus'}
+                      onValueChange={(value) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, {}),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: { 
+                            heading: value, 
+                            body: currentSettings?.theme?.fonts?.body ?? 'Marcellus' 
+                          },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
                         },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                  >
-                    <SelectTrigger id="headingFont">
-                      <SelectValue placeholder="Select heading font" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {fontOptions.heading.map((font) => (
-                        <SelectItem key={font.value} value={font.value}>
-                          <div className="flex items-center gap-2">
+                      })}
+                    >
+                      <SelectTrigger id="headingFont">
+                        <SelectValue placeholder="Select heading font" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {fontOptions.heading.map((font) => (
+                          <SelectItem key={font.value} value={font.value}>
                             <span>{font.name}</span>
-                            <span className="text-xs text-muted-foreground">— {font.description}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                {/* Body Font */}
-                <div className="space-y-2">
-                  <Label htmlFor="bodyFont">Body Font</Label>
-                  <Select
-                    value={currentSettings?.theme?.fonts?.body ?? 'Marcellus'}
-                    onValueChange={(value) => updateLocal({
-                      theme: {
-                        ...currentSettings?.theme,
-                        preset: currentSettings?.theme?.preset ?? 'magazine',
-                        colors: buildColors(currentSettings?.theme?.colors, {}),
-                        darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                        fonts: { 
-                          heading: currentSettings?.theme?.fonts?.heading ?? 'Marcellus', 
-                          body: value 
+                  {/* Body Font */}
+                  <div className="space-y-2">
+                    <Label htmlFor="bodyFont">Body Font</Label>
+                    <Select
+                      value={currentSettings?.theme?.fonts?.body ?? 'Marcellus'}
+                      onValueChange={(value) => updateLocal({
+                        theme: {
+                          ...currentSettings?.theme,
+                          preset: currentSettings?.theme?.preset ?? 'magazine',
+                          colors: buildColors(currentSettings?.theme?.colors, {}),
+                          darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                          fonts: { 
+                            heading: currentSettings?.theme?.fonts?.heading ?? 'Marcellus', 
+                            body: value 
+                          },
+                          borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
                         },
-                        borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                      },
-                    })}
-                  >
-                    <SelectTrigger id="bodyFont">
-                      <SelectValue placeholder="Select body font" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {fontOptions.body.map((font) => (
-                        <SelectItem key={font.value} value={font.value}>
-                          <div className="flex items-center gap-2">
+                      })}
+                    >
+                      <SelectTrigger id="bodyFont">
+                        <SelectValue placeholder="Select body font" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {fontOptions.body.map((font) => (
+                          <SelectItem key={font.value} value={font.value}>
                             <span>{font.name}</span>
-                            <span className="text-xs text-muted-foreground">— {font.description}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
 
@@ -733,20 +735,20 @@ export function ThemeSettings() {
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Layout Presets */}
-                <RadioGroup
-                  value={currentSettings?.theme?.preset ?? 'magazine'}
-                  onValueChange={(value) => updateLocal({
-                    theme: {
-                      ...currentSettings?.theme,
-                      preset: value as 'magazine' | 'newsletter' | 'minimal',
-                      colors: buildColors(currentSettings?.theme?.colors, {}),
-                      darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
-                      fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
-                      borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
-                    },
-                  })}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-4"
-                >
+              <RadioGroup
+                value={currentSettings?.theme?.preset ?? 'magazine'}
+                onValueChange={(value) => updateLocal({
+                  theme: {
+                    ...currentSettings?.theme,
+                    preset: value as 'magazine' | 'newsletter' | 'minimal',
+                    colors: buildColors(currentSettings?.theme?.colors, {}),
+                    darkMode: currentSettings?.theme?.darkMode ?? { enabled: true },
+                    fonts: currentSettings?.theme?.fonts ?? { heading: 'Marcellus', body: 'Marcellus' },
+                    borderRadius: currentSettings?.theme?.borderRadius ?? 'md',
+                  },
+                })}
+                className="grid grid-cols-1 md:grid-cols-3 gap-4"
+              >
                 {Object.entries(themePresets).map(([key, preset]) => (
                   <Label
                     key={key}
@@ -783,7 +785,7 @@ export function ThemeSettings() {
                       borderRadius: value as 'none' | 'sm' | 'md' | 'lg' | 'full',
                     },
                   })}
-                  className="flex gap-4"
+                  className="flex gap-4 flex-wrap"
                 >
                   {['none', 'sm', 'md', 'lg', 'full'].map((radius) => (
                     <Label
@@ -801,7 +803,7 @@ export function ThemeSettings() {
           </Card>
         </TabsContent>
 
-        {/* Hero Tab */}
+        {/* Hero Tab - 2 column where applicable */}
         <TabsContent value="hero">
           <Card>
             <CardHeader>
@@ -832,23 +834,47 @@ export function ThemeSettings() {
 
               {currentSettings?.hero?.enabled && (
                 <>
-                  {/* Hero Title */}
-                  <div className="space-y-2">
-                    <Label htmlFor="heroTitle">Hero Title</Label>
-                    <Input
-                      id="heroTitle"
-                      value={currentSettings?.hero?.title ?? ''}
-                      onChange={(e) => updateLocal({
-                        hero: {
-                          ...currentSettings?.hero,
-                          enabled: true,
-                          style: currentSettings?.hero?.style ?? 'fullWidth',
-                          showSubscribe: currentSettings?.hero?.showSubscribe ?? true,
-                          title: e.target.value,
-                        },
-                      })}
-                      placeholder="Welcome to My Blog"
-                    />
+                  {/* 2-column grid for title and subtitle */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Hero Title */}
+                    <div className="space-y-2">
+                      <Label htmlFor="heroTitle">Hero Title</Label>
+                      <Input
+                        id="heroTitle"
+                        value={currentSettings?.hero?.title ?? ''}
+                        onChange={(e) => updateLocal({
+                          hero: {
+                            ...currentSettings?.hero,
+                            enabled: true,
+                            style: currentSettings?.hero?.style ?? 'fullWidth',
+                            showSubscribe: currentSettings?.hero?.showSubscribe ?? true,
+                            title: e.target.value,
+                          },
+                        })}
+                        placeholder="Welcome to My Blog"
+                      />
+                    </div>
+
+                    {/* Show Subscribe */}
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label>Show Subscribe Form</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Display newsletter signup in the hero
+                        </p>
+                      </div>
+                      <Switch
+                        checked={currentSettings?.hero?.showSubscribe ?? true}
+                        onCheckedChange={(checked) => updateLocal({
+                          hero: {
+                            ...currentSettings?.hero,
+                            enabled: true,
+                            style: currentSettings?.hero?.style ?? 'fullWidth',
+                            showSubscribe: checked,
+                          },
+                        })}
+                      />
+                    </div>
                   </div>
 
                   {/* Hero Subtitle */}
@@ -905,7 +931,7 @@ export function ThemeSettings() {
                       />
                     </div>
                     {currentSettings?.hero?.backgroundImage && (
-                      <AspectRatio ratio={16 / 9} className="rounded-lg overflow-hidden border">
+                      <AspectRatio ratio={16 / 9} className="rounded-lg overflow-hidden border max-w-md">
                         <img
                           src={currentSettings.hero.backgroundImage}
                           alt="Hero background"
@@ -913,27 +939,6 @@ export function ThemeSettings() {
                         />
                       </AspectRatio>
                     )}
-                  </div>
-
-                  {/* Show Subscribe */}
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <Label>Show Subscribe Form</Label>
-                      <p className="text-sm text-muted-foreground">
-                        Display newsletter signup in the hero
-                      </p>
-                    </div>
-                    <Switch
-                      checked={currentSettings?.hero?.showSubscribe ?? true}
-                      onCheckedChange={(checked) => updateLocal({
-                        hero: {
-                          ...currentSettings?.hero,
-                          enabled: true,
-                          style: currentSettings?.hero?.style ?? 'fullWidth',
-                          showSubscribe: checked,
-                        },
-                      })}
-                    />
                   </div>
                 </>
               )}
