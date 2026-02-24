@@ -85,7 +85,7 @@ export function EditorToolbar({ editor, className }: EditorToolbarProps) {
         title: 'Image uploaded',
         description: 'Your image has been added to the article.',
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Upload failed',
         description: 'Could not upload image. Please try again.',

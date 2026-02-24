@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import { Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -47,7 +47,7 @@ export function BookmarkButton({
           ? 'Article removed from your bookmarks.'
           : 'Article saved to your bookmarks.',
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Failed to update bookmark. Please try again.',

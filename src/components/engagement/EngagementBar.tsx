@@ -32,7 +32,7 @@ export function EngagementBar({
   summary,
   layout = 'horizontal',
   showZapAmount = true,
-  showLikeCount = true,
+  showLikeCount: _showLikeCount = true,
   showRepostCount = true,
   className,
 }: EngagementBarProps) {

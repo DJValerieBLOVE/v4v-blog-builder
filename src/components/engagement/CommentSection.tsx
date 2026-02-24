@@ -61,7 +61,7 @@ export function CommentSection({ article, className }: CommentSectionProps) {
         title: 'Comment posted!',
         description: 'Your comment has been published.',
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Failed to post comment. Please try again.',
@@ -261,7 +261,7 @@ function ReplyForm({ article, parentComment, onClose }: ReplyFormProps) {
       toast({
         title: 'Reply posted!',
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Failed to post reply.',
