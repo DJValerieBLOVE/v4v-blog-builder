@@ -194,11 +194,9 @@ export function useZaps(
 
       const zapAmount = amount * 1000; // convert to millisats
 
-      // Build zap request - always pass the full event object
-      // nip57.makeZapRequest will create the appropriate tags based on event kind
+      // Build zap request using EventZap type (for zapping events)
       // nip57.makeZapRequest will create the appropriate tags (e tag for regular, a tag for addressable)
       const zapRequest = nip57.makeZapRequest({
-        profile: actualTarget.pubkey,
         event: actualTarget as NostrToolsEvent,
         amount: zapAmount,
         relays: config.relayMetadata.relays.map(r => r.url),
