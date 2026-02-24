@@ -445,6 +445,20 @@ Phases 1-6 complete. Post-phase polish complete.
 - [x] Transparent with blur when at top of page
 - [x] Smooth transition between states
 
+### GLOBAL Hover/Select Color Fix (COMPREHENSIVE)
+**Problem**: Multiple components had dark gray hover/select states
+**Root Cause**: Using `bg-primary` (dark), `bg-accent`, or `hover:bg-gray-100`
+
+**Files Fixed**:
+- [x] `AdminLayout.tsx`: Sidebar active `bg-primary` → `bg-muted`, hover → `hover:bg-muted/50`
+- [x] `ThemeSettings.tsx`: All upload buttons `hover:bg-accent`/`hover:bg-gray-100` → `hover:bg-muted/50`
+- [x] `AdminEditor.tsx`: Upload button `hover:bg-accent` → `hover:bg-muted/50`
+- [x] `AccountSwitcher.tsx`: Trigger button `hover:bg-accent` → `hover:bg-muted/50`
+- [x] `DMConversationList.tsx`: Conversation items `hover:bg-accent` → `hover:bg-muted/50`
+
+**Rule**: NEVER use `bg-primary`, `bg-accent`, or `bg-gray-100` for hover/select states.
+Always use `bg-muted` for selected and `hover:bg-muted/50` for hover.
+
 ---
 
 ## Design Notes

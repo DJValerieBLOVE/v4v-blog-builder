@@ -306,9 +306,14 @@ BLOG OWNER (you)          VISITORS (readers who login)
 **Goal**: Minor UI refinements
 
 - [x] Remove copyright text from footer ("© 2026 All rights reserved")
-- [x] Fix sidebar hover color (gray-100 → muted for theme compatibility)
 - [x] Set article content line spacing to 1.6 (matching Notion/Primal)
 - [x] Solid header background when user scrolls (no transparency)
+- [x] **GLOBAL HOVER/SELECT COLOR FIX** - Removed ALL dark hover states:
+  - AdminLayout sidebar: `bg-primary` → `bg-muted` for active, `hover:bg-muted/50` for hover
+  - ThemeSettings: All `hover:bg-accent` and `hover:bg-gray-100` → `hover:bg-muted/50`
+  - AdminEditor upload button: `hover:bg-accent` → `hover:bg-muted/50`
+  - AccountSwitcher: `hover:bg-accent` → `hover:bg-muted/50`
+  - DMConversationList: `hover:bg-accent` and `bg-accent` → `hover:bg-muted/50` and `bg-muted`
 
 **Deliverable**: Cleaner footer and improved article readability
 

@@ -55,8 +55,8 @@ const ConversationItemComponent = ({
     <button
       onClick={onClick}
       className={cn(
-        "w-full text-left p-3 rounded-lg transition-colors hover:bg-accent block overflow-hidden",
-        isSelected && "bg-accent"
+        "w-full text-left p-3 rounded-lg transition-colors hover:bg-muted/50 block overflow-hidden",
+        isSelected && "bg-muted"
       )}
     >
       <div className="flex items-start gap-3 max-w-full">

@@ -312,7 +312,7 @@ export function ThemeSettings() {
                       />
                       <Label
                         htmlFor="logo-upload"
-                        className="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 cursor-pointer"
+                        className="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-muted/50 h-10 px-4 cursor-pointer"
                       >
                         {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
                       </Label>
@@ -370,7 +370,7 @@ export function ThemeSettings() {
                       />
                       <Label
                         htmlFor="icon-upload"
-                        className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-3 cursor-pointer"
+                        className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-muted/50 h-10 px-3 cursor-pointer"
                       >
                         {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
                       </Label>
@@ -432,7 +432,7 @@ export function ThemeSettings() {
                     />
                     <Label
                       htmlFor="cover-upload"
-                      className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-gray-100 h-10 px-3 cursor-pointer"
+                      className="inline-flex items-center justify-center rounded-md text-sm border border-input bg-background hover:bg-muted/50 h-10 px-3 cursor-pointer"
                     >
                       {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
                     </Label>
@@ -952,7 +952,7 @@ export function ThemeSettings() {
                       />
                       <Label
                         htmlFor="hero-upload"
-                        className="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-accent h-10 px-4 cursor-pointer"
+                        className="inline-flex items-center justify-center rounded-md text-sm font-medium border border-input bg-background hover:bg-muted/50 h-10 px-4 cursor-pointer"
                       >
                         {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload'}
                       </Label>
