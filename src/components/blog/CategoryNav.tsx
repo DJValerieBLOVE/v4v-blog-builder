@@ -94,7 +94,7 @@ export function TagCloud({
               'inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm transition-colors',
               isActive
                 ? 'bg-primary text-primary-foreground'
-                : 'bg-muted hover:bg-primary/10 hover:text-primary'
+                : 'border bg-background hover:bg-primary/10 hover:text-primary'
             )}
           >
             <span>#{tag}</span>

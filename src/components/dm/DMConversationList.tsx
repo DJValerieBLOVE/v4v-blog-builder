@@ -202,7 +202,7 @@ export const DMConversationList = ({
       
       {/* Tab buttons - always visible */}
       <div className="px-2 pt-2 flex-shrink-0">
-        <div className="grid grid-cols-2 gap-1 bg-muted p-1 rounded-lg">
+        <div className="grid grid-cols-2 gap-1 border bg-background p-1 rounded-lg">
           <button
             onClick={() => setActiveTab('known')}
             className={cn(

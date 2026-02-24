@@ -459,6 +459,29 @@ Phases 1-6 complete. Post-phase polish complete.
 **Rule**: NEVER use `bg-primary`, `bg-accent`, or `bg-gray-100` for hover/select states.
 Always use `bg-muted` for selected and `hover:bg-muted/50` for hover.
 
+### WHITE Background Fix for Cards/Tabs/Inputs (GLOBAL)
+**Problem**: Tab containers, toolbars, and category badges had gray backgrounds
+**Root Cause**: Using `bg-muted` which was too dark (98% → 96%)
+
+**CSS Variables Updated** (index.css):
+- `--muted`: 96% lightness (for skeletons/placeholders only)
+- `--accent`: 97% lightness (subtle hover)
+
+**Files Fixed - Replace bg-muted with border bg-background**:
+- [x] `tabs.tsx` (UI component): Changed TabsList default
+- [x] `AdminEditor.tsx`: Tab container
+- [x] `ThemeSettings.tsx`: Tab container
+- [x] `LoginDialog.tsx`: Tab container
+- [x] `DMConversationList.tsx`: Tab buttons container
+- [x] `EditorToolbar.tsx`: Toolbar background
+- [x] `CategoryNav.tsx`: Category/tag badges
+
+**Rule**: For interactive containers (tabs, toolbars, tag badges):
+- ✅ Use `border bg-background` (white with subtle border)
+- ❌ Never use `bg-muted` (causes gray appearance)
+
+**For skeletons/placeholders**: `bg-muted` is OK (needs to show loading state)
+
 ---
 
 ## Design Notes

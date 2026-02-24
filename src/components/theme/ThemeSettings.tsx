@@ -186,7 +186,7 @@ export function ThemeSettings() {
         {/* Left: Settings (50%) */}
         <Tabs defaultValue="identity" className="space-y-6">
           {/* Bubble-style tabs - NOT full width */}
-          <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
+          <TabsList className="inline-flex h-10 items-center justify-start rounded-full border bg-background p-1 gap-1">
             <TabsTrigger value="identity" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
               <Type className="h-4 w-4" />
               <span className="hidden sm:inline">Identity</span>

@@ -108,7 +108,7 @@ export function EditorToolbar({ editor, className }: EditorToolbarProps) {
 
   return (
     <>
-      <div className={cn('flex items-center gap-1 p-2 border-b bg-muted/50 flex-wrap', className)}>
+      <div className={cn('flex items-center gap-1 p-2 border-b bg-background flex-wrap', className)}>
         {/* History */}
         <ToolbarButton
           onClick={() => editor.chain().focus().undo().run()}

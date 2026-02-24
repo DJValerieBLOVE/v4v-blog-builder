@@ -18,16 +18,16 @@
     --primary: 240 6% 20%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - for light backgrounds (almost white) */
-    --secondary: 0 0% 98%;
+    /* Secondary - for light backgrounds (WHITE) */
+    --secondary: 0 0% 100%;
     --secondary-foreground: 240 6% 10%;
 
-    /* Muted - for subtle backgrounds (should be VERY light) */
-    --muted: 0 0% 98%;
+    /* Muted - for subtle backgrounds (very light gray for skeletons/placeholders) */
+    --muted: 0 0% 96%;
     --muted-foreground: 240 4% 46%;
 
-    /* Accent - for hover states (MUST be almost white, NOT gray!) */
-    --accent: 0 0% 98%;
+    /* Accent - for hover states (very subtle, almost white) */
+    --accent: 0 0% 97%;
     --accent-foreground: 240 6% 10%;
 
     --destructive: 0 84% 60%;

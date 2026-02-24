@@ -175,7 +175,7 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ isOpen, onClose, onLogin }) =
 
   const renderTabs = () => (
     <Tabs defaultValue="key" className="w-full">
-      <TabsList className="grid w-full grid-cols-2 bg-muted/80 rounded-lg mb-4">
+      <TabsList className="grid w-full grid-cols-2 border bg-background rounded-lg mb-4">
         <TabsTrigger value="key" className="flex items-center gap-2">
           <span>Secret Key</span>
         </TabsTrigger>

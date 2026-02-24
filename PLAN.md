@@ -315,6 +315,12 @@ BLOG OWNER (you)          VISITORS (readers who login)
   - AccountSwitcher: `hover:bg-accent` → `hover:bg-muted/50`
   - DMConversationList: `hover:bg-accent` and `bg-accent` → `hover:bg-muted/50` and `bg-muted`
 
+- [x] **WHITE Background Fix for Cards/Tabs/Inputs (GLOBAL)**
+  - All tab containers: `bg-muted` → `border bg-background`
+  - Editor toolbar: White background
+  - Category badges: White background with border
+  - Updated CSS: muted=96%, accent=97% (for skeletons only)
+
 **Deliverable**: Cleaner footer and improved article readability
 
 ---

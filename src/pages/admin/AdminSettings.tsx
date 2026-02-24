@@ -139,7 +139,7 @@ export function AdminSettings() {
                     href="https://getalby.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors"
+                    className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
                   >
                     <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <Zap className="h-5 w-5 text-primary" />
@@ -153,7 +153,7 @@ export function AdminSettings() {
                     href="https://www.walletofsatoshi.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted transition-colors"
+                    className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
                   >
                     <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <Zap className="h-5 w-5 text-primary" />

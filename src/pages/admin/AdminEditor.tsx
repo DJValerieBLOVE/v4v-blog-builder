@@ -265,7 +265,7 @@ export function AdminEditor() {
         <div className="container max-w-5xl py-6">
           <Tabs defaultValue="content" className="space-y-6">
             {/* Tab Navigation */}
-            <TabsList className="inline-flex h-10 items-center justify-start rounded-full bg-muted p-1 gap-1">
+            <TabsList className="inline-flex h-10 items-center justify-start rounded-full border bg-background p-1 gap-1">
               <TabsTrigger value="content" className="gap-2 rounded-full px-4 data-[state=active]:bg-background data-[state=active]:shadow-sm">
                 <FileText className="h-4 w-4" />
                 <span>Content</span>

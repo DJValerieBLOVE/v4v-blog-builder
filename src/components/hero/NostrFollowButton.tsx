@@ -123,7 +123,7 @@ export function NostrFollowButton({
                   href="https://damus.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted transition-colors"
+                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted/50 transition-colors"
                 >
                   Damus (iOS)
                 </a>
@@ -131,7 +131,7 @@ export function NostrFollowButton({
                   href="https://primal.net"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted transition-colors"
+                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted/50 transition-colors"
                 >
                   Primal (Web)
                 </a>
@@ -139,7 +139,7 @@ export function NostrFollowButton({
                   href="https://snort.social"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted transition-colors"
+                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted/50 transition-colors"
                 >
                   Snort (Web)
                 </a>
@@ -147,7 +147,7 @@ export function NostrFollowButton({
                   href="https://github.com/greenart7c3/Amethyst"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted transition-colors"
+                  className="flex items-center gap-2 p-2 rounded-lg border hover:bg-muted/50 transition-colors"
                 >
                   Amethyst (Android)
                 </a>
