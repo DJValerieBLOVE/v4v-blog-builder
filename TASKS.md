@@ -504,6 +504,67 @@ Always use `bg-muted` for selected and `hover:bg-muted/50` for hover.
 
 ---
 
+## ERROR LOG & RULES (DO NOT REPEAT THESE MISTAKES)
+
+### TypeScript/ESLint Rules - ALWAYS FOLLOW
+
+**1. Unused Variables**
+- ❌ NEVER leave unused variables: `const foo = bar` where `foo` is not used
+- ✅ Prefix with underscore: `const _foo = bar` OR remove entirely
+- ✅ For function params: `(_error)` not `(error)` if not used
+- ✅ For destructured props: `_showLikeCount = true` not `showLikeCount = true`
+
+**2. Unused Imports**
+- ❌ NEVER import something and not use it
+- ✅ Remove unused imports immediately after refactoring
+- ✅ Check imports after every edit that removes code
+
+**3. nostr-tools nip57.makeZapRequest API**
+- ❌ WRONG: `{ profile: pubkey, event: event }` - 'profile' does not exist
+- ✅ For EventZap: `{ event: NostrToolsEvent, amount, relays, comment }`
+- ✅ For ProfileZap: `{ pubkey: string, amount, relays, comment }`
+- ✅ NEVER mix both - use one OR the other
+
+**4. CSS/Styling Rules**
+- ❌ NEVER use `bg-primary` for hover/select states (it's dark)
+- ❌ NEVER use `bg-accent` for hover states
+- ❌ NEVER use `bg-gray-100` or `hover:bg-gray-100`
+- ❌ NEVER use `bg-muted` for interactive containers (tabs, toolbars)
+- ✅ Use `hover:bg-muted/50` for hover states
+- ✅ Use `bg-muted` ONLY for selected state or skeletons
+- ✅ Use `border bg-background` for tab containers, toolbars, badges
+
+**5. index.html Requirements**
+- ✅ MUST have `<title>` tag
+- ✅ MUST have `<meta name="description">`
+- ✅ MUST have `<meta property="og:type">`
+- ✅ MUST have `<meta property="og:title">`
+- ✅ MUST have `<meta property="og:description">`
+
+**6. useEffect Dependencies**
+- If intentionally omitting a dependency, add: `// eslint-disable-next-line react-hooks/exhaustive-deps`
+
+### Errors Fixed Log
+
+| Date | File | Error | Fix |
+|------|------|-------|-----|
+| 2026-02-23 | useZaps.ts | `profile` does not exist in type | Use EventZap type: only `event`, not `profile` |
+| 2026-02-23 | useZaps.ts | Type 'string' not assignable to 'NostrEvent' | Pass full event object, not `actualTarget.id` |
+| 2026-02-23 | AboutPageBuilder.tsx | Unused imports | Removed: Plus, CardTitle, CardDescription, Select, SelectContent, useBlogSettings, SelectItem, SelectTrigger, SelectValue |
+| 2026-02-23 | ZapButton.tsx | 'variant' declared but never used | Changed to `_variant` |
+| 2026-02-23 | EngagementBar.tsx | 'showLikeCount' declared but never used | Changed to `_showLikeCount` |
+| 2026-02-23 | CommentSection.tsx | 'error' declared but never used (x2) | Changed to `_error` |
+| 2026-02-23 | BookmarkButton.tsx | 'useState' imported but never used | Removed import |
+| 2026-02-23 | BookmarkButton.tsx | 'error' declared but never used | Changed to `_error` |
+| 2026-02-23 | EditorToolbar.tsx | 'error' declared but never used | Changed to `_error` |
+| 2026-02-23 | SearchPage.tsx | React Hook useEffect missing dependency | Added eslint-disable comment |
+| 2026-02-23 | index.html | Missing title and meta tags | Added title, description, og:* tags |
+| 2026-02-23 | AdminLayout.tsx | Dark hover states | Changed `bg-primary` → `bg-muted`, `hover:bg-muted` → `hover:bg-muted/50` |
+| 2026-02-23 | ThemeSettings.tsx | Dark hover states | Changed all `hover:bg-accent` and `hover:bg-gray-100` → `hover:bg-muted/50` |
+| 2026-02-23 | Multiple files | Gray tab backgrounds | Changed `bg-muted` → `border bg-background` for all TabsList |
+
+---
+
 ## Design Notes
 
 - All thumbnails use 16:9 ratio
