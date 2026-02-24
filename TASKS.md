@@ -492,11 +492,15 @@ Always use `bg-muted` for selected and `hover:bg-muted/50` for hover.
 **For skeletons/placeholders**: `bg-muted` is OK (needs to show loading state)
 
 ### Linting & CI Fixes
-- [x] `AboutPageBuilder.tsx`: Removed unused imports (Plus, CardTitle, CardDescription, Select, SelectContent)
+- [x] `AboutPageBuilder.tsx`: Removed unused imports (Plus, CardTitle, CardDescription, Select, SelectContent, useBlogSettings, SelectItem, SelectTrigger, SelectValue)
 - [x] `ZapButton.tsx`: Prefixed unused `variant` with underscore (`_variant`)
 - [x] `index.html`: Added title, description, og:type, og:title, og:description meta tags
 - [x] `manifest.webmanifest`: Created PWA manifest file in public/
 - [x] `SearchPage.tsx`: Added eslint-disable comment for useEffect dependency
+- [x] `EngagementBar.tsx`: Prefixed unused `showLikeCount` with underscore
+- [x] `CommentSection.tsx`: Prefixed unused `error` with underscore (2 places)
+- [x] `BookmarkButton.tsx`: Removed unused `useState` import, prefixed `error` with underscore
+- [x] `EditorToolbar.tsx`: Prefixed unused `error` with underscore
 
 ---
 
