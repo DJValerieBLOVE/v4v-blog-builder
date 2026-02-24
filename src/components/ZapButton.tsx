@@ -21,7 +21,7 @@ export function ZapButton({
   className = "text-xs ml-1",
   showCount = true,
   zapData: externalZapData,
-  variant = 'default',
+  variant: _variant = 'default',
 }: ZapButtonProps) {
   // Support both target and event props for backwards compatibility
   const zapTarget = target ?? event;

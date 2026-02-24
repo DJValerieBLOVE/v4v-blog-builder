@@ -1,0 +1,21 @@
+{
+  "name": "V4V Blog",
+  "short_name": "V4V Blog",
+  "description": "A decentralized blog powered by Nostr and Lightning",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2D2D2D",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

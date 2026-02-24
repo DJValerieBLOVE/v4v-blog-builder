@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { 
   GripVertical, 
-  Plus, 
   Trash2, 
   Eye, 
   EyeOff,
@@ -15,7 +14,7 @@ import {
   Share2,
   ImageIcon,
 } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,8 +23,6 @@ import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import {
-  Select,
-  SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,

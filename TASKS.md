@@ -491,6 +491,13 @@ Always use `bg-muted` for selected and `hover:bg-muted/50` for hover.
 
 **For skeletons/placeholders**: `bg-muted` is OK (needs to show loading state)
 
+### Linting & CI Fixes
+- [x] `AboutPageBuilder.tsx`: Removed unused imports (Plus, CardTitle, CardDescription, Select, SelectContent)
+- [x] `ZapButton.tsx`: Prefixed unused `variant` with underscore (`_variant`)
+- [x] `index.html`: Added title, description, og:type, og:title, og:description meta tags
+- [x] `manifest.webmanifest`: Created PWA manifest file in public/
+- [x] `SearchPage.tsx`: Added eslint-disable comment for useEffect dependency
+
 ---
 
 ## Design Notes

@@ -35,6 +35,7 @@ export function SearchPage() {
     if (urlQuery && urlQuery !== query) {
       setQuery(urlQuery);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   // Set page head
